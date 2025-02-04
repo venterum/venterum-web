@@ -81,14 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme') || 'default';
     const savedLang = localStorage.getItem('lang') || 'ru';
 
-    // Apply saved theme
     body.className = `theme-${savedTheme}`;
     document.querySelector(`[data-theme="${savedTheme}"]`)?.click();
-
-    // Apply saved language
     document.querySelector(`[data-lang="${savedLang}"]`)?.click();
 
-    // Typing animation
     const commands = document.querySelectorAll('.command');
     commands.forEach(cmd => {
         const text = cmd.dataset.text;

@@ -97,7 +97,6 @@
     box-shadow: 0 4px 12px rgba(122, 162, 247, 0.2);
 }
 
-/* Специфичные стили для 404 страницы */
 .error-message {
     position: relative;
     color: var(--accent-color);
@@ -232,7 +231,6 @@
     }
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .error-message {
         font-size: 1.2rem;
@@ -248,8 +246,7 @@
         gap: 0.5rem;
     }
 }
-
-/* Обновим цветовую схему для 404 */
+ 
 .theme-default {
     --bg-color: #000000;
     --text-color: #888888;

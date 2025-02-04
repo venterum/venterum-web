@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Общие функции из основного script.js
     function typeCommand(element, text, onComplete) {
         element.textContent = '';
         let i = 0;
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const responses = document.querySelectorAll('.response');
         let currentIndex = 0;
 
-        // Создаем и добавляем курсор
         const cursor = document.createElement('div');
         cursor.className = 'terminal-cursor';
         document.querySelector('.terminal-content').appendChild(cursor);
@@ -38,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                // Анимируем элементы внутри ответа последовательно
                 const items = response.querySelectorAll('.suggestion, .error-log p, .error-log ul');
                 if (items.length) {
                     response.style.opacity = '1';
@@ -69,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         async function animateNext() {
             if (currentIndex >= sections.length) {
-                // В конце анимации позиционируем курсор после последней команды
                 const lastCommand = document.querySelector('.typing-effect:last-child .command');
                 updateCursorPosition(lastCommand);
                 return;
@@ -92,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(animateNext, 300);
         }
 
-        // Скрываем все секции и ответы изначально
         sections.forEach(section => {
             section.style.opacity = '0';
             section.style.transition = 'opacity 0.3s ease';
@@ -103,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
             response.style.transform = 'translateY(-10px)';
             response.style.transition = 'all 0.3s ease';
             
-            // Скрываем все элементы изначально
             const items = response.querySelectorAll('.suggestion, .error-log p, .error-log ul');
             items.forEach(item => {
                 item.style.opacity = '0';
@@ -112,16 +106,13 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Удаляем старые курсоры
         document.querySelectorAll('.command').forEach(cmd => {
             cmd.style.animation = 'none';
         });
 
-        // Начинаем анимацию
         setTimeout(animateNext, 500);
     }
 
-    // Добавляем обработчик для красной кнопки
     const closeBtn = document.querySelector('.dot.red');
     closeBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -132,6 +123,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 400);
     });
 
-    // Запускаем анимацию
     animate404Terminal();
 }); 
