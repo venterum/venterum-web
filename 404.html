@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Page Not Found</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="404.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="theme-default">
+    <div class="noise"></div>
+    <main class="terminal">
+        <div class="terminal-header">
+            <div class="window-title">venterum@error</div>
+            <div class="window-controls">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+        </div>
+        <div class="terminal-content">
+            <div class="typing-effect">
+                <span class="prompt">$</span>
+                <span class="command" data-text="ls">ls</span>
+            </div>
+            <div class="response error-message">
+                <p class="text-ru">Ошибка 404: Страница не найдена</p>
+                <p class="text-en">Error 404: Page Not Found</p>
+            </div>
+
+            <div class="typing-effect">
+                <span class="prompt">$</span>
+                <span class="command" data-text="dmesg | tail">dmesg | tail</span>
+            </div>
+            <div class="response error-log">
+                <p>[ERROR] Page not found in filesystem</p>
+                <p>[INFO] Possible causes:</p>
+                <ul>
+                    <li>Page was moved or deleted</li>
+                    <li>URL was mistyped</li>
+                    <li>Quantum fluctuations in the server</li>
+                    <li>Cat walked on keyboard</li>
+                </ul>
+            </div>
+
+            <div class="typing-effect">
+                <span class="prompt">$</span>
+                <span class="command" data-text="suggest">suggest</span>
+            </div>
+            <div class="response suggestions">
+                <p class="text-ru">Попробуйте:</p>
+                <p class="text-en">Try:</p>
+                <div class="command-suggestions">
+                    <div class="suggestion">
+                        <span class="command-text">cd /</span>
+                        <a href="/" class="suggestion-link">Вернуться на главную</a>
+                    </div>
+                    <div class="suggestion">
+                        <span class="command-text">man venterum</span>
+                        <a href="https://github.com/venterum" class="suggestion-link">Посетить GitHub</a>
+                    </div>
+                    <div class="suggestion">
+                        <span class="command-text">sudo rm -rf /</span>
+                        <span class="suggestion-link error">Не делайте этого!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="404.js"></script>
+</body>
+</html> 
