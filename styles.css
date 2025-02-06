@@ -139,10 +139,11 @@ body {
     animation: fadeIn 0.8s ease-out;
     border: 1px solid rgba(122, 162, 247, 0.2);
     position: relative;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: top;
     cursor: default;
     user-select: none;
+    will-change: transform;
 }
 
 .terminal.minimized {
@@ -236,8 +237,9 @@ body {
 
 .command {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     white-space: nowrap;
+    min-width: 1ch;
 }
 
 .prompt {
@@ -447,6 +449,7 @@ body {
 
     .terminal {
         margin: 1rem;
+        max-width: calc(100% - 2rem);
     }
 
     .skills-grid {
@@ -455,6 +458,56 @@ body {
 
     .social-links {
         flex-direction: column;
+        align-items: stretch;
+    }
+
+    .social-link {
+        justify-content: center;
+    }
+
+    .project-card {
+        padding: 1rem;
+    }
+
+    .controls-wrapper {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .nav {
+        padding: 0.5rem;
+    }
+
+    .nav-buttons {
+        margin: 0;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .theme-toggle .theme-name,
+    .lang-btn .lang-name {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .terminal-header {
+        padding: 0.5rem;
+    }
+
+    .window-title {
+        font-size: 0.8rem;
+    }
+
+    .project-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .project-links {
+        justify-content: flex-start;
     }
 }
 
@@ -550,18 +603,38 @@ body {
 }
 
 /* ASCII Art стили */
-.ascii-art {
-    font-family: monospace;
+.ascii-animation {
+    font-family: 'JetBrains Mono', monospace;
     white-space: pre;
     line-height: 1.2;
     color: var(--accent-color);
-    margin-bottom: 2rem;
-    animation: fadeIn 1s ease-out;
+    text-align: center;
+    padding: 1rem;
 }
 
-.ascii-art pre {
+.ascii-frame {
     margin: 0;
-    font-size: 0.8rem;
+    animation: float 2s ease-in-out infinite;
+    color: #44b544;  /* Зеленый цвет для лягушки */
+}
+
+.frog-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    color: #44b544;
+    text-transform: uppercase;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 /* Обновленные стили для контролов */
@@ -647,26 +720,6 @@ body {
     display: none;
 }
 
-/* Обновляем медиа-запросы */
-@media (max-width: 768px) {
-    .controls-wrapper {
-        gap: 0.5rem;
-    }
-
-    .lang-btn, .theme-toggle {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
-    }
-
-    .theme-name {
-        display: none;
-    }
-
-    .projects-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 /* Добавим стили для пасхалки и анимаций */
 .easter-egg {
     position: fixed;
@@ -699,10 +752,22 @@ body {
     border: 1px solid var(--accent-color);
     border-radius: 12px;
     padding: 2rem;
-    transition: all 0.3s;
     position: relative;
     overflow: hidden;
     margin: 1rem 0;
+}
+
+.about-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        var(--accent-color) 0%,
+        transparent 100%
+    );
 }
 
 .about-header h3 {
@@ -711,9 +776,24 @@ body {
     font-size: 1.5rem;
 }
 
+.about-content {
+    position: relative;
+    z-index: 1;
+}
+
 .about-content p {
-    line-height: 1.6;
+    line-height: 1.8;
     margin: 1rem 0;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.about-content p::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    opacity: 0.7;
 }
 
 /* Вернем оригинальные стили для кнопок */
@@ -922,9 +1002,9 @@ body {
 
 /* Добавим стили для состояния перетаскивания */
 .terminal.dragging {
-    opacity: 0.95;
-    transform: scale(1.01);
+    opacity: 0.98;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    transition: none;
 }
 
 .terminal-header:active {
@@ -1030,4 +1110,275 @@ body {
 
 .nav-button i {
     color: var(--accent-color);
+}
+
+/* Стили для строки ввода */
+.input-line {
+    margin-top: 2rem;
+    opacity: 1 !important;
+}
+
+.input-line .command {
+    min-width: 1ch;
+    outline: none;
+    caret-color: var(--accent-color);
+}
+
+/* Стили для neofetch */
+.neofetch {
+    display: flex;
+    gap: 2rem;
+    font-size: 12px;
+    line-height: 1.2;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.distro-art {
+    color: #1793d1;
+    margin: 0;
+    line-height: 1;
+}
+
+.system-info {
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color);
+}
+
+.info-label {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.separator {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.info-item {
+    margin: 0.2rem 0;
+}
+
+@media (max-width: 768px) {
+    .neofetch {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        font-size: 10px;
+    }
+
+    .distro-art {
+        margin-bottom: 1rem;
+    }
+}
+
+.education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.education-card {
+    background: var(--skill-bg);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+}
+
+.education-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.education-header h3 {
+    margin: 0;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+}
+
+.education-link {
+    color: var(--text-color);
+    opacity: 0.8;
+    transition: all 0.3s;
+}
+
+.education-link:hover {
+    color: var(--accent-color);
+    opacity: 1;
+}
+
+.education-period {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.education-period i {
+    color: var(--accent-color);
+}
+
+.education-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.skill-tag {
+    background: var(--terminal-bg);
+    color: var(--accent-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    border: 1px solid var(--accent-color);
+    transition: all 0.3s;
+}
+
+.skill-tag:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .education-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .education-card {
+        padding: 1rem;
+    }
+}
+
+.ascii-animation {
+    font-family: 'JetBrains Mono', monospace;
+    white-space: pre;
+    line-height: 1.2;
+    color: var(--accent-color);
+    text-align: center;
+}
+
+.ascii-frame {
+    margin: 0;
+    animation: float 2s ease-in-out infinite;
+}
+
+.frog-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1rem;
+    color: #44b544;
+    text-transform: uppercase;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Обновим стили для карточек образования */
+.education-card {
+    background: var(--skill-bg);
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+}
+
+.education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.education-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.about-section {
+    position: relative;
+    padding: 1rem;
+}
+
+.about-card {
+    background: var(--skill-bg);
+    border: 1px solid var(--accent-color);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, 
+        var(--accent-color) 0%,
+        transparent 100%
+    );
+}
+
+.about-content {
+    position: relative;
+    z-index: 1;
+}
+
+.about-content p {
+    line-height: 1.8;
+    margin: 1rem 0;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.about-content p::before {
+    content: '>';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    opacity: 0.7;
+}
+
+.ascii-animation {
+    font-family: 'JetBrains Mono', monospace;
+    white-space: pre;
+    line-height: 1.2;
+    color: #44b544;
+    text-align: center;
+    padding: 1rem;
+}
+
+.ascii-frame {
+    margin: 0;
+    animation: float 2s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
 } 

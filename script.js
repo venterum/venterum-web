@@ -75,6 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             localStorage.setItem('lang', lang);
+            
+            setTimeout(() => {
+                const inputCommand = document.querySelector('.input-line .command');
+                updateCursorPosition(inputCommand);
+            }, 100);
         });
     });
 
@@ -141,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isDragging) return;
 
         e.preventDefault();
-
+        
         if (e.type === "touchmove") {
             currentX = e.touches[0].clientX - initialX;
             currentY = e.touches[0].clientY - initialY;
@@ -152,7 +157,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         xOffset = currentX;
         yOffset = currentY;
-        setTranslate(currentX, currentY);
+        
+        requestAnimationFrame(() => {
+            terminal.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        });
     }
 
     terminalHeader.addEventListener('touchstart', dragStart, false);
@@ -181,13 +189,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     easterEgg.innerHTML = `
-        <div class="rickroll">
-            <div class="rickroll-text">Never gonna give you up</div>
-            <a class="rickroll-link">🎵</a>
+        <div class="ascii-animation">
+            <pre class="ascii-frame">
+               __,--‚__
+              /     /  '-,_
+           ,--,            '-,_
+          /              _,--' )
+         /(o)         _        |
+        (      (o) -   \\       |
+       _\\   ' ,         ) _____)
+      /  _  /       _,  __   _/
+     )  ( '-,____,-'   (  )_/
+    <_ _>    '-,____,-\\    )
+      V                |  /
+                      <  >
+                       VV</pre>
         </div>
     `;
 
     animateTerminal();
+
+    const inputCommand = document.querySelector('.input-line .command');
+    
+    inputCommand.addEventListener('input', () => {
+        updateCursorPosition(inputCommand);
+    });
+    
+    document.querySelector('.terminal-content').addEventListener('click', () => {
+        inputCommand.focus();
+    });
 });
 
 function typeCommand(element, text, onComplete) {
@@ -214,10 +244,16 @@ function animateTerminal() {
     document.querySelector('.terminal-content').appendChild(cursor);
 
     function updateCursorPosition(element) {
+        if (!element) return;
+        
         const rect = element.getBoundingClientRect();
         const terminalRect = document.querySelector('.terminal').getBoundingClientRect();
-        cursor.style.top = `${rect.bottom - terminalRect.top - 20}px`;
-        cursor.style.left = `${rect.left - terminalRect.left + element.offsetWidth + 10}px`;
+        const cursor = document.querySelector('.terminal-cursor');
+        
+        if (cursor) {
+            cursor.style.top = `${rect.bottom - terminalRect.top - 20}px`;
+            cursor.style.left = `${rect.left - terminalRect.left + element.offsetWidth}px`;
+        }
     }
 
     function animateResponse(response) {
@@ -276,8 +312,14 @@ function animateTerminal() {
 
     async function animateNext() {
         if (currentIndex >= sections.length) {
-            const lastCommand = document.querySelector('.typing-effect:last-child .command');
-            updateCursorPosition(lastCommand);
+            const inputCommand = document.querySelector('.input-line .command');
+            updateCursorPosition(inputCommand);
+            setTimeout(() => {
+                const cursor = document.querySelector('.terminal-cursor');
+                if (cursor) {
+                    cursor.style.opacity = '0';
+                }
+            }, 1000);
             return;
         }
 

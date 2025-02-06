@@ -160,24 +160,35 @@
 
             <div class="typing-effect">
                 <span class="prompt">$</span>
-                <span class="command" data-text="skills">skills</span>
+                <span class="command" data-text="skills && education">skills && education</span>
             </div>
-            <div class="response skills-grid">
-                <div class="skill-category">
-                    <h3>Languages</h3>
-                    <div class="skill-items">
-                        <span class="skill-item">Python</span>
-                        <span class="skill-item">HTML</span>
-                        <span class="skill-item">JavaScript</span>
+            <div class="response education-grid">
+                <div class="education-card">
+                    <div class="education-header">
+                        <h3>🎓 Yandex.Lyceum</h3>
+                        <a href="https://lyceum.yandex.ru" target="_blank" class="education-link">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="education-skills">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">PyQt</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">SQL</span>
                     </div>
                 </div>
-                <div class="skill-category">
-                    <h3>Technologies</h3>
-                    <div class="skill-items">
-                        <span class="skill-item">PyQt</span>
-                        <span class="skill-item">Flask</span>
-                        <span class="skill-item">Linux</span>
-                        <span class="skill-item">QML</span>
+
+                <div class="education-card">
+                    <div class="education-header">
+                        <h3>💻 Hexlet</h3>
+                        <a href="https://ru.hexlet.io/" target="_blank" class="education-link">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="education-skills">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
                     </div>
                 </div>
             </div>
@@ -207,6 +218,11 @@
                     <i class="fab fa-spotify"></i>
                     <span>Spotify</span>
                 </a>
+            </div>
+
+            <div class="typing-effect input-line">
+                <span class="prompt">$</span>
+                <span class="command" contenteditable="true"></span>
             </div>
         </div>
     </main>
