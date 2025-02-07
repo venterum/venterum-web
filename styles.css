@@ -1,21 +1,46 @@
 :root {
-    /* Default theme (Tokyo Night) */
-    --bg-color: #1a1b26;
-    --text-color: #a9b1d6;
-    --accent-color: #7aa2f7;
-    --terminal-bg: rgba(26, 27, 38, 0.95);
+    --bg-color: #1e1e1e;
+    --text-color: #d4d4d4;
+    --accent-color: #4d9fff;
+    --terminal-bg: rgba(30, 30, 30, 0.95);
     --header-bg: #2a2b3d;
     --skill-bg: rgba(122, 162, 247, 0.1);
+    --surface-1: rgba(77, 159, 255, 0.05);
+    --surface-2: rgba(77, 159, 255, 0.08);
+    --elevation-1: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.25);
+    --radius-1: 16px;
+    --radius-2: 24px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Material You themes */
+.theme-group {
+    padding: 0.5rem;
+}
+
+.theme-group-title {
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+
+.theme-divider {
+    height: 1px;
+    background: var(--accent-color);
+    opacity: 0.2;
+    margin: 0.5rem 0;
+}
+
 .theme-mint {
-    --bg-color: #1b352b;
-    --text-color: #b8e5d3;
-    --accent-color: #7fcfab;
-    --terminal-bg: rgba(27, 53, 43, 0.95);
-    --header-bg: #2a4a3d;
-    --skill-bg: rgba(127, 207, 171, 0.1);
+    --bg-color: #f2fff5;
+    --text-color: #2c4a3e;
+    --accent-color: #34c759;
+    --terminal-bg: rgba(242, 255, 245, 0.95);
+    --surface-1: rgba(52, 199, 89, 0.05);
+    --surface-2: rgba(52, 199, 89, 0.08);
 }
 
 .theme-sunset {
@@ -37,12 +62,63 @@
 }
 
 .theme-light {
-    --bg-color: #f5f5f5;
+    --bg-color: #ffffff;
     --text-color: #2c2c2c;
     --accent-color: #2b6cb0;
     --terminal-bg: rgba(255, 255, 255, 0.95);
     --header-bg: #e2e8f0;
-    --skill-bg: rgba(43, 108, 176, 0.1);
+    --skill-bg: rgba(43, 108, 176, 0.05);
+    --surface-1: rgba(43, 108, 176, 0.05);
+    --surface-2: rgba(43, 108, 176, 0.08);
+}
+
+.theme-tokyo {
+    --bg-color: #1a1b26;
+    --text-color: #a9b1d6;
+    --accent-color: #7aa2f7;
+    --terminal-bg: rgba(26, 27, 38, 0.95);
+    --header-bg: #2a2b3d;
+    --skill-bg: rgba(122, 162, 247, 0.05);
+    --surface-1: rgba(122, 162, 247, 0.05);
+    --surface-2: rgba(122, 162, 247, 0.08);
+}
+
+.theme-monokai {
+    --bg-color: #272822;
+    --text-color: #f8f8f2;
+    --accent-color: #fd971f;
+    --terminal-bg: rgba(39, 40, 34, 0.95);
+    --header-bg: #4a2a2a;
+    --skill-bg: rgba(253, 151, 31, 0.05);
+    --surface-1: rgba(253, 151, 31, 0.05);
+    --surface-2: rgba(253, 151, 31, 0.08);
+}
+
+.theme-coral {
+    --bg-color: #1e1414;
+    --text-color: #e4c7c7;
+    --accent-color: #ff7b7b;
+    --terminal-bg: rgba(30, 20, 20, 0.95);
+    --surface-1: rgba(255, 123, 123, 0.05);
+    --surface-2: rgba(255, 123, 123, 0.08);
+}
+
+.theme-sage {
+    --bg-color: #141e17;
+    --text-color: #c7e4d4;
+    --accent-color: #7bffa7;
+    --terminal-bg: rgba(20, 30, 23, 0.95);
+    --surface-1: rgba(123, 255, 167, 0.05);
+    --surface-2: rgba(123, 255, 167, 0.08);
+}
+
+.theme-azure {
+    --bg-color: #14191e;
+    --text-color: #c7d9e4;
+    --accent-color: #7bc4ff;
+    --terminal-bg: rgba(20, 25, 30, 0.95);
+    --surface-1: rgba(123, 196, 255, 0.05);
+    --surface-2: rgba(123, 196, 255, 0.08);
 }
 
 @keyframes noise {
@@ -131,16 +207,16 @@ body {
 
 .terminal {
     background: var(--terminal-bg);
-    border-radius: 10px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-2);
+    box-shadow: var(--elevation-2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     margin: 2rem auto;
     max-width: 800px;
     overflow: hidden;
     animation: fadeIn 0.8s ease-out;
-    border: 1px solid rgba(122, 162, 247, 0.2);
     position: relative;
-    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: top;
+    transition: var(--transition);
     cursor: default;
     user-select: none;
     will-change: transform;
@@ -152,7 +228,9 @@ body {
 }
 
 .terminal-header {
-    background: var(--header-bg);
+    background: var(--surface-1);
+    border-radius: var(--radius-2) var(--radius-2) 0 0;
+    backdrop-filter: blur(5px);
     padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
@@ -167,17 +245,17 @@ body {
 
 .window-controls {
     display: flex;
-    gap: 8px;
+    gap: 12px;
     padding: 4px;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 12px;
 }
 
 .dot {
-    width: 14px;
-    height: 14px;
-    position: relative;
-    transition: all 0.3s;
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+    transition: var(--transition);
 }
 
 .dot::before {
@@ -255,19 +333,43 @@ body {
 }
 
 .social-links {
-    display: flex;
+    margin: 2rem 0;
+}
+
+.social-links-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 1rem;
-    margin-top: 0.5rem;
+    margin: 0 auto;
 }
 
 .social-link {
-    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--surface-1);
+    border-radius: var(--radius-2);
+    transition: var(--transition);
+    box-shadow: var(--elevation-1);
     text-decoration: none;
-    transition: all 0.3s;
+    color: var(--text-color);
 }
 
 .social-link:hover {
-    text-shadow: 0 0 8px var(--accent-color);
+    transform: translateY(-4px);
+    box-shadow: var(--elevation-2);
+    background: var(--surface-2);
+    color: var(--accent-color);
+}
+
+.social-link i {
+    font-size: 1.2rem;
+}
+
+.social-link span {
+    font-size: 1rem;
 }
 
 .theme-toggle, .lang-toggle {
@@ -408,31 +510,6 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.social-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.social-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--accent-color);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: all 0.3s;
-    border: 1px solid var(--accent-color);
-}
-
-.social-link:hover {
-    background: var(--accent-color);
-    color: var(--bg-color);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(122, 162, 247, 0.2);
-}
-
 /* Responsive design */
 @media (max-width: 768px) {
     .nav {
@@ -448,8 +525,9 @@ body {
     }
 
     .terminal {
-        margin: 1rem;
+        margin: 0.5rem;
         max-width: calc(100% - 2rem);
+        border-radius: var(--radius-1);
     }
 
     .skills-grid {
@@ -602,7 +680,6 @@ body {
     color: var(--bg-color);
 }
 
-/* ASCII Art стили */
 .ascii-animation {
     font-family: 'JetBrains Mono', monospace;
     white-space: pre;
@@ -615,7 +692,7 @@ body {
 .ascii-frame {
     margin: 0;
     animation: float 2s ease-in-out infinite;
-    color: #44b544;  /* Зеленый цвет для лягушки */
+    color: #44b544;
 }
 
 .frog-text {
@@ -637,14 +714,12 @@ body {
     50% { transform: scale(1.1); }
 }
 
-/* Обновленные стили для контролов */
 .controls-wrapper {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-/* Стили для проектов */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -652,17 +727,20 @@ body {
     margin-top: 1rem;
 }
 
-.project-card {
-    background: var(--skill-bg);
-    border: 1px solid var(--accent-color);
-    border-radius: 8px;
+.project-card, .education-card, .about-card, .social-link, .nav-button {
+    background: var(--surface-1);
+    border-radius: var(--radius-2);
     padding: 1.5rem;
-    transition: all 0.3s;
+    transition: var(--transition);
+    border: none;
+    box-shadow: var(--elevation-1);
 }
 
-.project-card:hover {
+.project-card:hover, .education-card:hover, .about-card:hover, 
+.social-link:hover, .nav-button:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--elevation-2);
+    background: var(--surface-2);
 }
 
 .project-header {
@@ -707,20 +785,19 @@ body {
 }
 
 .tech-tag {
-    background: var(--terminal-bg);
+    background: var(--surface-2);
     color: var(--accent-color);
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
+    padding: 6px 16px;
+    border-radius: 20px;
     font-size: 0.8rem;
     border: 1px solid var(--accent-color);
+    transition: var(--transition);
 }
 
-/* Matrix rain effect */
 .matrix-rain {
     display: none;
 }
 
-/* Добавим стили для пасхалки и анимаций */
 .easter-egg {
     position: fixed;
     top: 50%;
@@ -739,7 +816,6 @@ body {
     opacity: 1;
 }
 
-/* Добавим новые стили */
 .about-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -748,9 +824,10 @@ body {
 }
 
 .about-card {
-    background: var(--skill-bg);
-    border: 1px solid var(--accent-color);
-    border-radius: 12px;
+    background: var(--surface-1);
+    border-radius: var(--radius-2);
+    border: none;
+    box-shadow: var(--elevation-1);
     padding: 2rem;
     position: relative;
     overflow: hidden;
@@ -796,7 +873,6 @@ body {
     opacity: 0.7;
 }
 
-/* Вернем оригинальные стили для кнопок */
 .window-controls {
     display: flex;
     gap: 8px;
@@ -814,7 +890,6 @@ body {
     transform: scale(1.2);
 }
 
-/* Улучшим стили для переключателей */
 .controls-wrapper {
     display: flex;
     align-items: center;
@@ -846,7 +921,6 @@ body {
 .lang-btn.active {
     background: var(--accent-color);
     color: var(--bg-color);
-    box-shadow: 0 0 10px rgba(122, 162, 247, 0.3);
 }
 
 .theme-toggle {
@@ -882,7 +956,6 @@ body {
     color: var(--bg-color);
 }
 
-/* Добавим анимацию для текста */
 .about-content p {
     animation: fadeIn 0.5s ease-out;
     animation-fill-mode: both;
@@ -896,37 +969,11 @@ body {
     animation-delay: 0.4s;
 }
 
-/* Улучшим анимации для всех карточек */
 .project-card, .skill-category, .social-link {
     position: relative;
     overflow: hidden;
 }
 
-.project-card::after,
-.skill-category::after,
-.social-link::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.1),
-        transparent
-    );
-    transition: 0.5s;
-}
-
-.project-card:hover::after,
-.skill-category:hover::after,
-.social-link:hover::after {
-    left: 100%;
-}
-
-/* Улучшим стили для кнопок управления терминалом */
 .window-controls {
     display: flex;
     gap: 8px;
@@ -962,14 +1009,12 @@ body {
     opacity: 0.2;
 }
 
-/* Добавим эффект свечения для активных элементов */
 .lang-btn.active,
 .theme-option:hover,
 .social-link:hover {
     box-shadow: 0 0 15px var(--accent-color);
 }
 
-/* Улучшим отзывчивость */
 @media (max-width: 768px) {
     .about-grid {
         grid-template-columns: 1fr;
@@ -984,7 +1029,6 @@ body {
     }
 }
 
-/* Добавим анимацию для пасхалки */
 .easter-egg {
     text-shadow: 0 0 10px var(--accent-color);
     animation: glow 1.5s ease-in-out infinite alternate;
@@ -1000,7 +1044,6 @@ body {
     }
 }
 
-/* Добавим стили для состояния перетаскивания */
 .terminal.dragging {
     opacity: 0.98;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
@@ -1011,7 +1054,6 @@ body {
     cursor: grabbing;
 }
 
-/* Добавим анимацию тряски */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
@@ -1022,7 +1064,6 @@ body {
     animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
-/* Добавим стили для рикролла */
 .rickroll {
     display: flex;
     flex-direction: column;
@@ -1050,7 +1091,6 @@ body {
     50% { transform: translateY(-10px); }
 }
 
-/* Обновим стили для анимации */
 .typing-effect {
     opacity: 0;
 }
@@ -1060,7 +1100,6 @@ body {
     transform: translateY(-10px);
 }
 
-/* Добавим стили для нового курсора */
 .terminal-cursor {
     position: absolute;
     width: 8px;
@@ -1070,14 +1109,12 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Обновим стили для команд */
 .command {
     position: relative;
     overflow: hidden;
     white-space: nowrap;
 }
 
-/* Обновим анимацию мигания */
 @keyframes blink {
     0%, 50% { opacity: 1; }
     51%, 100% { opacity: 0; }
@@ -1094,7 +1131,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.25rem;
     border-radius: 6px;
     color: var(--text-color);
     text-decoration: none;
@@ -1112,19 +1149,17 @@ body {
     color: var(--accent-color);
 }
 
-/* Стили для строки ввода */
 .input-line {
     margin-top: 2rem;
-    opacity: 1 !important;
+    opacity: 1;
+    pointer-events: none;
 }
 
 .input-line .command {
-    min-width: 1ch;
-    outline: none;
-    caret-color: var(--accent-color);
+    pointer-events: none;
+    user-select: none;
 }
 
-/* Стили для neofetch */
 .neofetch {
     display: flex;
     gap: 2rem;
@@ -1180,16 +1215,18 @@ body {
 }
 
 .education-card {
-    background: var(--skill-bg);
-    border: 1px solid var(--accent-color);
-    border-radius: 8px;
+    background: var(--surface-1);
+    border-radius: var(--radius-2);
+    border: none;
+    box-shadow: var(--elevation-1);
     padding: 1.5rem;
-    transition: all 0.3s;
+    transition: var(--transition);
 }
 
 .education-card:hover {
+    background: var(--surface-2);
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--elevation-2);
 }
 
 .education-header {
@@ -1238,13 +1275,13 @@ body {
 }
 
 .skill-tag {
-    background: var(--terminal-bg);
+    background: var(--surface-2);
     color: var(--accent-color);
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
+    padding: 6px 16px;
+    border-radius: 20px;
     font-size: 0.8rem;
     border: 1px solid var(--accent-color);
-    transition: all 0.3s;
+    transition: var(--transition);
 }
 
 .skill-tag:hover {
@@ -1295,90 +1332,37 @@ body {
     50% { transform: scale(1.1); }
 }
 
-/* Обновим стили для карточек образования */
-.education-card {
-    background: var(--skill-bg);
-    border: 1px solid var(--accent-color);
-    border-radius: 8px;
-    padding: 1.5rem;
-    transition: all 0.3s;
+.profile-card {
+    background: var(--surface-1);
+    border-radius: var(--radius-2);
+    padding: 2rem;
+    transition: var(--transition);
+    box-shadow: var(--elevation-1);
+    text-align: center;
 }
 
-.education-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
-}
-
-.education-skills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-}
-
-.about-section {
-    position: relative;
-    padding: 1rem;
+.profile-info p {
+    font-size: 1.2rem;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .about-card {
-    background: var(--skill-bg);
-    border: 1px solid var(--accent-color);
-    border-radius: 12px;
     padding: 2rem;
-    position: relative;
-    overflow: hidden;
 }
 
-.about-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, 
-        var(--accent-color) 0%,
-        transparent 100%
-    );
-}
-
-.about-content {
-    position: relative;
-    z-index: 1;
-}
-
-.about-content p {
+.about-text p {
+    font-size: 1.1rem;
     line-height: 1.8;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
     position: relative;
-    padding-left: 1rem;
+    padding-left: 1.5rem;
 }
 
-.about-content p::before {
+.about-text p::before {
     content: '>';
     position: absolute;
     left: 0;
     color: var(--accent-color);
     opacity: 0.7;
-}
-
-.ascii-animation {
-    font-family: 'JetBrains Mono', monospace;
-    white-space: pre;
-    line-height: 1.2;
-    color: #44b544;
-    text-align: center;
-    padding: 1rem;
-}
-
-.ascii-frame {
-    margin: 0;
-    animation: float 2s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(2deg); }
 } 

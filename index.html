@@ -40,25 +40,40 @@
                     <i class="fas fa-chevron-down"></i>
                 </button>
                 <div class="theme-list">
-                    <div class="theme-option" data-theme="default">
-                        <span class="theme-icon">🌈</span>
-                        <span class="theme-name">Tokyo Night</span>
+                    <div class="theme-group">
+                        <div class="theme-group-title">Dark Themes</div>
+                        <div class="theme-option" data-theme="default">
+                            <span class="theme-icon">🌙</span>
+                            <span class="theme-name">Just Dark</span>
+                        </div>
+                        <div class="theme-option" data-theme="tokyo">
+                            <span class="theme-icon">🗼</span>
+                            <span class="theme-name">Tokyo Night</span>
+                        </div>
+                        <div class="theme-option" data-theme="coral">
+                            <span class="theme-icon">🌺</span>
+                            <span class="theme-name">Coral Reef</span>
+                        </div>
+                        <div class="theme-option" data-theme="sage">
+                            <span class="theme-icon">🌿</span>
+                            <span class="theme-name">Sage Garden</span>
+                        </div>
+                        <div class="theme-option" data-theme="azure">
+                            <span class="theme-icon">🌊</span>
+                            <span class="theme-name">Azure Wave</span>
+                        </div>
                     </div>
-                    <div class="theme-option" data-theme="light">
-                        <span class="theme-icon">☀️</span>
-                        <span class="theme-name">Light</span>
-                    </div>
-                    <div class="theme-option" data-theme="mint">
-                        <span class="theme-icon">🌿</span>
-                        <span class="theme-name">Mint Forest</span>
-                    </div>
-                    <div class="theme-option" data-theme="sunset">
-                        <span class="theme-icon">🌅</span>
-                        <span class="theme-name">Sunset</span>
-                    </div>
-                    <div class="theme-option" data-theme="ocean">
-                        <span class="theme-icon">🌊</span>
-                        <span class="theme-name">Deep Ocean</span>
+                    <div class="theme-divider"></div>
+                    <div class="theme-group">
+                        <div class="theme-group-title">Light Themes</div>
+                        <div class="theme-option" data-theme="light">
+                            <span class="theme-icon">☀️</span>
+                            <span class="theme-name">Just Light</span>
+                        </div>
+                        <div class="theme-option" data-theme="mint">
+                            <span class="theme-icon">🍏</span>
+                            <span class="theme-name">Green Apple</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,9 +96,15 @@
                 <span class="prompt">$</span>
                 <span class="command" data-text="whoami">whoami</span>
             </div>
-            <div class="response">
-                <p class="text-ru">👋 Привет! Я Venterum, разработчик-любитель из Сибири ❄️</p>
-                <p class="text-en">👋 Hi! I'm Venterum, an amateur developer from Siberia ❄️</p>
+            <div class="response profile-section">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-info">
+                            <p class="text-ru">👋 Привет! Я Евгений (aka Venterum), разработчик</p>
+                            <p class="text-en">👋 Hi! I'm Evgenij (aka Venterum), a developer</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="typing-effect">
@@ -93,20 +114,24 @@
             <div class="response about-section">
                 <div class="about-card">
                     <div class="about-content">
-                        <p class="text-ru">
-                            Обожаю создавать прикольные проекты и изучать новые вещи. В свободное время люблю играть в игры, смотреть фильмы, сериалы или аниме. А, ну и мучиться с линуксом, конечно...
-                        </p>
-                        <p class="text-ru">
-                            Планирую переехать в Санкт-Петербург, работать в крутой команде и создавать проекты, которые будут 
-                            делать этот мир чуточку лучше. А пока развиваюсь, пишу опенсорс и наслаждаюсь процессом)
-                        </p>
-                        <p class="text-en">
-                            I love creating useful things and learning new technologies. In my free time I enjoy playing games, watching movies, shows or anime.
-                        </p>
-                        <p class="text-en">
-                            I plan to move to Saint Petersburg, work in a cool team and create projects that will make
-                            this world a little better. For now, I'm developing myself, writing open source and enjoying the process XD
-                        </p>
+                        <div class="about-text">
+                            <p class="text-ru">
+                                Создаю полезные проекты и изучаю новые технологии. В свободное время погружаюсь в игры, 
+                                смотрю фильмы и аниме, а также экспериментирую с Linux.
+                            </p>
+                            <p class="text-ru">
+                                Стремлюсь к переезду в Санкт-Петербург, работе в крутой команде и созданию проектов, 
+                                которые делают мир лучше. Пока же развиваюсь, пишу open source и наслаждаюсь процессом ✨
+                            </p>
+                            <p class="text-en">
+                                Creating useful projects and learning new technologies. In my free time, I dive into games, 
+                                watch movies and anime, and experiment with Linux.
+                            </p>
+                            <p class="text-en">
+                                Aiming to move to Saint Petersburg, work in a great team and create projects that make 
+                                the world better. Meanwhile, I'm growing, writing open source and enjoying the process ✨
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -198,26 +223,24 @@
                 <span class="command" data-text="social">social</span>
             </div>
             <div class="social-links">
-                <a href="https://github.com/venterum" target="_blank" class="social-link">
-                    <i class="fab fa-github"></i>
-                    <span>GitHub</span>
-                </a>
-                <a href="https://t.me/venterum" target="_blank" class="social-link">
-                    <i class="fab fa-telegram"></i>
-                    <span>Telegram</span>
-                </a>
-                <a href="https://discord.com/users/venterum" target="_blank" class="social-link">
-                    <i class="fab fa-discord"></i>
-                    <span>Discord</span>
-                </a>
-                <a href="https://steamcommunity.com/id/venteruma/" target="_blank" class="social-link">
-                    <i class="fab fa-steam"></i>
-                    <span>Steam</span>
-                </a>
-                <a href="/404.html" class="social-link">
-                    <i class="fab fa-spotify"></i>
-                    <span>Spotify</span>
-                </a>
+                <div class="social-links-container">
+                    <a href="https://github.com/venterum" target="_blank" class="social-link">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://t.me/venterum" target="_blank" class="social-link">
+                        <i class="fab fa-telegram"></i>
+                        <span>Telegram</span>
+                    </a>
+                    <a href="https://discord.com/users/venterum" target="_blank" class="social-link">
+                        <i class="fab fa-discord"></i>
+                        <span>Discord</span>
+                    </a>
+                    <a href="https://steamcommunity.com/id/venteruma/" target="_blank" class="social-link">
+                        <i class="fab fa-steam"></i>
+                        <span>Steam</span>
+                    </a>
+                </div>
             </div>
 
             <div class="typing-effect input-line">

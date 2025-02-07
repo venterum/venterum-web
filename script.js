@@ -90,21 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector(`[data-theme="${savedTheme}"]`)?.click();
     document.querySelector(`[data-lang="${savedLang}"]`)?.click();
 
-    const commands = document.querySelectorAll('.command');
-    commands.forEach(cmd => {
-        const text = cmd.dataset.text;
-        cmd.textContent = '';
-        let i = 0;
-        const interval = setInterval(() => {
-            if (i < text.length) {
-                cmd.textContent += text[i];
-                i++;
-            } else {
-                clearInterval(interval);
-            }
-        }, 100);
-    });
-
     const terminalHeader = document.querySelector('.terminal-header');
     let isDragging = false;
     let currentX;
@@ -208,17 +193,96 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     animateTerminal();
-
-    const inputCommand = document.querySelector('.input-line .command');
-    
-    inputCommand.addEventListener('input', () => {
-        updateCursorPosition(inputCommand);
-    });
-    
-    document.querySelector('.terminal-content').addEventListener('click', () => {
-        inputCommand.focus();
-    });
 });
+
+async function animateTerminal() {
+    const sections = document.querySelectorAll('.typing-effect');
+    const responses = document.querySelectorAll('.response');
+    const socialLinks = document.querySelector('.social-links-container');
+    let currentIndex = 0;
+
+    if (socialLinks) {
+        socialLinks.style.opacity = '0';
+        socialLinks.style.transform = 'translateY(-10px)';
+    }
+
+    const cursor = document.createElement('div');
+    cursor.className = 'terminal-cursor';
+    document.querySelector('.terminal-content').appendChild(cursor);
+
+    function updateCursorPosition(element) {
+        const rect = element.getBoundingClientRect();
+        const terminalRect = document.querySelector('.terminal').getBoundingClientRect();
+        cursor.style.top = `${rect.bottom - terminalRect.top - 20}px`;
+        cursor.style.left = `${rect.left - terminalRect.left + element.offsetWidth}px`;
+    }
+
+    async function animateSection(section, response) {
+        section.style.opacity = '1';
+        const command = section.querySelector('.command');
+        updateCursorPosition(command);
+
+        await new Promise(resolve => {
+            typeCommand(command, command.dataset.text, resolve);
+        });
+
+        if (response) {
+            response.style.opacity = '1';
+            response.style.transform = 'translateY(0)';
+
+            const elements = response.children;
+            for (let element of elements) {
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 500));
+    }
+
+    async function animate() {
+        for (let i = 0; i < sections.length; i++) {
+            await animateSection(sections[i], responses[i]);
+            
+            if (i === sections.length - 2 && socialLinks) {
+                socialLinks.style.transition = 'all 0.5s ease';
+                socialLinks.style.opacity = '1';
+                socialLinks.style.transform = 'translateY(0)';
+            }
+        }
+
+        const inputLine = document.querySelector('.input-line');
+        if (inputLine) {
+            updateCursorPosition(inputLine.querySelector('.command'));
+            setTimeout(() => {
+                cursor.style.opacity = '0';
+                setTimeout(() => {
+                    cursor.remove();
+                }, 300);
+            }, 1000);
+        }
+    }
+
+    sections.forEach(section => {
+        section.style.opacity = '0';
+        section.style.transition = 'opacity 0.3s ease';
+    });
+
+    responses.forEach(response => {
+        response.style.opacity = '0';
+        response.style.transform = 'translateY(-10px)';
+        response.style.transition = 'all 0.3s ease';
+        
+        Array.from(response.children).forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(-10px)';
+            element.style.transition = 'all 0.3s ease';
+        });
+    });
+
+    animate();
+}
 
 function typeCommand(element, text, onComplete) {
     element.textContent = '';
@@ -232,135 +296,4 @@ function typeCommand(element, text, onComplete) {
             if (onComplete) onComplete();
         }
     }, 50);
-}
-
-function animateTerminal() {
-    const sections = document.querySelectorAll('.typing-effect');
-    const responses = document.querySelectorAll('.response');
-    let currentIndex = 0;
-
-    const cursor = document.createElement('div');
-    cursor.className = 'terminal-cursor';
-    document.querySelector('.terminal-content').appendChild(cursor);
-
-    function updateCursorPosition(element) {
-        if (!element) return;
-        
-        const rect = element.getBoundingClientRect();
-        const terminalRect = document.querySelector('.terminal').getBoundingClientRect();
-        const cursor = document.querySelector('.terminal-cursor');
-        
-        if (cursor) {
-            cursor.style.top = `${rect.bottom - terminalRect.top - 20}px`;
-            cursor.style.left = `${rect.left - terminalRect.left + element.offsetWidth}px`;
-        }
-    }
-
-    function animateResponse(response) {
-        return new Promise(resolve => {
-            if (!response) {
-                resolve();
-                return;
-            }
-
-            const cards = response.querySelectorAll('.project-card, .skill-category');
-            const socialLinks = response.querySelectorAll('.social-link');
-            
-            if (cards.length || socialLinks.length) {
-                response.style.opacity = '1';
-                response.style.transform = 'translateY(0)';
-                
-                let cardIndex = 0;
-                function animateNextCard() {
-                    if (cardIndex >= cards.length) {
-                        if (socialLinks.length) {
-                            let socialIndex = 0;
-                            function animateNextSocial() {
-                                if (socialIndex >= socialLinks.length) {
-                                    setTimeout(resolve, 300);
-                                    return;
-                                }
-                                
-                                const link = socialLinks[socialIndex];
-                                link.style.opacity = '1';
-                                link.style.transform = 'translateY(0)';
-                                socialIndex++;
-                                setTimeout(animateNextSocial, 100);
-                            }
-                            setTimeout(animateNextSocial, 500);
-                        } else {
-                            setTimeout(resolve, 300);
-                        }
-                        return;
-                    }
-                    
-                    const card = cards[cardIndex];
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                    cardIndex++;
-                    setTimeout(animateNextCard, 150);
-                }
-                
-                setTimeout(animateNextCard, 400);
-            } else {
-                response.style.opacity = '1';
-                response.style.transform = 'translateY(0)';
-                setTimeout(resolve, 500);
-            }
-        });
-    }
-
-    async function animateNext() {
-        if (currentIndex >= sections.length) {
-            const inputCommand = document.querySelector('.input-line .command');
-            updateCursorPosition(inputCommand);
-            setTimeout(() => {
-                const cursor = document.querySelector('.terminal-cursor');
-                if (cursor) {
-                    cursor.style.opacity = '0';
-                }
-            }, 1000);
-            return;
-        }
-
-        const section = sections[currentIndex];
-        const response = responses[currentIndex];
-        const command = section.querySelector('.command');
-
-        section.style.opacity = '1';
-        updateCursorPosition(command);
-        
-        await new Promise(resolve => {
-            typeCommand(command, command.dataset.text, resolve);
-        });
-
-        await animateResponse(response);
-        
-        currentIndex++;
-        setTimeout(animateNext, 500);
-    }
-
-    sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transition = 'opacity 0.3s ease';
-    });
-
-    responses.forEach(response => {
-        response.style.opacity = '0';
-        response.style.transform = 'translateY(-10px)';
-        response.style.transition = 'all 0.3s ease';
-        
-        const cards = response.querySelectorAll('.project-card, .skill-category, .social-link');
-        cards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(-10px)';
-            card.style.transition = 'all 0.3s ease';
-        });
-    });
-
-    document.querySelectorAll('.command').forEach(cmd => {
-        cmd.style.animation = 'none';
-    });
-
-    setTimeout(animateNext, 500);
 } 
