@@ -36,11 +36,11 @@
 
 .theme-mint {
     --bg-color: #f2fff5;
-    --text-color: #2c4a3e;
-    --accent-color: #34c759;
+    --text-color: #1a332a;
+    --accent-color: #9eca43;
     --terminal-bg: rgba(242, 255, 245, 0.95);
-    --surface-1: rgba(52, 199, 89, 0.05);
-    --surface-2: rgba(52, 199, 89, 0.08);
+    --surface-1: rgba(158, 202, 67, 0.08);
+    --surface-2: rgba(158, 202, 67, 0.12);
 }
 
 .theme-sunset {
@@ -63,13 +63,13 @@
 
 .theme-light {
     --bg-color: #ffffff;
-    --text-color: #2c2c2c;
-    --accent-color: #2b6cb0;
+    --text-color: #1a1a1a;
+    --accent-color: #404040;
     --terminal-bg: rgba(255, 255, 255, 0.95);
-    --header-bg: #e2e8f0;
-    --skill-bg: rgba(43, 108, 176, 0.05);
-    --surface-1: rgba(43, 108, 176, 0.05);
-    --surface-2: rgba(43, 108, 176, 0.08);
+    --header-bg: #f0f0f0;
+    --skill-bg: rgba(64, 64, 64, 0.05);
+    --surface-1: rgba(64, 64, 64, 0.05);
+    --surface-2: rgba(64, 64, 64, 0.08);
 }
 
 .theme-tokyo {
@@ -1365,4 +1365,74 @@ body {
     left: 0;
     color: var(--accent-color);
     opacity: 0.7;
+}
+
+.frog-window {
+    background: var(--terminal-bg);
+    border-radius: var(--radius-2);
+    box-shadow: var(--elevation-2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    width: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: var(--transition);
+    cursor: default;
+    user-select: none;
+}
+
+.frog-header {
+    background: var(--surface-1);
+    border-radius: var(--radius-2) var(--radius-2) 0 0;
+    backdrop-filter: blur(5px);
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.frog-window .window-title {
+    color: var(--text-color);
+    opacity: 0.8;
+    font-size: 14px;
+}
+
+.frog-window .window-controls {
+    display: flex;
+    gap: 8px;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+}
+
+.frog-window .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+}
+
+.frog-content {
+    padding: 1rem;
+}
+
+.frog-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-1);
+}
+
+.frog-window.dragging {
+    opacity: 0.98;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    transition: none;
+}
+
+.frog-header:active {
+    cursor: grabbing;
 } 

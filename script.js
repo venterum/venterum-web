@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('click', (e) => {
-        if (isMinimized && !minimizeBtn.contains(e.target)) {
+        if (isMinimized && !minimizeBtn.contains(e.target) && !easterEgg.contains(e.target)) {
             isMinimized = false;
             terminal.classList.remove('minimized');
             easterEgg.classList.remove('visible');
@@ -164,33 +164,80 @@ document.addEventListener('DOMContentLoaded', () => {
         terminal.style.transform = 'translate(0px, 0px)';
     });
 
-    const closeBtn = document.querySelector('.dot.red');
-    closeBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        terminal.classList.add('shake');
-        setTimeout(() => {
-            terminal.classList.remove('shake');
-        }, 400);
-    });
-
     easterEgg.innerHTML = `
-        <div class="ascii-animation">
-            <pre class="ascii-frame">
-               __,--‚__
-              /     /  '-,_
-           ,--,            '-,_
-          /              _,--' )
-         /(o)         _        |
-        (      (o) -   \\       |
-       _\\   ' ,         ) _____)
-      /  _  /       _,  __   _/
-     )  ( '-,____,-'   (  )_/
-    <_ _>    '-,____,-\\    )
-      V                |  /
-                      <  >
-                       VV</pre>
+        <div class="frog-window">
+            <div class="frog-header">
+                <div class="window-title">frog.jpeg</div>
+                <div class="window-controls">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+            </div>
+            <div class="frog-content">
+                <img src="assets/frog.jpg" alt="Frog" class="frog-image">
+            </div>
         </div>
     `;
+
+    const frogWindow = easterEgg.querySelector('.frog-window');
+    const frogHeader = easterEgg.querySelector('.frog-header');
+    let frogIsDragging = false;
+    let frogCurrentX;
+    let frogCurrentY;
+    let frogInitialX;
+    let frogInitialY;
+    let frogXOffset = 0;
+    let frogYOffset = 0;
+
+    function frogDragStart(e) {
+        if (e.type === "touchstart") {
+            frogInitialX = e.touches[0].clientX - frogXOffset;
+            frogInitialY = e.touches[0].clientY - frogYOffset;
+        } else {
+            frogInitialX = e.clientX - frogXOffset;
+            frogInitialY = e.clientY - frogYOffset;
+        }
+
+        if (e.target.closest('.frog-header')) {
+            frogIsDragging = true;
+            frogWindow.classList.add('dragging');
+        }
+    }
+
+    function frogDrag(e) {
+        if (!frogIsDragging) return;
+
+        e.preventDefault();
+        
+        if (e.type === "touchmove") {
+            frogCurrentX = e.touches[0].clientX - frogInitialX;
+            frogCurrentY = e.touches[0].clientY - frogInitialY;
+        } else {
+            frogCurrentX = e.clientX - frogInitialX;
+            frogCurrentY = e.clientY - frogInitialY;
+        }
+
+        frogXOffset = frogCurrentX;
+        frogYOffset = frogCurrentY;
+        
+        requestAnimationFrame(() => {
+            frogWindow.style.transform = `translate(calc(-50% + ${frogCurrentX}px), calc(-50% + ${frogCurrentY}px))`;
+        });
+    }
+
+    function frogDragEnd() {
+        frogIsDragging = false;
+        frogWindow.classList.remove('dragging');
+    }
+
+    frogHeader.addEventListener('mousedown', frogDragStart);
+    document.addEventListener('mousemove', frogDrag);
+    document.addEventListener('mouseup', frogDragEnd);
+
+    frogHeader.addEventListener('touchstart', frogDragStart);
+    document.addEventListener('touchmove', frogDrag);
+    document.addEventListener('touchend', frogDragEnd);
 
     animateTerminal();
 });
