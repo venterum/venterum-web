@@ -240,6 +240,45 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchend', frogDragEnd);
 
     animateTerminal();
+
+    const wipMessages = {
+        ru: [
+            "Этот раздел ещё прихорашивается...",
+            "Здесь пока идёт ремонт...",
+            "Скоро здесь будет что-то интересное...",
+            "Работа кипит, страница в процессе...",
+            "Ещё немного терпения..."
+        ],
+        en: [
+            "This section is still getting prettier...",
+            "Under construction for now...",
+            "Something interesting is coming soon...",
+            "Work in progress, page is coming...",
+            "Just a little more patience..."
+        ]
+    };
+
+    const wipButtons = document.querySelectorAll('.wip-button');
+    let toast = document.createElement('div');
+    toast.className = 'wip-toast';
+    document.body.appendChild(toast);
+    let toastTimeout;
+
+    wipButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const currentLang = localStorage.getItem('lang') || 'ru';
+            const messages = wipMessages[currentLang];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            
+            toast.textContent = randomMessage;
+            toast.classList.add('visible');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('visible');
+            }, 3000);
+        });
+    });
 });
 
 async function animateTerminal() {

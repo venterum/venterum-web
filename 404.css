@@ -101,7 +101,7 @@
     position: relative;
     color: var(--accent-color);
     font-size: 1.5rem;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     animation: glitch 1s linear infinite;
 }
 
@@ -110,7 +110,7 @@
     border: 1px solid var(--accent-color);
     border-radius: 8px;
     padding: 1rem;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     font-family: monospace;
 }
 
@@ -141,7 +141,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 0.5rem;
+    padding: 0;
     border-radius: 8px;
     background: var(--skill-bg);
     transition: all 0.3s;
@@ -158,23 +158,26 @@
 }
 
 .suggestion-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    width: 100%;
     color: var(--text-color);
     text-decoration: none;
-    transition: color 0.3s;
+    transition: all 0.3s;
 }
 
 .suggestion-link:hover {
     color: var(--accent-color);
+    background: var(--terminal-bg);
+    border-radius: 8px;
+    transform: translateX(10px);
 }
 
 .suggestion-link.error {
-    color: #ff5f57;
-    font-style: italic;
     cursor: not-allowed;
-}
-
-.suggestion-link.error:hover {
-    animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    color: #ff5f57;
 }
 
 .terminal::before {
@@ -244,6 +247,16 @@
         align-items: flex-start;
         gap: 0.5rem;
     }
+
+    .suggestion-link {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .cow-message {
+        font-size: 0.8rem;
+    }
 }
  
 .theme-default {
@@ -253,4 +266,43 @@
     --terminal-bg: rgba(0, 0, 0, 0.95);
     --header-bg: #111111;
     --skill-bg: rgba(255, 51, 51, 0.1);
+}
+
+.typing-effect {
+    display: flex;
+    gap: 8px;
+    margin: 0.5rem 0;
+    opacity: 1;
+}
+
+.response {
+    margin-left: 24px;
+    margin-bottom: 1rem;
+    opacity: 1;
+    transform: none;
+}
+
+.terminal-content {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.suggestions {
+    margin: 0.5rem 0;
+}
+
+.cow-message {
+    background: var(--surface-1);
+    border-radius: var(--radius-1);
+    padding: 1rem;
+    font-family: monospace;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+.cow-message pre {
+    margin: 0;
+    color: var(--accent-color);
 } 

@@ -25,11 +25,19 @@
         <div class="terminal-content">
             <div class="typing-effect">
                 <span class="prompt">$</span>
-                <span class="command" data-text="ls">ls</span>
+                <span class="command" data-text="cowsay 'Error 404: Page Not Found'">cowsay 'Error 404: Page Not Found'</span>
             </div>
-            <div class="response error-message">
-                <p class="text-ru">Ошибка 404: Страница не найдена</p>
-                <p class="text-en">Error 404: Page Not Found</p>
+            <div class="response cow-message">
+                <pre>
+  _________________________________________
+< Ошибка 404: Страница не найдена >
+  -----------------------------------------
+         \   ^__^
+          \  (oo)\_______
+             (__)\       )\/\
+                 ||----w |
+                 ||     ||
+                </pre>
             </div>
 
             <div class="typing-effect">
@@ -56,16 +64,25 @@
                 <p class="text-en">Try:</p>
                 <div class="command-suggestions">
                     <div class="suggestion">
-                        <span class="command-text">cd /</span>
-                        <a href="/" class="suggestion-link">Вернуться на главную</a>
+                        <a href="/" class="suggestion-link">
+                            <span class="command-text">cd /</span>
+                            <span class="link-text text-ru">Вернуться на главную</span>
+                            <span class="link-text text-en">Return to home</span>
+                        </a>
                     </div>
                     <div class="suggestion">
-                        <span class="command-text">man venterum</span>
-                        <a href="https://github.com/venterum" class="suggestion-link">Посетить GitHub</a>
+                        <a href="https://github.com/venterum" class="suggestion-link">
+                            <span class="command-text">man venterum</span>
+                            <span class="link-text text-ru">Посетить GitHub</span>
+                            <span class="link-text text-en">Visit GitHub</span>
+                        </a>
                     </div>
                     <div class="suggestion">
-                        <span class="command-text">sudo rm -rf /</span>
-                        <span class="suggestion-link error">Не делайте этого!</span>
+                        <div class="suggestion-link error">
+                            <span class="command-text">sudo rm -rf /</span>
+                            <span class="link-text text-ru">Не делайте этого!</span>
+                            <span class="link-text text-en">Don't do this!</span>
+                        </div>
                     </div>
                 </div>
             </div>

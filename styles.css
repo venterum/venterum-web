@@ -212,7 +212,7 @@ body {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     margin: 2rem auto;
-    max-width: 800px;
+    max-width: 840px;
     overflow: hidden;
     animation: fadeIn 0.8s ease-out;
     position: relative;
@@ -605,7 +605,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: all 0.3s;
+    transition: var(--transition);
 }
 
 .theme-toggle:hover {
@@ -619,12 +619,12 @@ body {
     right: 0;
     margin-top: 0.5rem;
     background: var(--terminal-bg);
-    border: 1px solid var(--accent-color);
-    border-radius: 8px;
+    border-radius: var(--radius-1);
     padding: 0.5rem;
     display: none;
     min-width: 200px;
     z-index: 1000;
+    box-shadow: var(--elevation-2);
 }
 
 .theme-list.active {
@@ -636,15 +636,14 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-1);
     cursor: pointer;
-    transition: all 0.3s;
-    border-radius: 4px;
+    transition: var(--transition);
 }
 
 .theme-option:hover {
-    background: var(--accent-color);
-    color: var(--bg-color);
+    background: var(--surface-2);
 }
 
 /* Обновленные стили для переключателя языка */
@@ -658,21 +657,22 @@ body {
 }
 
 .lang-btn {
-    background: var(--terminal-bg);
-    border: 1px solid var(--accent-color);
-    color: var(--text-color);
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: all 0.3s;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-1);
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
 }
 
 .lang-btn:hover {
-    background: var(--accent-color);
-    color: var(--bg-color);
+    background: var(--surface-1);
 }
 
 .lang-btn.active {
@@ -718,6 +718,9 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+    background: var(--surface-1);
+    padding: 0.5rem;
+    border-radius: var(--radius-1);
 }
 
 .projects-grid {
@@ -894,28 +897,28 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    background: var(--terminal-bg);
+    background: var(--surface-1);
     padding: 0.5rem;
-    border-radius: 12px;
-    border: 1px solid var(--accent-color);
+    border-radius: var(--radius-1);
 }
 
 .lang-btn {
     padding: 0.5rem 1rem;
-    border-radius: 8px;
+    border-radius: var(--radius-1);
     border: none;
-    background: transparent;
+    background: none;
     color: var(--text-color);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: var(--transition);
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
 }
 
 .lang-btn:hover, .theme-toggle:hover {
-    background: var(--accent-color);
-    color: var(--bg-color);
+    background: var(--surface-2);
 }
 
 .lang-btn.active {
@@ -925,35 +928,35 @@ body {
 
 .theme-toggle {
     padding: 0.5rem 1rem;
-    border-radius: 8px;
+    border-radius: var(--radius-1);
     border: none;
-    background: transparent;
+    background: none;
     color: var(--text-color);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: var(--transition);
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
 }
 
 .theme-list {
     background: var(--terminal-bg);
-    border: 1px solid var(--accent-color);
-    border-radius: 8px;
+    border-radius: var(--radius-1);
     padding: 0.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--elevation-2);
 }
 
 .theme-option {
     padding: 0.5rem 1rem;
-    border-radius: 6px;
+    border-radius: var(--radius-1);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: var(--transition);
 }
 
 .theme-option:hover {
-    background: var(--accent-color);
-    color: var(--bg-color);
+    background: var(--surface-2);
 }
 
 .about-content p {
@@ -1012,7 +1015,11 @@ body {
 .lang-btn.active,
 .theme-option:hover,
 .social-link:hover {
-    box-shadow: 0 0 15px var(--accent-color);
+    box-shadow: var(--elevation-2);
+}
+
+.theme-toggle:hover {
+    background: var(--surface-2);
 }
 
 @media (max-width: 768px) {
@@ -1131,22 +1138,40 @@ body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
-    border-radius: 6px;
+    padding: 0.5rem 1rem;
     color: var(--text-color);
     text-decoration: none;
-    transition: all 0.3s;
-    border: 1px solid transparent;
+    border-radius: var(--radius-1);
+    transition: var(--transition);
+    background: none;
+    border: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
 .nav-button:hover {
-    border-color: var(--accent-color);
-    background: var(--skill-bg);
-    transform: translateY(-2px);
+    background: var(--surface-1);
 }
 
-.nav-button i {
-    color: var(--accent-color);
+.wip-toast {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--terminal-bg);
+    border: 1px solid var(--accent-color);
+    border-radius: var(--radius-1);
+    padding: 1rem;
+    z-index: 1000;
+    box-shadow: var(--elevation-2);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.wip-toast.visible {
+    opacity: 1;
 }
 
 .input-line {
