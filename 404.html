@@ -29,9 +29,9 @@
             </div>
             <div class="response cow-message">
                 <pre>
-  _________________________________________
+  _______________________________
 < Ошибка 404: Страница не найдена >
-  -----------------------------------------
+  -------------------------------
          \   ^__^
           \  (oo)\_______
              (__)\       )\/\
@@ -61,27 +61,44 @@
             </div>
             <div class="response suggestions">
                 <p class="text-ru">Попробуйте:</p>
-                <p class="text-en">Try:</p>
                 <div class="command-suggestions">
                     <div class="suggestion">
                         <a href="/" class="suggestion-link">
                             <span class="command-text">cd /</span>
                             <span class="link-text text-ru">Вернуться на главную</span>
-                            <span class="link-text text-en">Return to home</span>
                         </a>
                     </div>
                     <div class="suggestion">
                         <a href="https://github.com/venterum" class="suggestion-link">
                             <span class="command-text">man venterum</span>
                             <span class="link-text text-ru">Посетить GitHub</span>
-                            <span class="link-text text-en">Visit GitHub</span>
                         </a>
                     </div>
                     <div class="suggestion">
                         <div class="suggestion-link error">
                             <span class="command-text">sudo rm -rf /</span>
                             <span class="link-text text-ru">Не делайте этого!</span>
-                            <span class="link-text text-en">Don't do this!</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="typing-effect">
+                <span class="prompt">$</span>
+                <span class="command" data-text="play-game">play-game</span>
+            </div>
+            <div class="response game-container">
+                <div class="game-wrapper">
+                    <div id="game-area">
+                        <div id="character">█</div>
+                        <div id="obstacle">▌</div>
+                        <div id="ground"></div>
+                    </div>
+                    <div class="game-controls">
+                        <p>Нажмите ПРОБЕЛ чтобы прыгать</p>
+                        <div class="game-score">
+                            <span>Счёт: </span>
+                            <span id="score">0</span>
                         </div>
                     </div>
                 </div>

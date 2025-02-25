@@ -305,4 +305,129 @@
 .cow-message pre {
     margin: 0;
     color: var(--accent-color);
+}
+
+/* Game Styles */
+.game-wrapper {
+    margin: 1rem 0;
+    border: 1px solid var(--accent-color);
+    border-radius: 8px;
+    padding: 1rem;
+    background: var(--terminal-bg);
+}
+
+#game-area {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    border-bottom: 2px solid var(--accent-color);
+    overflow: hidden;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+#character {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+    left: 50px;
+    color: var(--text-color);
+    font-size: 24px;
+    line-height: 1;
+    user-select: none;
+}
+
+#obstacle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+    right: -20px;
+    color: var(--accent-color);
+    font-size: 24px;
+    line-height: 1;
+    user-select: none;
+}
+
+#ground {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--accent-color);
+}
+
+.game-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.game-button {
+    background: var(--surface-1);
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s;
+}
+
+.game-button:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    transform: translateY(-2px);
+}
+
+.game-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.game-score {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    color: var(--accent-color);
+}
+
+.jumping {
+    animation: jump 0.5s;
+}
+
+@keyframes jump {
+    0% { bottom: 0; }
+    50% { bottom: 80px; }
+    100% { bottom: 0; }
+}
+
+.game-over-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    margin: 1rem 0;
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    animation: glitch 0.5s infinite;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+    border-radius: 8px;
+    z-index: 10;
+}
+
+/* Оптимизация для мобильных устройств */
+@media (max-width: 768px) {
+    #game-area {
+        height: 120px;
+    }
+    
+    .game-controls p {
+        font-size: 0.9rem;
+    }
 } 
