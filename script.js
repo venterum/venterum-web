@@ -279,6 +279,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 3000);
         });
     });
+
+    const cookieConsent = localStorage.getItem('cookieConsent');
+    const cookieNotice = document.querySelector('.cookie-notice');
+    
+    if (cookieConsent === null) {
+        setTimeout(() => {
+            cookieNotice.classList.add('visible');
+        }, 1000);
+    }
+    
+    document.querySelector('.cookie-accept').addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'accepted');
+        cookieNotice.classList.remove('visible');
+    });
 });
 
 async function animateTerminal() {

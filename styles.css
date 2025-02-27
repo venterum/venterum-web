@@ -1460,4 +1460,78 @@ body {
 
 .frog-header:active {
     cursor: grabbing;
+}
+
+.cookie-notice {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--terminal-bg);
+    border: 1px solid var(--accent-color);
+    border-radius: var(--radius-1);
+    padding: 1.2rem 1.5rem;
+    z-index: 1000;
+    box-shadow: var(--elevation-2);
+    max-width: 500px;
+    width: 90%;
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+    backdrop-filter: blur(10px);
+}
+
+.cookie-notice.visible {
+    display: block;
+}
+
+.cookie-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.cookie-header i {
+    font-size: 1.2rem;
+}
+
+.cookie-text {
+    margin-bottom: 1.2rem;
+    line-height: 1.5;
+}
+
+.cookie-note {
+    display: block;
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.cookie-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cookie-button {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-1);
+    border: none;
+    font-family: 'JetBrains Mono', monospace;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.cookie-accept {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    min-width: 120px;
+}
+
+.cookie-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--elevation-1);
 } 
