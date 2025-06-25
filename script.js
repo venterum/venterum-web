@@ -4,27 +4,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const easterEgg = document.querySelector('.easter-egg');
     let isMinimized = false;
 
-    minimizeBtn.addEventListener('click', () => {
-        isMinimized = !isMinimized;
-        
-        if (isMinimized) {
-            terminal.classList.add('minimized');
-            setTimeout(() => {
-                easterEgg.classList.add('visible');
-            }, 300);
-        } else {
-            terminal.classList.remove('minimized');
-            easterEgg.classList.remove('visible');
-        }
-    });
-
-    document.addEventListener('click', (e) => {
-        if (isMinimized && !minimizeBtn.contains(e.target) && !easterEgg.contains(e.target)) {
-            isMinimized = false;
-            terminal.classList.remove('minimized');
-            easterEgg.classList.remove('visible');
-        }
-    });
+    if (minimizeBtn && terminal && easterEgg) {
+        minimizeBtn.addEventListener('click', () => {
+            isMinimized = !isMinimized;
+            
+            if (isMinimized) {
+                terminal.classList.add('minimized');
+                setTimeout(() => {
+                    easterEgg.classList.add('visible');
+                }, 300);
+            } else {
+                terminal.classList.remove('minimized');
+                easterEgg.classList.remove('visible');
+            }
+        });
+    
+        document.addEventListener('click', (e) => {
+            if (isMinimized && !minimizeBtn.contains(e.target) && !easterEgg.contains(e.target)) {
+                isMinimized = false;
+                terminal.classList.remove('minimized');
+                easterEgg.classList.remove('visible');
+            }
+        });
+    }
 
     const themeToggle = document.querySelector('.theme-toggle');
     const themeList = document.querySelector('.theme-list');
@@ -148,98 +150,104 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    terminalHeader.addEventListener('touchstart', dragStart, false);
-    document.addEventListener('touchend', dragEnd, false);
-    document.addEventListener('touchmove', drag, false);
-
-    terminalHeader.addEventListener('mousedown', dragStart, false);
-    document.addEventListener('mouseup', dragEnd, false);
-    document.addEventListener('mousemove', drag, false);
-
-    terminalHeader.addEventListener('selectstart', (e) => e.preventDefault());
-
-    terminalHeader.addEventListener('dblclick', () => {
-        xOffset = 0;
-        yOffset = 0;
-        terminal.style.transform = 'translate(0px, 0px)';
-    });
-
-    easterEgg.innerHTML = `
-        <div class="frog-window">
-            <div class="frog-header">
-                <div class="window-title">frog.jpeg</div>
-                <div class="window-controls">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                </div>
-            </div>
-            <div class="frog-content">
-                <img src="assets/frog.jpg" alt="Frog" class="frog-image">
-            </div>
-        </div>
-    `;
-
-    const frogWindow = easterEgg.querySelector('.frog-window');
-    const frogHeader = easterEgg.querySelector('.frog-header');
-    let frogIsDragging = false;
-    let frogCurrentX;
-    let frogCurrentY;
-    let frogInitialX;
-    let frogInitialY;
-    let frogXOffset = 0;
-    let frogYOffset = 0;
-
-    function frogDragStart(e) {
-        if (e.type === "touchstart") {
-            frogInitialX = e.touches[0].clientX - frogXOffset;
-            frogInitialY = e.touches[0].clientY - frogYOffset;
-        } else {
-            frogInitialX = e.clientX - frogXOffset;
-            frogInitialY = e.clientY - frogYOffset;
-        }
-
-        if (e.target.closest('.frog-header')) {
-            frogIsDragging = true;
-            frogWindow.classList.add('dragging');
-        }
-    }
-
-    function frogDrag(e) {
-        if (!frogIsDragging) return;
-
-        e.preventDefault();
-        
-        if (e.type === "touchmove") {
-            frogCurrentX = e.touches[0].clientX - frogInitialX;
-            frogCurrentY = e.touches[0].clientY - frogInitialY;
-        } else {
-            frogCurrentX = e.clientX - frogInitialX;
-            frogCurrentY = e.clientY - frogInitialY;
-        }
-
-        frogXOffset = frogCurrentX;
-        frogYOffset = frogCurrentY;
-        
-        requestAnimationFrame(() => {
-            frogWindow.style.transform = `translate(calc(-50% + ${frogCurrentX}px), calc(-50% + ${frogCurrentY}px))`;
+    if (terminalHeader && terminal) {
+        terminalHeader.addEventListener('touchstart', dragStart, false);
+        document.addEventListener('touchend', dragEnd, false);
+        document.addEventListener('touchmove', drag, false);
+    
+        terminalHeader.addEventListener('mousedown', dragStart, false);
+        document.addEventListener('mouseup', dragEnd, false);
+        document.addEventListener('mousemove', drag, false);
+    
+        terminalHeader.addEventListener('selectstart', (e) => e.preventDefault());
+    
+        terminalHeader.addEventListener('dblclick', () => {
+            xOffset = 0;
+            yOffset = 0;
+            terminal.style.transform = 'translate(0px, 0px)';
         });
     }
 
-    function frogDragEnd() {
-        frogIsDragging = false;
-        frogWindow.classList.remove('dragging');
+    if (easterEgg) {
+        easterEgg.innerHTML = `
+            <div class="frog-window">
+                <div class="frog-header">
+                    <div class="window-title">frog.jpeg</div>
+                    <div class="window-controls">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                </div>
+                <div class="frog-content">
+                    <img src="assets/frog.jpg" alt="Frog" class="frog-image">
+                </div>
+            </div>
+        `;
+    
+        const frogWindow = easterEgg.querySelector('.frog-window');
+        const frogHeader = easterEgg.querySelector('.frog-header');
+        let frogIsDragging = false;
+        let frogCurrentX;
+        let frogCurrentY;
+        let frogInitialX;
+        let frogInitialY;
+        let frogXOffset = 0;
+        let frogYOffset = 0;
+
+        function frogDragStart(e) {
+            if (e.type === "touchstart") {
+                frogInitialX = e.touches[0].clientX - frogXOffset;
+                frogInitialY = e.touches[0].clientY - frogYOffset;
+            } else {
+                frogInitialX = e.clientX - frogXOffset;
+                frogInitialY = e.clientY - frogYOffset;
+            }
+
+            if (e.target.closest('.frog-header')) {
+                frogIsDragging = true;
+                frogWindow.classList.add('dragging');
+            }
+        }
+
+        function frogDrag(e) {
+            if (!frogIsDragging) return;
+
+            e.preventDefault();
+            
+            if (e.type === "touchmove") {
+                frogCurrentX = e.touches[0].clientX - frogInitialX;
+                frogCurrentY = e.touches[0].clientY - frogInitialY;
+            } else {
+                frogCurrentX = e.clientX - frogInitialX;
+                frogCurrentY = e.clientY - frogInitialY;
+            }
+
+            frogXOffset = frogCurrentX;
+            frogYOffset = frogCurrentY;
+            
+            requestAnimationFrame(() => {
+                frogWindow.style.transform = `translate(calc(-50% + ${frogCurrentX}px), calc(-50% + ${frogCurrentY}px))`;
+            });
+        }
+
+        function frogDragEnd() {
+            frogIsDragging = false;
+            frogWindow.classList.remove('dragging');
+        }
+
+        frogHeader.addEventListener('mousedown', frogDragStart);
+        document.addEventListener('mousemove', frogDrag);
+        document.addEventListener('mouseup', frogDragEnd);
+    
+        frogHeader.addEventListener('touchstart', frogDragStart);
+        document.addEventListener('touchmove', frogDrag);
+        document.addEventListener('touchend', frogDragEnd);
     }
 
-    frogHeader.addEventListener('mousedown', frogDragStart);
-    document.addEventListener('mousemove', frogDrag);
-    document.addEventListener('mouseup', frogDragEnd);
-
-    frogHeader.addEventListener('touchstart', frogDragStart);
-    document.addEventListener('touchmove', frogDrag);
-    document.addEventListener('touchend', frogDragEnd);
-
-    animateTerminal();
+    if (document.querySelector('.typing-effect')) {
+        animateTerminal();
+    }
 
     const wipMessages = {
         ru: [
@@ -259,40 +267,44 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const wipButtons = document.querySelectorAll('.wip-button');
-    let toast = document.createElement('div');
-    toast.className = 'wip-toast';
-    document.body.appendChild(toast);
-    let toastTimeout;
-
-    wipButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const currentLang = localStorage.getItem('lang') || 'ru';
-            const messages = wipMessages[currentLang];
-            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
-            
-            toast.textContent = randomMessage;
-            toast.classList.add('visible');
-            
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('visible');
-            }, 3000);
+    if (wipButtons.length > 0) {
+        let toast = document.createElement('div');
+        toast.className = 'wip-toast';
+        document.body.appendChild(toast);
+        let toastTimeout;
+    
+        wipButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const currentLang = localStorage.getItem('lang') || 'ru';
+                const messages = wipMessages[currentLang];
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                
+                toast.textContent = randomMessage;
+                toast.classList.add('visible');
+                
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.remove('visible');
+                }, 3000);
+            });
         });
-    });
+    }
 
     const cookieConsent = localStorage.getItem('cookieConsent');
     const cookieNotice = document.querySelector('.cookie-notice');
     
-    if (cookieConsent === null) {
-        setTimeout(() => {
-            cookieNotice.classList.add('visible');
-        }, 1000);
+    if (cookieNotice) {
+        if (cookieConsent === null) {
+            setTimeout(() => {
+                cookieNotice.classList.add('visible');
+            }, 1000);
+        }
+        
+        document.querySelector('.cookie-accept').addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieNotice.classList.remove('visible');
+        });
     }
-    
-    document.querySelector('.cookie-accept').addEventListener('click', () => {
-        localStorage.setItem('cookieConsent', 'accepted');
-        cookieNotice.classList.remove('visible');
-    });
 });
 
 async function animateTerminal() {

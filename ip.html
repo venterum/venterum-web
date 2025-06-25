@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Lookup | venterum.com</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="ip.css">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+</head>
+<body class="theme-tokyo">
+    <div class="noise"></div>
+    <nav class="nav">
+        <a href="/" class="logo-link"><div class="logo">venterum@web:~$</div></a>
+        <div class="nav-buttons">
+        </div>
+        <div class="controls-wrapper">
+            <button class="lang-btn" data-lang="ru">
+                <span class="lang-flag">🇷🇺</span>
+                <span class="lang-name">RU</span>
+            </button>
+            <button class="lang-btn" data-lang="en">
+                <span class="lang-flag">🇬🇧</span>
+                <span class="lang-name">EN</span>
+            </button>
+            <div class="theme-dropdown">
+                <button class="theme-toggle">
+                    <span class="current-theme">🎨</span>
+                    <span class="text-ru theme-name">Тема</span>
+                    <span class="text-en theme-name">Theme</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="theme-list">
+                    <div class="theme-group">
+                        <div class="theme-group-title text-ru">Светлые темы</div>
+                        <div class="theme-group-title text-en">Light Themes</div>
+                        <div class="theme-option" data-theme="light">
+                            <span class="theme-icon">☀️</span>
+                            <span class="text-ru theme-name">Просто светлая</span>
+                            <span class="text-en theme-name">Just Light</span>
+                        </div>
+                        <div class="theme-option" data-theme="mint">
+                            <span class="theme-icon">🌿</span>
+                            <span class="text-ru theme-name">Свежий лемонграсс</span>
+                            <span class="text-en theme-name">Fresh Lemongrass</span>
+                        </div>
+                    </div>
+                    <div class="theme-divider"></div>
+                    <div class="theme-group">
+                        <div class="theme-group-title text-ru">Темные темы</div>
+                        <div class="theme-group-title text-en">Dark Themes</div>
+                        <div class="theme-option" data-theme="default">
+                            <span class="theme-icon">🌙</span>
+                            <span class="text-ru theme-name">Просто темная</span>
+                            <span class="text-en theme-name">Just Dark</span>
+                        </div>
+                        <div class="theme-option" data-theme="tokyo">
+                            <span class="theme-icon">🗼</span>
+                            <span class="text-ru theme-name">Токийская ночь</span>
+                            <span class="text-en theme-name">Tokyo Night</span>
+                        </div>
+                        <div class="theme-option" data-theme="coral">
+                            <span class="theme-icon">🌺</span>
+                            <span class="text-ru theme-name">Коралловый риф</span>
+                            <span class="text-en theme-name">Coral Reef</span>
+                        </div>
+                        <div class="theme-option" data-theme="sage">
+                            <span class="theme-icon">🌿</span>
+                            <span class="text-ru theme-name">Сад шалфея</span>
+                            <span class="text-en theme-name">Sage Garden</span>
+                        </div>
+                        <div class="theme-option" data-theme="azure">
+                            <span class="theme-icon">🌊</span>
+                            <span class="text-ru theme-name">Лазурная волна</span>
+                            <span class="text-en theme-name">Azure Wave</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="ip-page-container">
+        {% if ip_data.status == 'success' %}
+            <div class="grid-card ip-display-card">
+                <div class="card-content">
+                    <span class="label text-ru">Ваш внешний IP адрес</span>
+                    <span class="label text-en">Your external IP address</span>
+                    <h1 class="ip-address">{{ ip_data.query }}</h1>
+                </div>
+            </div>
+
+            <div class="grid-card map-card">
+                 <div class="card-header">
+                    <h2><i class="fas fa-map-marked-alt"></i>
+                        <span class="text-ru">Вы, возможно, находитесь тут</span>
+                        <span class="text-en">You might be here...</span>
+                    </h2>
+                </div>
+                <div id="map"></div>
+            </div>
+
+            <div class="grid-card info-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-info-circle"></i>
+                        <span class="text-ru">Вот, что интернет знает о вас</span>
+                        <span class="text-en">Here's what the internet knows about you</span>
+                    </h2>
+                </div>
+                <div class="info-grid">
+                    <div class="info-group">
+                        <h3 class="group-title text-ru">Сеть</h3>
+                        <h3 class="group-title text-en">Network</h3>
+                        <div class="info-group-items">
+                            <div class="info-item">
+                                <span class="label text-ru">Страна</span><span class="label text-en">Country</span>
+                                <span class="value"><span class="flag-emoji"></span> {{ ip_data.country }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Город</span><span class="label text-en">City</span>
+                                <span class="value">{{ ip_data.city }}, {{ ip_data.regionName }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Провайдер</span><span class="label text-en">ISP</span>
+                                <span class="value">{{ ip_data.isp }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Тип подключения</span><span class="label text-en">Connection Type</span>
+                                <span class="value">
+                                    {% if ip_data.proxy %}<i class="fas fa-user-secret"></i><span class="text-ru">Прокси / VPN</span><span class="text-en">Proxy / VPN</span>
+                                    {% elif ip_data.hosting %}<i class="fas fa-server"></i><span class="text-ru">Хостинг / ЦОД</span><span class="text-en">Hosting / Datacenter</span>
+                                    {% elif ip_data.mobile %}<i class="fas fa-mobile-alt"></i><span class="text-ru">Мобильная сеть</span><span class="text-en">Mobile Network</span>
+                                    {% else %}<i class="fas fa-network-wired"></i><span class="text-ru">Стандартное</span><span class="text-en">Standard</span>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-group">
+                        <h3 class="group-title text-ru">Устройство</h3>
+                        <h3 class="group-title text-en">Device information</h3>
+                        <div class="info-group-items">
+                            <div class="info-item">
+                                <span class="label text-ru">Тип устройства</span><span class="label text-en">Device Type</span>
+                                <span class="value">
+                                    {% if user_agent.is_pc %}<i class="fas fa-desktop"></i><span class="text-ru">ПК</span><span class="text-en">Desktop</span>
+                                    {% elif user_agent.is_mobile %}<i class="fas fa-mobile-alt"></i><span class="text-ru">Мобильный</span><span class="text-en">Mobile</span>
+                                    {% elif user_agent.is_tablet %}<i class="fas fa-tablet-alt"></i><span class="text-ru">Планшет</span><span class="text-en">Tablet</span>
+                                    {% else %}<i class="fas fa-question-circle"></i><span class="text-ru">Неизвестно</span><span class="text-en">Unknown</span>
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Операционная система</span><span class="label text-en">Operating System</span>
+                                <span class="value">
+                                    {% if user_agent.os.family == 'Windows' and user_agent.os.version_string == '10' %}
+                                        Windows 10 <span class="text-ru">или</span><span class="text-en">or</span> 11
+                                    {% else %}
+                                        {{ user_agent.os.family }} {{ user_agent.os.version_string }}
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Браузер</span><span class="label text-en">Browser</span>
+                                <span class="value">{{ user_agent.browser.family }} {{ user_agent.browser.version_string }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Разрешение экрана</span><span class="label text-en">Screen Resolution</span>
+                                <span class="value" id="screen-resolution"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Язык браузера</span><span class="label text-en">Browser Language</span>
+                                <span class="value" id="browser-language"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Местное время</span><span class="label text-en">Local Time</span>
+                                <span class="value" id="local-time">--:--:--</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="error-container full-width-card">
+                <h3><i class="fas fa-exclamation-triangle"></i> 
+                    <span class="text-ru">Ой! Что-то пошло не так.</span>
+                    <span class="text-en">Oops! Something went wrong.</span>
+                </h3>
+                <p>
+                    <span class="text-ru">Не удалось получить информацию для IP: {{ ip_data.query }}</span>
+                    <span class="text-en">Could not retrieve information for IP: {{ ip_data.query }}</span>
+                </p>
+                <p class="error-message">
+                    <span class="text-ru">Причина: {{ ip_data.message }}</span>
+                    <span class="text-en">Reason: {{ ip_data.message }}</span>
+                </p>
+            </div>
+        {% endif %}
+    </main>
+
+    <div class="privacy-warning-notice">
+        <div class="notice-content">
+            <i class="fas fa-shield-alt"></i>
+            <div class="notice-text">
+                <p class="text-ru"><b>Мы ценим вашу приватность.</b> Эта страница не хранит и не передаёт ваши данные.</p>
+                <p class="text-en"><b>We value your privacy.</b> This page does not store or share your data.</p>
+            </div>
+            <button class="notice-accept">
+                <span class="text-ru">Понятно</span>
+                <span class="text-en">Got it</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Most controls are handled by script.js, we just need to init this page's specific elements
+        const savedLang = localStorage.getItem('lang') || 'ru';
+        
+        const privacyNotice = document.querySelector('.privacy-warning-notice');
+        if (privacyNotice) {
+            const privacyConsent = localStorage.getItem('privacyNoticeShown');
+            if (privacyConsent !== 'true') {
+                setTimeout(() => {
+                    privacyNotice.classList.add('visible');
+                }, 1500);
+            }
+            
+            privacyNotice.querySelector('.notice-accept').addEventListener('click', () => {
+                localStorage.setItem('privacyNoticeShown', 'true');
+                privacyNotice.classList.remove('visible');
+            });
+        }
+
+        {% if ip_data.status == 'success' %}
+            const lat = {{ ip_data.lat }};
+            const lon = {{ ip_data.lon }};
+            const timezone = "{{ ip_data.timezone }}";
+            const countryCode = "{{ ip_data.countryCode }}";
+
+            function getFlagEmoji(countryCode) {
+                const codePoints = countryCode
+                    .toUpperCase()
+                    .split('')
+                    .map(char => 127397 + char.charCodeAt());
+                return String.fromCodePoint(...codePoints);
+            }
+
+            const flagElement = document.querySelector('.flag-emoji');
+            if (flagElement) {
+                flagElement.textContent = getFlagEmoji(countryCode);
+            }
+
+            // Init Map
+            const map = L.map('map').setView([lat, lon], 10);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+            
+            const popupText = savedLang === 'ru' 
+                ? 'Приблизительное местоположение для IP: {{ ip_data.query }}'
+                : 'Approximate location for IP: {{ ip_data.query }}';
+
+            L.marker([lat, lon]).addTo(map)
+                .bindPopup(popupText)
+                .openPopup();
+            
+            // Init Local Time
+            const timeEl = document.getElementById('local-time');
+            function updateTime() {
+                const langLocale = savedLang === 'ru' ? 'ru-RU' : 'en-US';
+                const timeString = new Date().toLocaleTimeString(langLocale, {
+                    timeZone: timezone,
+                    hour12: false
+                });
+                timeEl.textContent = `${timeString} (${timezone})`;
+            }
+            updateTime();
+            setInterval(updateTime, 1000);
+
+            // Init client-side data
+            document.getElementById('screen-resolution').textContent = `${screen.width} x ${screen.height}`;
+            document.getElementById('browser-language').textContent = navigator.language;
+        {% endif %}
+    });
+    </script>
+</body>
+</html> 
