@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     langButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            const lang = btn.dataset.lang;
+        const lang = btn.dataset.lang;
             
             langButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -308,104 +308,90 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function animateTerminal() {
-    const sections = document.querySelectorAll('.typing-effect');
-    const responses = document.querySelectorAll('.response');
-    const socialLinks = document.querySelector('.social-links-container');
-    let currentIndex = 0;
+    const typingEffectEl = document.querySelector('.typing-effect');
+    const commandEl = document.querySelector('.command');
+    const responseEl = document.querySelector('.response');
+    const asciiArtEl = responseEl.querySelector('.ascii-art');
+    const aboutTextEl = responseEl.querySelector('.about-text');
 
-    if (socialLinks) {
-        socialLinks.style.opacity = '0';
-        socialLinks.style.transform = 'translateY(-10px)';
-    }
+    // Hide elements initially for the animation
+    typingEffectEl.style.opacity = '0';
+    responseEl.style.opacity = '0';
+    asciiArtEl.style.opacity = '0';
+    aboutTextEl.style.opacity = '0';
+    
+    // Wait a moment before starting to ensure styles are applied
+    await new Promise(resolve => setTimeout(resolve, 100));
 
-    const cursor = document.createElement('div');
-    cursor.className = 'terminal-cursor';
-    document.querySelector('.terminal-content').appendChild(cursor);
+    // 0. Make the prompt visible
+    typingEffectEl.style.transition = 'opacity 0.3s ease';
+    typingEffectEl.style.opacity = '1';
+    await new Promise(resolve => setTimeout(resolve, 100));
 
-    function updateCursorPosition(element) {
-        const rect = element.getBoundingClientRect();
-        const terminalRect = document.querySelector('.terminal').getBoundingClientRect();
-        cursor.style.top = `${rect.bottom - terminalRect.top - 20}px`;
-        cursor.style.left = `${rect.left - terminalRect.left + element.offsetWidth}px`;
-    }
+    // 1. Type the command
+    await typeCommand(commandEl, commandEl.dataset.text, 50);
 
-    async function animateSection(section, response) {
-        section.style.opacity = '1';
-        const command = section.querySelector('.command');
-        updateCursorPosition(command);
+    // 2. Show response area and fade in ASCII art
+    responseEl.style.transition = 'opacity 0.3s ease';
+    responseEl.style.opacity = '1';
+    await new Promise(resolve => setTimeout(resolve, 200));
+    
+    asciiArtEl.style.transition = 'opacity 0.5s ease';
+    asciiArtEl.style.opacity = '1';
+    await new Promise(resolve => setTimeout(resolve, 300));
 
-        await new Promise(resolve => {
-            typeCommand(command, command.dataset.text, resolve);
-        });
+    // 3. Fade in the text container and type out the welcome message
+    aboutTextEl.style.transition = 'opacity 0.5s ease';
+    aboutTextEl.style.opacity = '1';
+    await new Promise(resolve => setTimeout(resolve, 100)); // Short delay for fade-in
 
-        if (response) {
-            response.style.opacity = '1';
-            response.style.transform = 'translateY(0)';
+    const currentLang = localStorage.getItem('lang') || 'ru';
+    const targetP = aboutTextEl.querySelector(`.text-${currentLang}`);
+    
+    const originalText = targetP.innerHTML.replace(/<br\s*\/?>/gi, '\n');
+    targetP.innerHTML = ''; // Clear for typing effect
+    targetP.style.whiteSpace = 'pre-wrap'; // Respect newlines
 
-            const elements = response.children;
-            for (let element of elements) {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-                await new Promise(resolve => setTimeout(resolve, 100));
-            }
-        }
+    await typeParagraph(targetP, originalText, 25); // Type the paragraph content
 
-        await new Promise(resolve => setTimeout(resolve, 500));
-    }
-
-    async function animate() {
-        for (let i = 0; i < sections.length; i++) {
-            await animateSection(sections[i], responses[i]);
-            
-            if (i === sections.length - 2 && socialLinks) {
-                socialLinks.style.transition = 'all 0.5s ease';
-                socialLinks.style.opacity = '1';
-                socialLinks.style.transform = 'translateY(0)';
-            }
-        }
-
-        const inputLine = document.querySelector('.input-line');
-        if (inputLine) {
-            updateCursorPosition(inputLine.querySelector('.command'));
-            setTimeout(() => {
-                cursor.style.opacity = '0';
-                setTimeout(() => {
-                    cursor.remove();
-                }, 300);
-            }, 1000);
-        }
-    }
-
-    sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transition = 'opacity 0.3s ease';
-    });
-
-    responses.forEach(response => {
-        response.style.opacity = '0';
-        response.style.transform = 'translateY(-10px)';
-        response.style.transition = 'all 0.3s ease';
-        
-        Array.from(response.children).forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(-10px)';
-            element.style.transition = 'all 0.3s ease';
-        });
-    });
-
-    animate();
+    // 4. Show the final prompt
+    const finalPrompt = document.getElementById('final-prompt');
+    finalPrompt.style.transition = 'opacity 0.5s ease';
+    finalPrompt.style.opacity = '1';
 }
 
-function typeCommand(element, text, onComplete) {
-    element.textContent = '';
-    let i = 0;
-    const interval = setInterval(() => {
-        if (i < text.length) {
-            element.textContent += text[i];
-            i++;
-        } else {
-            clearInterval(interval);
-            if (onComplete) onComplete();
-        }
-    }, 50);
+function typeCommand(element, text, speed) {
+    return new Promise(resolve => {
+        element.textContent = '';
+        let i = 0;
+        const interval = setInterval(() => {
+            if (i < text.length) {
+                element.textContent += text[i];
+                i++;
+            } else {
+                clearInterval(interval);
+                resolve();
+            }
+        }, speed);
+    });
+}
+
+function typeParagraph(element, text, speed) {
+    return new Promise(resolve => {
+        let i = 0;
+        const interval = setInterval(() => {
+            if (i < text.length) {
+                // Handle newline characters correctly
+                if (text[i] === '\n') {
+                    element.innerHTML += '<br>';
+                } else {
+                    element.innerHTML += text[i];
+                }
+                i++;
+            } else {
+                clearInterval(interval);
+                resolve();
+            }
+        }, speed);
+    });
 } 

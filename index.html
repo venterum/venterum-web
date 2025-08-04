@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>venterum@web:~$</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="icon" type="image/png" href="favicon.png">
@@ -32,14 +32,14 @@
             </a>
         </div>
         <div class="controls-wrapper">
-            <button class="lang-btn" data-lang="ru">
-                <span class="lang-flag">🇷🇺</span>
-                <span class="lang-name">RU</span>
-            </button>
-            <button class="lang-btn" data-lang="en">
-                <span class="lang-flag">🇬🇧</span>
-                <span class="lang-name">EN</span>
-            </button>
+                            <button class="lang-btn" data-lang="ru">
+                    <span class="lang-flag">🇷🇺</span>
+                    <span class="lang-name">RU</span>
+                                    </button>
+                <button class="lang-btn" data-lang="en">
+                        <span class="lang-flag">🇬🇧</span>
+                        <span class="lang-name">EN</span>
+                        </button>
             <div class="theme-dropdown">
                 <button class="theme-toggle">
                     <span class="current-theme">🎨</span>
@@ -99,209 +99,32 @@
 
     <main class="terminal">
         <div class="terminal-header">
-            <div class="window-title">venterum@webterm</div>
+            <div class="window-title">venterminal</div>
             <div class="window-controls">
-                <span class="dot green" id="minimize-btn" title="Minimize"></span>
-                <span class="dot yellow"></span>
-                <span class="dot red"></span>
+                <button class="control-btn red" id="minimize-btn">×</button>
             </div>
         </div>
         <div class="terminal-content">
             <div class="matrix-rain" id="matrix"></div>
-
-            <div class="typing-effect">
-                <span class="prompt">$</span>
-                <span class="command" data-text="whoami">whoami</span>
+            <div class="typing-effect" style="opacity: 0;">
+                <span class="prompt">venterum@web:~$ </span>
+                <span class="command" data-text="bash ~/welcome.sh"></span>
             </div>
-            <div class="response profile-section">
-                <div class="profile-card">
-                    <div class="profile-header">
-                        <div class="profile-info">
-                            <p class="text-ru">👋 Привет! Я Евгений (aka Venterum)</p>
-                            <p class="text-en">👋 Hi! I'm Evgenij (aka Venterum)</p>
-                        </div>
-                    </div>
+            <div class="response">
+                <pre class="ascii-art"> ___    __           _____                               
+__ |  / /_____________  /________________  ________ ___ 
+__ | / /_  _ \_  __ \  __/  _ \_  ___/  / / /_  __ `__ \
+__ |/ / /  __/  / / / /_ /  __/  /   / /_/ /_  / / / / /
+_____/  \___//_/ /_/\__/ \___//_/    \__,_/ /_/ /_/ /_/
+                </pre>
+                <div class="about-text">
+                    <p class="text-ru">Привет, спасибо, что заглянули ко мне на сайт. Меня зовут Евгений, я люблю разбираться в системах, писать код и настраивать вещи под себя.<br>Ценю приватность, децентрализацию и полный контроль над своими данными.<br><br>Изучаю, экспериментирую и иногда делюсь этим.</p>
+                    <p class="text-en">Hello, thanks for visiting my site. My name is Evgeny, I love to understand systems, write code, and customize things for myself.<br>I value privacy, decentralization, and full control over my data.<br><br>I study, experiment, and sometimes share it.</p>
                 </div>
             </div>
-            
-            <div class="typing-effect">
-                <span class="prompt">$</span>
-                <span class="command" data-text="about">about</span>
-            </div>
-            <div class="response about-section">
-                <div class="about-card">
-                    <div class="about-content">
-                        <div class="about-text">
-                            <p class="text-ru">
-                                Создаю полезные проекты и изучаю новые технологии. В свободное время погружаюсь в игры, 
-                                смотрю фильмы и аниме, а также экспериментирую с Linux.
-                            </p>
-                            <p class="text-en">
-                                I create useful projects and explore new technologies. In my free time, I dive into games, 
-                                watch movies and anime, and tinker with Linux.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="typing-effect">
-                <span class="prompt">$</span>
-                <span class="command" data-text="projects">projects</span>
-            </div>
-            <div class="response projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>🎞️ ReelKeeper</h3>
-                        <div class="project-links">
-                            <a href="https://github.com/venterum/ReelKeeper" target="_blank" class="project-link">
-                                <i class="fab fa-github"></i>
-                                <span class="text-ru">GitHub</span>
-                                <span class="text-en">GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <p class="text-ru">Персональная библиотека фильмов и сериалов с возможностью отслеживания просмотра</p>
-                    <p class="text-en">A personal library for movies and TV shows with watch progress tracking</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">PyQt</span>
-                        <span class="tech-tag">SQLite</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>⚡ Material Quick Settings</h3>
-                        <div class="project-links">
-                            <a href="https://github.com/venterum/KDE-Material-Quick-Settings" target="_blank" class="project-link">
-                                <i class="fab fa-github"></i>
-                                <span class="text-ru">GitHub</span>
-                                <span class="text-en">GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <p class="text-ru">Виджет быстрых настроек в стиле Material You для KDE 6</p>
-                    <p class="text-en">A Material You-styled quick settings widget for KDE 6</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">QML</span>
-                        <span class="tech-tag">KDE</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>🔠 Latinizator</h3>
-                        <div class="project-links">
-                            <a href="https://github.com/venterum/Latinizator" target="_blank" class="project-link">
-                                <i class="fab fa-github"></i>
-                                <span class="text-ru">GitHub</span>
-                                <span class="text-en">GitHub</span>
-                            </a>
-                            <a href="https://latinizator.venterum.com" target="_blank" class="project-link">
-                                <i class="fas fa-globe"></i>
-                                <span class="text-ru">Веб</span>
-                                <span class="text-en">Web</span>
-                            </a>
-                        </div>
-                    </div>
-                    <p class="text-ru">Инструмент для транслитерации текста на русском языке в латиницу</p>
-                    <p class="text-en">A tool for transliterating Russian text into the Latin alphabet</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Flask</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>🔄 Yandex EU Button</h3>
-                        <div class="project-links">
-                            <a href="https://github.com/venterum/yandex-eu-button" target="_blank" class="project-link">
-                                <i class="fab fa-github"></i>
-                                <span class="text-ru">GitHub</span>
-                                <span class="text-en">GitHub</span>
-                            </a>
-                        </div>
-                    </div>
-                    <p class="text-ru">Userscript для быстрого перехода на европейскую выдачу поиска Яндекса</p>
-                    <p class="text-en">A userscript for quickly switching to Yandex EU search results</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">Userscript</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="typing-effect">
-                <span class="prompt">$</span>
-                <span class="command" data-text="skills && education">skills && education</span>
-            </div>
-            <div class="response education-grid">
-                <div class="education-card">
-                    <div class="education-header">
-                        <h3 class="text-ru">Ｙ Яндекс Лицей</h3>
-                        <h3 class="text-en">Ｙ Yandex Lyceum</h3>
-                        <a href="https://lyceum.yandex.ru" target="_blank" class="education-link">
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                    <div class="education-skills">
-                        <span class="skill-tag">Python</span>
-                        <span class="tech-tag">PyQt</span>
-                        <span class="tech-tag">Git</span>
-                        <span class="tech-tag">SQL</span>
-                    </div>
-                </div>
-
-                <div class="education-card">
-                    <div class="education-header">
-                        <h3 class="text-ru">✖ Хекслет</h3>
-                        <h3 class="text-en">✖ Hexlet</h3>
-                        <a href="https://ru.hexlet.io/" target="_blank" class="education-link">
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                    <div class="education-skills">
-                        <span class="tech-tag">HTML</span>
-                        <span class="tech-tag">CSS</span>
-                        <span class="tech-tag">JavaScript</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="typing-effect">
-                <span class="prompt">$</span>
-                <span class="command" data-text="social">social</span>
-            </div>
-            <div class="social-links">
-                <div class="social-links-container">
-                    <a href="https://github.com/venterum" target="_blank" class="social-link">
-                        <i class="fab fa-github"></i>
-                        <span class="text-ru">GitHub</span>
-                        <span class="text-en">GitHub</span>
-                    </a>
-                    <a href="https://t.me/venterum" target="_blank" class="social-link">
-                        <i class="fab fa-telegram"></i>
-                        <span class="text-ru">Telegram</span>
-                        <span class="text-en">Telegram</span>
-                    </a>
-                    <a href="https://discord.com/users/venterum" target="_blank" class="social-link">
-                        <i class="fab fa-discord"></i>
-                        <span class="text-ru">Discord</span>
-                        <span class="text-en">Discord</span>
-                    </a>
-                    <a href="https://steamcommunity.com/id/venteruma/" target="_blank" class="social-link">
-                        <i class="fab fa-steam"></i>
-                        <span class="text-ru">Steam</span>
-                        <span class="text-en">Steam</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="typing-effect input-line">
-                <span class="prompt">$</span>
-                <span class="command" contenteditable="true"></span>
+            <div class="input-line" id="final-prompt" style="opacity: 0;">
+                <span class="prompt">venterum@web:~$</span>
+                <span class="cursor"></span>
             </div>
         </div>
     </main>
