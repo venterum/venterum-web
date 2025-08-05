@@ -311,51 +311,48 @@ async function animateTerminal() {
     const typingEffectEl = document.querySelector('.typing-effect');
     const commandEl = document.querySelector('.command');
     const responseEl = document.querySelector('.response');
-    const asciiArtEl = responseEl.querySelector('.ascii-art');
-    const aboutTextEl = responseEl.querySelector('.about-text');
+    const aboutTextEl = document.querySelector('.about-text');
+    const finalPrompt = document.getElementById('final-prompt');
 
-    // Hide elements initially for the animation
+    // 1. Initial setup
     typingEffectEl.style.opacity = '0';
     responseEl.style.opacity = '0';
-    asciiArtEl.style.opacity = '0';
+    finalPrompt.style.opacity = '0';
     aboutTextEl.style.opacity = '0';
-    
-    // Wait a moment before starting to ensure styles are applied
+
+    const lines = aboutTextEl.querySelectorAll(".terminal-line");
+    lines.forEach(line => line.classList.add('hidden-line'));
+
     await new Promise(resolve => setTimeout(resolve, 100));
 
-    // 0. Make the prompt visible
+    // 2. Animate command prompt
     typingEffectEl.style.transition = 'opacity 0.3s ease';
     typingEffectEl.style.opacity = '1';
-    await new Promise(resolve => setTimeout(resolve, 100));
-
-    // 1. Type the command
     await typeCommand(commandEl, commandEl.dataset.text, 50);
-
-    // 2. Show response area and fade in ASCII art
-    responseEl.style.transition = 'opacity 0.3s ease';
-    responseEl.style.opacity = '1';
     await new Promise(resolve => setTimeout(resolve, 200));
-    
-    asciiArtEl.style.transition = 'opacity 0.5s ease';
-    asciiArtEl.style.opacity = '1';
-    await new Promise(resolve => setTimeout(resolve, 300));
 
-    // 3. Fade in the text container and type out the welcome message
+    // 3. Show response area
+    responseEl.style.transition = 'opacity 0.5s ease';
+    responseEl.style.opacity = '1';
+    aboutTextEl.classList.remove('hidden');
     aboutTextEl.style.transition = 'opacity 0.5s ease';
     aboutTextEl.style.opacity = '1';
-    await new Promise(resolve => setTimeout(resolve, 100)); // Short delay for fade-in
+    await new Promise(resolve => setTimeout(resolve, 300));
 
+    // 4. Type out the text content
     const currentLang = localStorage.getItem('lang') || 'ru';
-    const targetP = aboutTextEl.querySelector(`.text-${currentLang}`);
+    const visibleLines = aboutTextEl.querySelectorAll(`.terminal-line.text-${currentLang}`);
     
-    const originalText = targetP.innerHTML.replace(/<br\s*\/?>/gi, '\n');
-    targetP.innerHTML = ''; // Clear for typing effect
-    targetP.style.whiteSpace = 'pre-wrap'; // Respect newlines
+    for (const line of visibleLines) {
+        line.classList.remove('hidden-line');
+        const prompt = line.querySelector('.prompt').outerHTML;
+        const content = line.innerHTML.replace(prompt, '');
+        line.innerHTML = prompt; // Keep the prompt
+        await typeContent(line, content, 10); // Faster typing speed
+        await new Promise(resolve => setTimeout(resolve, 100));
+    }
 
-    await typeParagraph(targetP, originalText, 25); // Type the paragraph content
-
-    // 4. Show the final prompt
-    const finalPrompt = document.getElementById('final-prompt');
+    // 5. Show the final prompt
     finalPrompt.style.transition = 'opacity 0.5s ease';
     finalPrompt.style.opacity = '1';
 }
@@ -376,19 +373,20 @@ function typeCommand(element, text, speed) {
     });
 }
 
-function typeParagraph(element, text, speed) {
+function typeContent(element, htmlContent, speed) {
     return new Promise(resolve => {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlContent;
+        const text = tempDiv.textContent || '';
+        
         let i = 0;
         const interval = setInterval(() => {
             if (i < text.length) {
-                // Handle newline characters correctly
-                if (text[i] === '\n') {
-                    element.innerHTML += '<br>';
-                } else {
-                    element.innerHTML += text[i];
-                }
+                element.innerHTML += text[i];
                 i++;
             } else {
+                // Restore original HTML to keep links and highlights
+                element.innerHTML = element.querySelector('.prompt').outerHTML + htmlContent;
                 clearInterval(interval);
                 resolve();
             }
