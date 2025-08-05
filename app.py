@@ -1,10 +1,9 @@
-from flask import Flask, send_from_directory, render_template, request
-import os
-import requests
+from flask import Flask, render_template, request, send_from_directory
 import ipaddress
+import requests
 import user_agents
 
-app = Flask(__name__, template_folder='.')
+app = Flask(__name__)
 
 @app.route('/ip')
 def ip_lookup():
@@ -33,17 +32,17 @@ def ip_lookup():
 
     return render_template('ip.html', ip_data=ip_data, user_agent=user_agent_data)
 
-@app.route('/<path:path>')
-def send_static(path):
-    return send_from_directory('.', path)
+@app.route('/<path:filename>')
+def serve_static(filename):
+    return send_from_directory('static', filename)
 
 @app.route('/')
-def root():
-    return send_from_directory('.', 'index.html')
+def index():
+    return render_template('index.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return send_from_directory('.', '404.html'), 404
+    return render_template('404.html'), 404
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=2007) 
+    app.run(host='0.0.0.0', port=2007)
