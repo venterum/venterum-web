@@ -63,27 +63,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     langButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-        const lang = btn.dataset.lang;
+            const lang = btn.dataset.lang;
             
             langButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            if (lang === 'en') {
-                textRu.forEach(el => el.style.display = 'none');
-                textEn.forEach(el => el.style.display = 'block');
-            } else {
-                textRu.forEach(el => el.style.display = 'block');
-                textEn.forEach(el => el.style.display = 'none');
-            }
-            
             localStorage.setItem('lang', lang);
             
-            setTimeout(() => {
-                const inputCommand = document.querySelector('.input-line .command');
-                updateCursorPosition(inputCommand);
-            }, 100);
+            updateLanguage(lang);
         });
     });
+
+    function updateLanguage(lang) {
+        const textRu = document.querySelectorAll('.text-ru');
+        const textEn = document.querySelectorAll('.text-en');
+
+        if (lang === 'en') {
+            textRu.forEach(el => el.style.display = 'none');
+            textEn.forEach(el => el.style.display = 'block');
+        } else {
+            textRu.forEach(el => el.style.display = 'block');
+            textEn.forEach(el => el.style.display = 'none');
+        }
+
+        if (document.querySelector('.typing-effect')) {
+            animateTerminal();
+        }
+    }
 
     const savedTheme = localStorage.getItem('theme') || 'default';
     const savedLang = localStorage.getItem('lang') || 'ru';
@@ -169,84 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (easterEgg) {
-        easterEgg.innerHTML = `
-            <div class="frog-window">
-                <div class="frog-header">
-                    <div class="window-title">frog.jpeg</div>
-                    <div class="window-controls">
-                        <span class="dot red"></span>
-                        <span class="dot yellow"></span>
-                        <span class="dot green"></span>
-                    </div>
-                </div>
-                <div class="frog-content">
-                    <img src="assets/frog.jpg" alt="Frog" class="frog-image">
-                </div>
-            </div>
-        `;
-    
-        const frogWindow = easterEgg.querySelector('.frog-window');
-        const frogHeader = easterEgg.querySelector('.frog-header');
-        let frogIsDragging = false;
-        let frogCurrentX;
-        let frogCurrentY;
-        let frogInitialX;
-        let frogInitialY;
-        let frogXOffset = 0;
-        let frogYOffset = 0;
-
-        function frogDragStart(e) {
-            if (e.type === "touchstart") {
-                frogInitialX = e.touches[0].clientX - frogXOffset;
-                frogInitialY = e.touches[0].clientY - frogYOffset;
-            } else {
-                frogInitialX = e.clientX - frogXOffset;
-                frogInitialY = e.clientY - frogYOffset;
-            }
-
-            if (e.target.closest('.frog-header')) {
-                frogIsDragging = true;
-                frogWindow.classList.add('dragging');
-            }
-        }
-
-        function frogDrag(e) {
-            if (!frogIsDragging) return;
-
-            e.preventDefault();
-            
-            if (e.type === "touchmove") {
-                frogCurrentX = e.touches[0].clientX - frogInitialX;
-                frogCurrentY = e.touches[0].clientY - frogInitialY;
-            } else {
-                frogCurrentX = e.clientX - frogInitialX;
-                frogCurrentY = e.clientY - frogInitialY;
-            }
-
-            frogXOffset = frogCurrentX;
-            frogYOffset = frogCurrentY;
-            
-            requestAnimationFrame(() => {
-                frogWindow.style.transform = `translate(calc(-50% + ${frogCurrentX}px), calc(-50% + ${frogCurrentY}px))`;
-            });
-        }
-
-        function frogDragEnd() {
-            frogIsDragging = false;
-            frogWindow.classList.remove('dragging');
-        }
-
-        frogHeader.addEventListener('mousedown', frogDragStart);
-        document.addEventListener('mousemove', frogDrag);
-        document.addEventListener('mouseup', frogDragEnd);
-    
-        frogHeader.addEventListener('touchstart', frogDragStart);
-        document.addEventListener('touchmove', frogDrag);
-        document.addEventListener('touchend', frogDragEnd);
+        easterEgg.innerHTML = `<a href="/kernel_panic" class="easter-egg-link">тык</a>`;
     }
 
     if (document.querySelector('.typing-effect')) {
-        animateTerminal();
+        updateLanguage(savedLang);
     }
 
     const wipMessages = {
@@ -307,14 +240,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+let isAnimating = false;
 async function animateTerminal() {
+    if (isAnimating) return;
+    isAnimating = true;
     const typingEffectEl = document.querySelector('.typing-effect');
     const commandEl = document.querySelector('.command');
     const responseEl = document.querySelector('.response');
     const aboutTextEl = document.querySelector('.about-text');
     const finalPrompt = document.getElementById('final-prompt');
 
-    // 1. Initial setup
     typingEffectEl.style.opacity = '0';
     responseEl.style.opacity = '0';
     finalPrompt.style.opacity = '0';
@@ -325,13 +260,11 @@ async function animateTerminal() {
 
     await new Promise(resolve => setTimeout(resolve, 100));
 
-    // 2. Animate command prompt
     typingEffectEl.style.transition = 'opacity 0.3s ease';
     typingEffectEl.style.opacity = '1';
     await typeCommand(commandEl, commandEl.dataset.text, 50);
     await new Promise(resolve => setTimeout(resolve, 200));
 
-    // 3. Show response area
     responseEl.style.transition = 'opacity 0.5s ease';
     responseEl.style.opacity = '1';
     aboutTextEl.classList.remove('hidden');
@@ -339,7 +272,6 @@ async function animateTerminal() {
     aboutTextEl.style.opacity = '1';
     await new Promise(resolve => setTimeout(resolve, 300));
 
-    // 4. Type out the text content
     const currentLang = localStorage.getItem('lang') || 'ru';
     const visibleLines = aboutTextEl.querySelectorAll(`.terminal-line.text-${currentLang}`);
     
@@ -347,14 +279,14 @@ async function animateTerminal() {
         line.classList.remove('hidden-line');
         const prompt = line.querySelector('.prompt').outerHTML;
         const content = line.innerHTML.replace(prompt, '');
-        line.innerHTML = prompt; // Keep the prompt
-        await typeContent(line, content, 10); // Faster typing speed
+        line.innerHTML = prompt; 
+        await typeContent(line, content, 10); 
         await new Promise(resolve => setTimeout(resolve, 100));
     }
 
-    // 5. Show the final prompt
     finalPrompt.style.transition = 'opacity 0.5s ease';
     finalPrompt.style.opacity = '1';
+    isAnimating = false;
 }
 
 function typeCommand(element, text, speed) {
@@ -385,7 +317,6 @@ function typeContent(element, htmlContent, speed) {
                 element.innerHTML += text[i];
                 i++;
             } else {
-                // Restore original HTML to keep links and highlights
                 element.innerHTML = element.querySelector('.prompt').outerHTML + htmlContent;
                 clearInterval(interval);
                 resolve();

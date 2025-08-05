@@ -40,6 +40,30 @@ def serve_static(filename):
 def index():
     return render_template('index.html')
 
+@app.route('/kernel_panic')
+def kernel_panic():
+    return render_template('kernel_panic.html')
+
+@app.route('/kernel_panic/thread/1')
+def thread_grub():
+    return render_template('thread_grub.html')
+
+@app.route('/kernel_panic/404')
+def not_found_retro():
+    return render_template('404_retro.html'), 404
+
+@app.route('/kernel_panic/thread/2')
+def thread_pentium():
+    return render_template('thread_pentium.html')
+
+@app.route('/kernel_panic/thread/3')
+def thread_linux():
+    return render_template('thread_linux.html')
+
+@app.route('/kernel_panic/thread/4')
+def thread_bash():
+    return render_template('thread_bash.html')
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

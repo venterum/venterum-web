@@ -1,0 +1,118 @@
+body {
+    background: #2d2d2d url('https://web.archive.org/web/20090830035132im_/http://www.kde.org/stuff/clipart/patterns/pattern_herringbone_dark.png');
+    color: #e0e0e0;
+    font-family: 'Tahoma', 'Verdana', sans-serif;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    width: 800px;
+    margin: 20px auto;
+    border: 3px double #00ff00;
+    background-color: #1e1e1e;
+}
+
+#header {
+    background-color: #333;
+    border-bottom: 2px solid #00ff00;
+    padding: 10px;
+    text-align: center;
+}
+
+h1, h2 {
+    color: #00ff00;
+    margin: 0;
+    font-family: 'Courier New', 'Lucida Console', monospace;
+}
+
+.green {
+    color: #00ff00;
+}
+
+#nav {
+    background-color: #444;
+    padding: 5px;
+    text-align: center;
+    border-bottom: 1px solid #00ff00;
+}
+
+#nav a {
+    color: #00ff00;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+#nav a:hover {
+    text-decoration: underline;
+}
+
+#content {
+    padding: 10px;
+}
+
+.forum-category {
+    margin-bottom: 20px;
+}
+
+.forum-table {
+    background-color: #333;
+    border-collapse: collapse;
+}
+
+.forum-table th {
+    background-color: #555;
+    color: #00ff00;
+    text-align: left;
+}
+
+.forum-table td, .forum-table th {
+    border: 1px solid #00ff00;
+}
+
+.forum-table a {
+    color: #00ff00;
+}
+
+.forum-table span {
+    color: #aaa;
+    font-size: 10px;
+}
+
+#footer {
+    background-color: #333;
+    border-top: 2px solid #00ff00;
+    padding: 10px;
+    text-align: center;
+    font-size: 10px;
+}
+
+#footer p {
+    margin: 0;
+}
+
+.thread-post {
+    background-color: #333;
+    border: 1px solid #00ff00;
+    margin-bottom: 10px;
+}
+
+.post-author {
+    background-color: #555;
+    color: #00ff00;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.post-body {
+    padding: 10px;
+}
+
+.post-date {
+    display: block;
+    text-align: right;
+    font-size: 10px;
+    color: #aaa;
+    margin-top: 10px;
+}

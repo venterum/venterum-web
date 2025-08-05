@@ -276,7 +276,6 @@ body {
 
 .control-btn:hover {
     opacity: 1;
-    transform: scale(1.1);
 }
 
 .control-btn.red:hover {
@@ -306,8 +305,8 @@ body {
 
 .response {
     display: flex;
-    flex-direction: column; /* Arrange items vertically */
-    align-items: center; /* Center items horizontally */
+    flex-direction: column; 
+    align-items: center; 
     justify-content: center;
 }
 
@@ -526,7 +525,7 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive design */
+
 @media (max-width: 768px) {
     .nav {
         flex-direction: column;
@@ -605,7 +604,7 @@ body {
     }
 }
 
-/* Обновленные стили для переключателя тем */
+
 .theme-dropdown {
     position: relative;
     margin-right: 1rem;
@@ -831,6 +830,7 @@ font-family: 'IBM Plex Mono', monospace;
 
 .easter-egg.visible {
     opacity: 1;
+    pointer-events: auto;
 }
 
 .about-grid {
@@ -1593,4 +1593,15 @@ font-family: 'IBM Plex Mono', monospace;
 .cookie-button:hover {
     transform: translateY(-2px);
     box-shadow: var(--elevation-1);
+}
+
+.easter-egg-link {
+    color: var(--accent-color);
+    font-size: 2rem;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.easter-egg-link:hover {
+    text-decoration: underline;
 } 
