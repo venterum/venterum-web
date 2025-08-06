@@ -307,7 +307,6 @@
     color: var(--accent-color);
 }
 
-/* Game Styles */
 .game-wrapper {
     margin: 1rem 0;
     border: 1px solid var(--accent-color);
@@ -421,7 +420,6 @@
     z-index: 10;
 }
 
-/* Оптимизация для мобильных устройств */
 @media (max-width: 768px) {
     #game-area {
         height: 120px;
@@ -430,4 +428,4 @@
     .game-controls p {
         font-size: 0.9rem;
     }
-} 
+}

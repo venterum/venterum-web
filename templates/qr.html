@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everything-to-QR | venterum.com</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='qr.css') }}">
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="theme-tokyo">
+    <div class="noise"></div>
+    <nav class="nav">
+        <a href="/" class="logo-link"><div class="logo">venterum@web:~$</div></a>
+        <div class="nav-buttons">
+        </div>
+        <div class="controls-wrapper">
+            <button class="lang-btn" data-lang="ru">
+                <span class="lang-flag">🇷🇺</span>
+                <span class="lang-name">RU</span>
+            </button>
+            <button class="lang-btn" data-lang="en">
+                <span class="lang-flag">🇬🇧</span>
+                <span class="lang-name">EN</span>
+            </button>
+            <div class="theme-dropdown">
+                <button class="theme-toggle">
+                    <span class="current-theme">🎨</span>
+                    <span class="text-ru theme-name">Тема</span>
+                    <span class="text-en theme-name">Theme</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="theme-list">
+                    <div class="theme-group">
+                        <div class="theme-group-title text-ru">Светлые темы</div>
+                        <div class="theme-group-title text-en">Light Themes</div>
+                        <div class="theme-option" data-theme="light">
+                            <span class="theme-icon">☀️</span>
+                            <span class="text-ru theme-name">Просто светлая</span>
+                            <span class="text-en theme-name">Just Light</span>
+                        </div>
+                        <div class="theme-option" data-theme="mint">
+                            <span class="theme-icon">🌿</span>
+                            <span class="text-ru theme-name">Свежий лемонграсс</span>
+                            <span class="text-en theme-name">Fresh Lemongrass</span>
+                        </div>
+                    </div>
+                    <div class="theme-divider"></div>
+                    <div class="theme-group">
+                        <div class="theme-group-title text-ru">Темные темы</div>
+                        <div class="theme-group-title text-en">Dark Themes</div>
+                        <div class="theme-option" data-theme="default">
+                            <span class="theme-icon">🌙</span>
+                            <span class="text-ru theme-name">Просто темная</span>
+                            <span class="text-en theme-name">Just Dark</span>
+                        </div>
+                        <div class="theme-option" data-theme="tokyo">
+                            <span class="theme-icon">🗼</span>
+                            <span class="text-ru theme-name">Токийская ночь</span>
+                            <span class="text-en theme-name">Tokyo Night</span>
+                        </div>
+                        <div class="theme-option" data-theme="coral">
+                            <span class="theme-icon">🌺</span>
+                            <span class="text-ru theme-name">Коралловый риф</span>
+                            <span class="text-en theme-name">Coral Reef</span>
+                        </div>
+                        <div class="theme-option" data-theme="sage">
+                            <span class="theme-icon">🌿</span>
+                            <span class="text-ru theme-name">Сад шалфея</span>
+                            <span class="text-en theme-name">Sage Garden</span>
+                        </div>
+                        <div class="theme-option" data-theme="azure">
+                            <span class="theme-icon">🌊</span>
+                            <span class="text-ru theme-name">Лазурная волна</span>
+                            <span class="text-en theme-name">Azure Wave</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <main class="qr-page-container">
+        <div class="grid-card qr-generator-card">
+            <div class="card-header">
+                <h2><i class="fas fa-qrcode"></i>
+                    <span class="text-ru">Everything-to-QR</span>
+                    <span class="text-en">Everything-to-QR</span>
+                </h2>
+            </div>
+            <div class="card-content">
+                <textarea id="qr-data" class="qr-input" placeholder="Введите текст, ссылку или JSON..."></textarea>
+                <button id="generate-qr-btn" class="generate-btn">
+                    <span class="text-ru">Сгенерировать</span>
+                    <span class="text-en">Generate</span>
+                </button>
+            </div>
+        </div>
+        <div class="grid-card qr-result-card">
+            <div class="card-header">
+                <h2>
+                    <i class="fas fa-image"></i>
+                    <span class="text-ru">Результат</span>
+                    <span class="text-en">Result</span>
+                </h2>
+            </div>
+            <div id="qr-code-container" class="qr-code-container">
+                <span class="placeholder-text text-ru">QR-код появится здесь</span>
+                <span class="placeholder-text text-en">QR code will appear here</span>
+            </div>
+            <a id="download-qr-btn" class="download-btn" style="display: none;">
+                <span class="text-ru">Скачать</span>
+                <span class="text-en">Download</span>
+            </a>
+        </div>
+    </main>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='qr.js') }}"></script>
+</body>
+</html>

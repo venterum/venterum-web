@@ -50,7 +50,6 @@ a.logo-link {
     padding: 1.5rem;
 }
 
-/* IP Display Card */
 .ip-display-card .card-content {
     text-align: center;
 }
@@ -68,7 +67,6 @@ a.logo-link {
     line-height: 1.1;
 }
 
-/* Info Card */
 .info-card .info-grid {
     display: flex;
     flex-direction: column;
@@ -128,7 +126,6 @@ a.logo-link {
     margin-right: 0.25rem;
 }
 
-/* Map Card */
 .map-card {
     min-height: 350px;
     padding: 0;
@@ -157,7 +154,6 @@ a.logo-link {
     color: var(--text-color) !important;
 }
 
-/* Privacy Notice */
 .privacy-warning-notice {
     position: fixed;
     bottom: -150px;
@@ -219,7 +215,6 @@ a.logo-link {
     box-shadow: var(--elevation-1);
 }
 
-/* Error and Layout */
 .error-container.full-width-card {
     grid-column: 1 / -1;
     text-align: center;
@@ -252,4 +247,4 @@ a.logo-link {
 
 .text-en {
     display: none;
-} 
+}

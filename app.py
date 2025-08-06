@@ -1,9 +1,42 @@
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, jsonify
 import ipaddress
 import requests
 import user_agents
+import qrcode
+import base64
+from io import BytesIO
+from PIL import Image
+from qrcode.image.styledpil import StyledPilImage
+from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
+from qrcode.image.styles.colormasks import SolidFillColorMask
 
 app = Flask(__name__)
+
+@app.route('/qr/generate', methods=['POST'])
+def generate_qr_code():
+    data = request.json.get('data')
+    if data:
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(data)
+        qr.make(fit=True)
+
+        img = qr.make_image(fill_color="black", back_color="white")
+        
+        buffered = BytesIO()
+        img.save(buffered, format="PNG")
+        img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
+        
+        return jsonify({'qr_code': img_str})
+    return jsonify({'error': 'No data provided'}), 400
+
+@app.route('/qr')
+def qr_page():
+    return render_template('qr.html')
 
 @app.route('/ip')
 def ip_lookup():
