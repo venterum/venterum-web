@@ -87,9 +87,12 @@
         {% if ip_data.status == 'success' %}
             <div class="grid-card ip-display-card">
                 <div class="card-content">
-                    <span class="label text-ru">Ваш внешний IP адрес</span>
-                    <span class="label text-en">Your external IP address</span>
-                    <h1 class="ip-address">{{ ip_data.query }}</h1>
+                    <div class="ip-label-container">
+                        <span class="label text-ru">Ваш внешний IP адрес</span>
+                        <span class="label text-en">Your external IP address</span>
+                        <i class="fas fa-eye" id="toggle-ip"></i>
+                    </div>
+                    <h1 class="ip-address" id="ip-address" data-ip="{{ ip_data.query }}"></h1>
                 </div>
             </div>
 
@@ -218,6 +221,7 @@
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="script.js"></script>
+    <script src="ip.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Most controls are handled by script.js, we just need to init this page's specific elements

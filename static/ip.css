@@ -51,7 +51,18 @@ a.logo-link {
 }
 
 .ip-display-card .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+}
+
+.ip-label-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Adjust gap as needed */
+    margin-bottom: 0.5rem; /* Space between label and IP */
 }
 
 .ip-display-card .label {
@@ -65,7 +76,23 @@ a.logo-link {
     margin: 0.5rem 0 0 0;
     word-break: break-all;
     line-height: 1.1;
+    min-height: 1.1em; /* Prevent layout shift */
 }
+
+#toggle-ip {
+    font-size: 1.2rem; /* Match label font size */
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-left: 5px; /* Add some space to the left */
+}
+
+#toggle-ip:hover {
+    color: var(--accent-color);
+}
+
+
+
 
 .info-card .info-grid {
     display: flex;

@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (easterEgg) {
-        easterEgg.innerHTML = `<a href="/kernel_panic" class="easter-egg-link">тык</a>`;
+        easterEgg.innerHTML = `<a href="/kernel_panic" class="easter-egg-link">👾</a>`;
     }
 
     if (document.querySelector('.typing-effect')) {

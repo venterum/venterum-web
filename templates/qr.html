@@ -83,22 +83,29 @@
         </div>
     </nav>
     <main class="qr-page-container">
-        <div class="grid-card qr-generator-card">
+        <div class="grid-card">
             <div class="card-header">
                 <h2><i class="fas fa-qrcode"></i>
                     <span class="text-ru">Everything-to-QR</span>
                     <span class="text-en">Everything-to-QR</span>
+                    <div class="info-icon-wrapper">
+                        <i class="fas fa-info-circle info-icon"></i>
+                        <div class="tooltip">
+                            <span class="text-ru">Этот инструмент позволяет генерировать QR-коды из текста, ссылок или JSON. Просто введите данные в поле и нажмите "Сгенерировать".</span>
+                            <span class="text-en">This tool allows you to generate QR codes from text, links, or JSON. Just enter the data in the field and click "Generate".</span>
+                        </div>
+                    </div>
                 </h2>
             </div>
             <div class="card-content">
                 <textarea id="qr-data" class="qr-input" placeholder="Введите текст, ссылку или JSON..."></textarea>
-                <button id="generate-qr-btn" class="generate-btn">
+                <button id="generate-qr-btn" class="button">
                     <span class="text-ru">Сгенерировать</span>
                     <span class="text-en">Generate</span>
                 </button>
             </div>
         </div>
-        <div class="grid-card qr-result-card">
+        <div class="grid-card">
             <div class="card-header">
                 <h2>
                     <i class="fas fa-image"></i>
@@ -106,14 +113,16 @@
                     <span class="text-en">Result</span>
                 </h2>
             </div>
-            <div id="qr-code-container" class="qr-code-container">
-                <span class="placeholder-text text-ru">QR-код появится здесь</span>
-                <span class="placeholder-text text-en">QR code will appear here</span>
+            <div class="card-content">
+                <div id="qr-code-container" class="qr-code-container">
+                    <span class="placeholder-text text-ru">QR-код появится здесь</span>
+                    <span class="placeholder-text text-en">QR code will appear here</span>
+                </div>
+                <a id="download-qr-btn" class="button" style="display: none;">
+                    <span class="text-ru">Скачать</span>
+                    <span class="text-en">Download</span>
+                </a>
             </div>
-            <a id="download-qr-btn" class="download-btn" style="display: none;">
-                <span class="text-ru">Скачать</span>
-                <span class="text-en">Download</span>
-            </a>
         </div>
     </main>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
