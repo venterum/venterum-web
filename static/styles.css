@@ -924,6 +924,8 @@ font-family: 'IBM Plex Mono', monospace;
     background: var(--surface-1);
     padding: 0.5rem;
     border-radius: 99999px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 35px;
 }
 
 .lang-btn {
@@ -1169,13 +1171,15 @@ font-family: 'IBM Plex Mono', monospace;
     padding: 0.5rem 1rem;
     color: var(--text-color);
     text-decoration: none;
-    border-radius: var(--radius-1);
+    border-radius: 99999999px;
     transition: var(--transition);
     background: none;
     border: none;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 1rem;
     cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 35px;
 }
 
 .nav-button:hover {
