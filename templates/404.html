@@ -1,112 +1,15 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>venterum@web:~$ No such file...</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="404.css">
-    <link rel="stylesheet" href="responsive.css">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>404 - Page Not Found</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='404.css') }}">
 </head>
-<body class="theme-default">
-    <div class="noise"></div>
-    <main class="terminal">
-        <div class="terminal-header">
-            <div class="window-title">venterum@error</div>
-            <div class="window-controls">
-                <span class="dot red"></span>
-                <span class="dot yellow"></span>
-                <span class="dot green"></span>
-            </div>
-        </div>
-        <div class="terminal-content">
-            <div class="typing-effect">
-                <span class="prompt">$</span>
-                <span class="command" data-text="cowsay 'Error 404: Page Not Found'">cowsay 'Error 404: Page Not Found'</span>
-            </div>
-            <div class="response cow-message">
-                <pre>
-  _______________________________
-< Ошибка 404: Страница не найдена >
-  -------------------------------
-         \   ^__^
-          \  (oo)\_______
-             (__)\       )\/\
-                 ||----w |
-                 ||     ||
-                </pre>
-            </div>
-
-            <div class="typing-effect">
-                <span class="prompt">$</span>
-                <span class="command" data-text="dmesg | tail">dmesg | tail</span>
-            </div>
-            <div class="response error-log">
-                <p>[ERROR] Page not found in filesystem</p>
-                <p>[INFO] Possible causes:</p>
-                <ul>
-                    <li>Page was moved or deleted</li>
-                    <li>URL was mistyped</li>
-                    <li>Quantum fluctuations in the server</li>
-                    <li>Cat walked on keyboard</li>
-                </ul>
-            </div>
-
-            <div class="typing-effect">
-                <span class="prompt">$</span>
-                <span class="command" data-text="suggest">suggest</span>
-            </div>
-            <div class="response suggestions">
-                <p class="text-ru">Попробуйте:</p>
-                <div class="command-suggestions">
-                    <div class="suggestion">
-                        <a href="/" class="suggestion-link">
-                            <span class="command-text">cd /</span>
-                            <span class="link-text text-ru">Вернуться на главную</span>
-                        </a>
-                    </div>
-                    <div class="suggestion">
-                        <a href="https://github.com/venterum" class="suggestion-link">
-                            <span class="command-text">man venterum</span>
-                            <span class="link-text text-ru">Посетить GitHub</span>
-                        </a>
-                    </div>
-                    <div class="suggestion">
-                        <div class="suggestion-link error">
-                            <span class="command-text">sudo rm -rf /</span>
-                            <span class="link-text text-ru">Не делайте этого!</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="typing-effect">
-                <span class="prompt">$</span>
-                <span class="command" data-text="play-game">play-game</span>
-            </div>
-            <div class="response game-container">
-                <div class="game-wrapper">
-                    <div id="game-area">
-                        <div id="character">█</div>
-                        <div id="obstacle">▌</div>
-                        <div id="ground"></div>
-                    </div>
-                    <div class="game-controls">
-                        <p>Нажмите ПРОБЕЛ чтобы прыгать</p>
-                        <div class="game-score">
-                            <span>Счёт: </span>
-                            <span id="score">0</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-    <script src="404.js"></script>
-    <script src="responsive.js"></script>
+<body>
+    <div class="container">
+        <pre class="cow-art">{{ cow_art }}</pre>
+        <a href="/" class="home-button">Return to Homepage</a>
+    </div>
 </body>
-</html> 
+</html>
