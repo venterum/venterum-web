@@ -1,0 +1,175 @@
+@media (max-width: 768px) {
+  .terminal-header {
+    cursor: default;
+    user-select: none;
+    background: var(--surface-1);
+  }
+  
+  .terminal-header:active {
+    cursor: default;
+  }
+  
+  .nav {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 0.8rem;
+  }
+  
+  .logo {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    margin: 0;
+  }
+  
+  .nav-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-direction: column;
+    font-size: 0.85rem;
+    box-shadow: var(--elevation-1);
+    transition: all 0.2s ease;
+  }
+  
+  .nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--elevation-2);
+  }
+  
+  .nav-button i {
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .nav-button .text-ru,
+  .nav-button .text-en {
+    display: none !important;
+  }
+  
+  .controls-wrapper {
+    gap: 0.75rem;
+    padding: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .theme-dropdown {
+    margin-right: 0;
+  }
+  
+  .theme-toggle {
+    padding: 0.75rem;
+    border-radius: 12px;
+  }
+  
+  .theme-toggle .theme-name,
+  .theme-toggle .fa-chevron-down {
+    display: none;
+  }
+  
+  .lang-btn {
+    padding: 0.75rem;
+    border-radius: 12px;
+  }
+  
+  .lang-btn .lang-name {
+    display: none;
+  }
+  
+  .terminal {
+    margin: 1rem;
+    max-width: calc(100% - 2rem);
+    border-radius: var(--radius-1);
+  }
+  
+  .terminal-content {
+    padding: 1.2rem;
+  }
+  
+  .window-title {
+    font-size: 0.9rem;
+  }
+  
+  .easter-egg {
+    font-size: 1.5rem;
+  }
+  
+  .cookie-notice {
+    bottom: 1rem;
+    padding: 1.2rem;
+    max-width: 95%;
+  }
+  
+  .cookie-header {
+    font-size: 1.1rem;
+  }
+  
+  .cookie-text {
+    font-size: 0.95rem;
+  }
+  
+  .cookie-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .about-text {
+    padding: 0 1rem;
+  }
+  
+  .terminal-line {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-button {
+    width: 55px;
+    height: 55px;
+    border-radius: 14px;
+  }
+  
+  .nav-button i {
+    font-size: 1.3rem;
+  }
+  
+  .controls-wrapper {
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+  
+  .terminal {
+    margin: 0.75rem;
+    max-width: calc(100% - 1.5rem);
+  }
+  
+  .terminal-header {
+    padding: 0.6rem;
+  }
+  
+  .window-title {
+    font-size: 0.85rem;
+  }
+  
+  .terminal-content {
+    padding: 1rem;
+  }
+  
+  .cookie-notice {
+    bottom: 0.75rem;
+    padding: 1rem;
+  }
+}

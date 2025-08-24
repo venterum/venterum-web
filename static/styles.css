@@ -539,12 +539,6 @@ body {
         gap: 1rem;
     }
 
-    .terminal {
-        margin: 0.5rem;
-        max-width: calc(100% - 2rem);
-        border-radius: var(--radius-1);
-    }
-
     .skills-grid {
         grid-template-columns: 1fr;
     }
