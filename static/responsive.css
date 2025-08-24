@@ -91,7 +91,6 @@
   .terminal {
     margin: 1rem;
     max-width: calc(100% - 2rem);
-    border-radius: var(--radius-1);
   }
   
   .terminal-content {
