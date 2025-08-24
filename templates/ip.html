@@ -257,10 +257,17 @@
                 }, 1500);
             }
             
-            privacyNotice.querySelector('.notice-accept').addEventListener('click', () => {
+            const acceptButton = privacyNotice.querySelector('.notice-accept');
+            const handleClick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 localStorage.setItem('privacyNoticeShown', 'true');
                 privacyNotice.classList.remove('visible');
-            });
+            };
+            
+            // Add both click and touch events for better mobile support
+            acceptButton.addEventListener('click', handleClick);
+            acceptButton.addEventListener('touchend', handleClick);
         }
 
         {% if ip_data.status == 'success' %}

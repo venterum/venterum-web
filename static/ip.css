@@ -183,7 +183,7 @@ a.logo-link {
 
 .privacy-warning-notice {
     position: fixed;
-    bottom: -150px;
+    bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
     background: var(--terminal-bg);
@@ -194,12 +194,15 @@ a.logo-link {
     box-shadow: var(--elevation-1);
     max-width: 550px;
     width: 90%;
-    transition: bottom 0.5s ease-in-out;
+    display: none;
+    animation: fadeIn 0.3s ease-out;
     backdrop-filter: blur(10px);
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
 }
 
 .privacy-warning-notice.visible {
-    bottom: 2rem;
+    display: block;
 }
 
 .privacy-warning-notice .notice-content {
