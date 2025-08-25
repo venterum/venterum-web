@@ -589,11 +589,6 @@ body {
         flex-wrap: wrap;
         justify-content: center;
     }
-
-    .theme-toggle .theme-name,
-    .lang-btn .lang-name {
-        display: none;
-    }
 }
 
 @media (max-width: 480px) {
