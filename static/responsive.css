@@ -115,40 +115,8 @@
   }
 }
 
-@media (max-width: 480px) {
-  .nav-button {
-    width: 55px;
-    height: 55px;
-    border-radius: 14px;
-  }
-  
-  .nav-button i {
-    font-size: 1.3rem;
-  }
-  
-  .controls-wrapper {
-    gap: 0.5rem;
-    padding: 0.5rem;
-  }
-  
-  .terminal {
-    margin: 0.75rem;
-  }
-  
-  .terminal-header {
-    padding: 0.6rem;
-  }
-  
-  .window-title {
-    font-size: 0.85rem;
-  }
-  
-  .terminal-content {
-    padding: 1rem;
-  }
-  
-  .cookie-notice {
-    bottom: 0.75rem;
-    padding: 1rem;
+@media (max-width: 500px) {
+  .lang-name {
+     display: none;
   }
 }
