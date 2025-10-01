@@ -4,34 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>venterum@web:~$ ./iplookup</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="ip.css">
-    <link rel="stylesheet" href="ip-responsive.css">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='ip.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
-<body class="theme-tokyo">
+<body class="theme-default">
     <div class="noise"></div>
     <nav class="nav">
-        <a href="/" class="logo-link"><div class="logo">venterum@web:~$</div></a>
+        <div class="logo">venterum@web:~$</div>
         <div class="nav-buttons">
-            <button class="nav-button wip-button">
-                <i class="fas fa-book"></i>
-                <span class="text-ru">Блог</span>
-                <span class="text-en">Blog</span>
-            </button>
+            <a href="/" class="nav-button">
+                <i class="fas fa-home"></i>
+                <span class="text-ru">Главная</span>
+                <span class="text-en">Home</span>
+            </a>
             <a href="https://github.com/venterum" target="_blank" class="nav-button">
                 <i class="fab fa-github"></i>
                 <span class="text-ru">GitHub</span>
                 <span class="text-en">GitHub</span>
-            </a>
-            <a href="/ip" class="nav-button active">
-                <i class="fas fa-location-arrow"></i>
-                <span class="text-ru">IP Lookup</span>
-                <span class="text-en">IP Lookup</span>
             </a>
             <a href="/qr" class="nav-button">
                 <i class="fas fa-qrcode"></i>
@@ -40,14 +36,14 @@
             </a>
         </div>
         <div class="controls-wrapper">
-            <button class="lang-btn" data-lang="ru">
-                <span class="lang-flag">🇷🇺</span>
-                <span class="lang-name">Русский</span>
-            </button>
-            <button class="lang-btn" data-lang="en">
-                <span class="lang-flag">🇬🇧</span>
-                <span class="lang-name">English</span>
-            </button>
+                            <button class="lang-btn" data-lang="ru">
+                    <span class="lang-flag">🇷🇺</span>
+                    <span class="lang-name">Русский</span>
+                                    </button>
+                <button class="lang-btn" data-lang="en">
+                        <span class="lang-flag">🇬🇧</span>
+                        <span class="lang-name">English</span>
+                        </button>
             <div class="theme-dropdown">
                 <button class="theme-toggle">
                     <span class="current-theme">🎨</span>
@@ -241,11 +237,11 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="script.js"></script>
-    <script src="ip.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='responsive.js') }}"></script>
+    <script src="{{ url_for('static', filename='ip.js') }}"></script>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Most controls are handled by script.js, we just need to init this page's specific elements
         const savedLang = localStorage.getItem('lang') || 'ru';
         
         const privacyNotice = document.querySelector('.privacy-warning-notice');

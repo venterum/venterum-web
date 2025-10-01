@@ -6,22 +6,23 @@
     <title>venterum@web:~$ ./qr</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='qr.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='qr-responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
+
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="theme-tokyo">
+<body class="theme-default">
     <div class="noise"></div>
     <nav class="nav">
-        <a href="/" class="logo-link"><div class="logo">venterum@web:~$</div></a>
+        <div class="logo">venterum@web:~$</div>
         <div class="nav-buttons">
-            <button class="nav-button wip-button">
-                <i class="fas fa-book"></i>
-                <span class="text-ru">Блог</span>
-                <span class="text-en">Blog</span>
-            </button>
+            <a href="/" class="nav-button">
+                <i class="fas fa-home"></i>
+                <span class="text-ru">Главная</span>
+                <span class="text-en">Home</span>
+            </a>
             <a href="https://github.com/venterum" target="_blank" class="nav-button">
                 <i class="fab fa-github"></i>
                 <span class="text-ru">GitHub</span>
@@ -32,21 +33,16 @@
                 <span class="text-ru">IP Lookup</span>
                 <span class="text-en">IP Lookup</span>
             </a>
-            <a href="/qr" class="nav-button active">
-                <i class="fas fa-qrcode"></i>
-                <span class="text-ru">Everything-to-QR</span>
-                <span class="text-en">Everything-to-QR</span>
-            </a>
         </div>
         <div class="controls-wrapper">
-            <button class="lang-btn" data-lang="ru">
-                <span class="lang-flag">🇷🇺</span>
-                <span class="lang-name">Русский</span>
-            </button>
-            <button class="lang-btn" data-lang="en">
-                <span class="lang-flag">🇬🇧</span>
-                <span class="lang-name">English</span>
-            </button>
+                            <button class="lang-btn" data-lang="ru">
+                    <span class="lang-flag">🇷🇺</span>
+                    <span class="lang-name">Русский</span>
+                                    </button>
+                <button class="lang-btn" data-lang="en">
+                        <span class="lang-flag">🇬🇧</span>
+                        <span class="lang-name">English</span>
+                        </button>
             <div class="theme-dropdown">
                 <button class="theme-toggle">
                     <span class="current-theme">🎨</span>
@@ -147,6 +143,7 @@
         </div>
     </main>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='responsive.js') }}"></script>
     <script src="{{ url_for('static', filename='qr.js') }}"></script>
 </body>
 </html>
