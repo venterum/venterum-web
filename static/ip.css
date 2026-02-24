@@ -16,6 +16,76 @@ a.logo-link {
     animation: fadeIn 0.5s ease-out;
 }
 
+.ip-tools-card .card-content {
+    padding: 1rem 1.2rem;
+}
+
+.ip-query-form .label {
+    margin-bottom: 0.55rem;
+    display: block;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    opacity: 0.75;
+}
+
+.ip-query-row {
+    display: flex;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+}
+
+.ip-query-input {
+    flex: 1 1 240px;
+    min-height: 42px;
+    border-radius: 999px;
+    border: 1px solid var(--surface-2);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-color);
+    padding: 0 0.9rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95rem;
+}
+
+.ip-query-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.ip-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.ip-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: var(--accent-color);
+    color: var(--bg-color);
+    text-decoration: none;
+    cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.88rem;
+    transition: var(--transition);
+}
+
+.ip-action-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--elevation-1);
+}
+
+.ip-action-btn.secondary {
+    background: transparent;
+    color: var(--text-color);
+}
+
 .grid-card {
     background: var(--surface-1);
     border-radius: var(--radius-2);
@@ -166,7 +236,11 @@ a.logo-link {
     width: 100%;
 }
 
-.leaflet-control-attribution, .leaflet-control-zoom {
+.leaflet-control-attribution.leaflet-control {
+    display: none !important;
+}
+
+.leaflet-control-zoom {
     background: var(--terminal-bg) !important;
     color: var(--text-color) !important;
 }
@@ -179,6 +253,12 @@ a.logo-link {
 
 .leaflet-container a.leaflet-popup-close-button {
     color: var(--text-color) !important;
+}
+
+.map-note {
+    padding: 0.65rem 1rem 0.9rem;
+    font-size: 0.78rem;
+    opacity: 0.75;
 }
 
 .privacy-warning-notice {
@@ -255,17 +335,30 @@ a.logo-link {
 @media (min-width: 900px) {
     .ip-page-container {
         grid-template-columns: 1.2fr 1.5fr;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto auto 1fr;
         grid-template-areas:
+            "tools      info"
             "ip-display info"
             "map        info";
     }
+    .ip-tools-card { grid-area: tools; }
     .ip-display-card { grid-area: ip-display; }
     .map-card { grid-area: map; }
     .info-card { grid-area: info; }
 
     .info-card .info-grid {
         padding: 1.5rem 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .ip-query-row {
+        flex-direction: column;
+    }
+
+    .ip-query-input,
+    .ip-action-btn {
+        width: 100%;
     }
 }
 

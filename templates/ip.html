@@ -29,6 +29,11 @@
                 <span class="text-ru">GitHub</span>
                 <span class="text-en">GitHub</span>
             </a>
+            <a href="/#blog" class="nav-button">
+                <i class="fas fa-newspaper"></i>
+                <span class="text-ru">Блог</span>
+                <span class="text-en">Blog</span>
+            </a>
             <a href="/qr" class="nav-button">
                 <i class="fas fa-qrcode"></i>
                 <span class="text-ru">Everything-to-QR</span>
@@ -101,6 +106,35 @@
         </div>
     </nav>
     <main class="ip-page-container">
+        <div class="grid-card ip-tools-card">
+            <div class="card-content">
+                <form class="ip-query-form" action="/ip" method="get">
+                    <label for="ip-query" class="label text-ru">Проверить другой IP</label>
+                    <label for="ip-query" class="label text-en">Check another IP</label>
+                    <div class="ip-query-row">
+                        <input
+                            id="ip-query"
+                            name="ip"
+                            type="text"
+                            class="ip-query-input"
+                            value="{{ requested_ip }}"
+                            placeholder="8.8.8.8"
+                            autocomplete="off"
+                            inputmode="decimal"
+                        >
+                        <button type="submit" class="ip-action-btn">
+                            <span class="text-ru">Проверить</span>
+                            <span class="text-en">Lookup</span>
+                        </button>
+                        <a href="/ip" class="ip-action-btn secondary">
+                            <span class="text-ru">Мой IP</span>
+                            <span class="text-en">My IP</span>
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         {% if ip_data.status == 'success' %}
             <div class="grid-card ip-display-card">
                 <div class="card-content">
@@ -110,6 +144,16 @@
                         <i class="fas fa-eye" id="toggle-ip"></i>
                     </div>
                     <h1 class="ip-address" id="ip-address" data-ip="{{ ip_data.query }}"></h1>
+                    <div class="ip-actions">
+                        <button type="button" class="ip-action-btn" id="copy-ip-btn">
+                            <span class="text-ru">Скопировать</span>
+                            <span class="text-en">Copy</span>
+                        </button>
+                        <a href="/ip{% if requested_ip %}?ip={{ requested_ip }}{% endif %}" class="ip-action-btn secondary">
+                            <span class="text-ru">Обновить</span>
+                            <span class="text-en">Refresh</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -121,6 +165,10 @@
                     </h2>
                 </div>
                 <div id="map"></div>
+                <div class="map-note">
+                    <span class="text-ru">Геолокация по IP приблизительная.</span>
+                    <span class="text-en">IP geolocation is approximate.</span>
+                </div>
             </div>
 
             <div class="grid-card info-card">
@@ -136,16 +184,52 @@
                         <h3 class="group-title text-en">Network</h3>
                         <div class="info-group-items">
                             <div class="info-item">
+                                <span class="label text-ru">IP-адрес</span><span class="label text-en">IP Address</span>
+                                <span class="value">{{ ip_data.query or '—' }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Континент</span><span class="label text-en">Continent</span>
+                                <span class="value">{{ ip_data.continent or '—' }}{% if ip_data.continentCode %} ({{ ip_data.continentCode }}){% endif %}</span>
+                            </div>
+                            <div class="info-item">
                                 <span class="label text-ru">Страна</span><span class="label text-en">Country</span>
-                                <span class="value"><span class="flag-emoji"></span> {{ ip_data.country }}</span>
+                                <span class="value"><span class="flag-emoji"></span> {{ ip_data.country or '—' }}</span>
                             </div>
                             <div class="info-item">
                                 <span class="label text-ru">Город</span><span class="label text-en">City</span>
-                                <span class="value">{{ ip_data.city }}, {{ ip_data.regionName }}</span>
+                                <span class="value">{{ ip_data.city or '—' }}, {{ ip_data.regionName or '—' }}{% if ip_data.region %} ({{ ip_data.region }}){% endif %}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Район / Индекс</span><span class="label text-en">District / ZIP</span>
+                                <span class="value">{{ ip_data.district or '—' }} / {{ ip_data.zip or '—' }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Координаты</span><span class="label text-en">Coordinates</span>
+                                <span class="value">{{ ip_data.lat }}, {{ ip_data.lon }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Таймзона / Смещение</span><span class="label text-en">Timezone / Offset</span>
+                                <span class="value">{{ ip_data.timezone or '—' }} / {{ ip_data.offset or '—' }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Валюта</span><span class="label text-en">Currency</span>
+                                <span class="value">{{ ip_data.currency or '—' }}</span>
                             </div>
                             <div class="info-item">
                                 <span class="label text-ru">Провайдер</span><span class="label text-en">ISP</span>
-                                <span class="value">{{ ip_data.isp }}</span>
+                                <span class="value">{{ ip_data.isp or '—' }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Организация</span><span class="label text-en">Organization</span>
+                                <span class="value">{{ ip_data.org or '—' }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">ASN / AS Name</span><span class="label text-en">ASN / AS Name</span>
+                                <span class="value">{{ ip_data.as or '—' }} / {{ ip_data.asname or '—' }}</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label text-ru">Reverse DNS</span><span class="label text-en">Reverse DNS</span>
+                                <span class="value">{{ ip_data.reverse or '—' }}</span>
                             </div>
                             <div class="info-item">
                                 <span class="label text-ru">Тип подключения</span><span class="label text-en">Connection Type</span>
@@ -286,7 +370,7 @@
             }
 
             // Init Map
-            const map = L.map('map').setView([lat, lon], 10);
+            const map = L.map('map', { attributionControl: false }).setView([lat, lon], 10);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 maxZoom: 19,
                 attribution: '© OpenStreetMap'

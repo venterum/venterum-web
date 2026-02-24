@@ -210,9 +210,11 @@ def qr_page():
 
 @app.route("/ip")
 def ip_lookup():
-    ip_address = request.headers.get("X-Forwarded-For", request.remote_addr).split(
+    client_ip = request.headers.get("X-Forwarded-For", request.remote_addr).split(
         ","
     )[0].strip()
+    requested_ip = request.args.get("ip", "").strip()
+    ip_address = requested_ip or client_ip
 
     query_ip = ip_address
     try:
@@ -220,12 +222,28 @@ def ip_lookup():
         if ip_obj.is_private or ip_obj.is_loopback:
             query_ip = ""
     except ValueError:
-        pass
+        # If custom input is not a valid IP, return a friendly error state.
+        if requested_ip:
+            ua_string = request.headers.get("User-Agent", "")
+            user_agent_data = user_agents.parse(ua_string)
+            ip_data = {
+                "status": "fail",
+                "message": "Invalid IP format",
+                "query": requested_ip,
+            }
+            return render_template(
+                "ip.html",
+                ip_data=ip_data,
+                user_agent=user_agent_data,
+                requested_ip=requested_ip,
+            )
+        query_ip = ""
 
     api_url = (
         f"http://ip-api.com/json/{query_ip}"
-        "?fields=status,message,country,countryCode,regionName,city,lat,lon,"
-        "timezone,isp,org,query,proxy,hosting,mobile"
+        "?fields=status,message,continent,continentCode,country,countryCode,region,"
+        "regionName,city,district,zip,lat,lon,timezone,offset,currency,isp,org,"
+        "as,asname,reverse,query,proxy,hosting,mobile"
     )
 
     ip_data = {}
@@ -239,7 +257,12 @@ def ip_lookup():
     ua_string = request.headers.get("User-Agent", "")
     user_agent_data = user_agents.parse(ua_string)
 
-    return render_template("ip.html", ip_data=ip_data, user_agent=user_agent_data)
+    return render_template(
+        "ip.html",
+        ip_data=ip_data,
+        user_agent=user_agent_data,
+        requested_ip=requested_ip,
+    )
 
 
 @app.route("/get_news")
