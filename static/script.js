@@ -238,6 +238,134 @@ document.addEventListener('DOMContentLoaded', () => {
             cookieNotice.classList.remove('visible');
         });
     }
+
+    const blogGrid = document.getElementById('blog-grid');
+    if (blogGrid) {
+        fetch('/get_news')
+            .then(response => response.ok ? response.json() : null)
+            .then(data => {
+                if (!Array.isArray(data) || data.length === 0) {
+                    return;
+                }
+
+                blogGrid.innerHTML = '';
+
+                data.forEach(item => {
+                    const card = document.createElement('article');
+                    card.className = 'blog-card';
+
+                    const header = document.createElement('div');
+                    header.className = 'blog-card-header';
+
+                    const channel = document.createElement('div');
+                    channel.className = 'blog-channel';
+
+                    if (item.channel && item.channel.avatar_url) {
+                        const avatar = document.createElement('img');
+                        avatar.className = 'blog-avatar';
+                        avatar.src = item.channel.avatar_url;
+                        avatar.alt = item.channel.name || 'Telegram*';
+                        channel.appendChild(avatar);
+                    }
+
+                    const channelText = document.createElement('div');
+                    channelText.className = 'blog-channel-text';
+
+                    const channelName = document.createElement('div');
+                    channelName.className = 'blog-channel-name';
+                    channelName.textContent = (item.channel && item.channel.name) ? item.channel.name : 'Telegram*';
+
+                    const dateRow = document.createElement('div');
+                    dateRow.className = 'blog-date';
+
+                    const date = new Date(item.datetime);
+                    const dateRu = document.createElement('span');
+                    dateRu.className = 'text-ru';
+                    dateRu.textContent = date.toLocaleDateString('ru-RU', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric'
+                    });
+
+                    const dateEn = document.createElement('span');
+                    dateEn.className = 'text-en';
+                    dateEn.textContent = date.toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    });
+
+                    dateRow.appendChild(dateRu);
+                    dateRow.appendChild(dateEn);
+
+                    channelText.appendChild(channelName);
+                    channelText.appendChild(dateRow);
+                    channel.appendChild(channelText);
+                    header.appendChild(channel);
+
+                    if (item.url) {
+                        const openLink = document.createElement('a');
+                        openLink.className = 'blog-open-btn';
+                        openLink.href = item.url;
+                        openLink.target = '_blank';
+                        openLink.rel = 'noopener';
+
+                        const openLinkRu = document.createElement('span');
+                        openLinkRu.className = 'text-ru';
+                        openLinkRu.textContent = 'Открыть';
+
+                        const openLinkEn = document.createElement('span');
+                        openLinkEn.className = 'text-en';
+                        openLinkEn.textContent = 'Open';
+
+                        openLink.appendChild(openLinkRu);
+                        openLink.appendChild(openLinkEn);
+                        header.appendChild(openLink);
+                    }
+
+                    card.appendChild(header);
+
+                    if (item.image_url) {
+                        const image = document.createElement('img');
+                        image.className = 'blog-image';
+                        image.src = item.image_url;
+                        image.alt = '';
+                        card.appendChild(image);
+                    }
+
+                    if (item.content) {
+                        const content = document.createElement('div');
+                        content.className = 'blog-content';
+                        content.innerHTML = item.content;
+
+                        const contentText = (content.textContent || '').trim();
+                        if (contentText.length > 0) {
+                            content.querySelectorAll('a').forEach(link => {
+                                link.target = '_blank';
+                                link.rel = 'noopener noreferrer nofollow';
+                            });
+                            card.appendChild(content);
+                        }
+                    }
+
+                    blogGrid.appendChild(card);
+                });
+
+                const currentLang = localStorage.getItem('lang') || 'ru';
+                const ruNodes = blogGrid.querySelectorAll('.text-ru');
+                const enNodes = blogGrid.querySelectorAll('.text-en');
+                if (currentLang === 'en') {
+                    ruNodes.forEach(el => el.style.display = 'none');
+                    enNodes.forEach(el => el.style.display = 'block');
+                } else {
+                    ruNodes.forEach(el => el.style.display = 'block');
+                    enNodes.forEach(el => el.style.display = 'none');
+                }
+            })
+            .catch(() => {
+                // Keep placeholders on failure
+            });
+    }
 });
 
 let isAnimating = false;

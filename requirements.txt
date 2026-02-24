@@ -3,3 +3,4 @@ requests
 user_agents
 qrcode[pil]
 cowsay
+beautifulsoup4

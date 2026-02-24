@@ -113,6 +113,32 @@
     font-size: 0.9rem;
     line-height: 1.5;
   }
+
+  .blog-section {
+    margin: 2.5rem auto 1.5rem;
+  }
+
+  .blog-shell {
+    padding: 1.5rem;
+  }
+
+  .blog-open-btn {
+    padding: 0.22rem 0.46rem;
+    font-size: 0.74rem;
+  }
+
+  .blog-header {
+    gap: 1.5rem;
+  }
+
+  .blog-grid {
+    column-count: 2;
+    column-gap: 1.25rem;
+  }
+
+  .blog-image {
+    height: 160px;
+  }
 }
 
 @media (max-width: 500px) {

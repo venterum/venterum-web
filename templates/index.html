@@ -21,6 +21,11 @@
                 <span class="text-ru">GitHub</span>
                 <span class="text-en">GitHub</span>
             </a>
+            <a href="#blog" class="nav-button">
+                <i class="fas fa-newspaper"></i>
+                <span class="text-ru">Блог</span>
+                <span class="text-en">Blog</span>
+            </a>
             <a href="/ip" class="nav-button">
                 <i class="fas fa-location-arrow"></i>
                 <span class="text-ru">IP Lookup</span>
@@ -102,7 +107,7 @@
         <div class="terminal-header">
             <div class="window-title">venterum@web: ~</div>
             <div class="window-controls">
-                <button class="control-btn red" id="minimize-btn">×</button>
+                <button class="control-btn red" id="minimize-btn" aria-label="Close terminal">✕</button>
             </div>
         </div>
         <div class="terminal-content">
@@ -119,21 +124,25 @@ __ |/ / /  __/  / / / /_ /  __/  /   / /_/ /_  / / / / /
 _____/  \___//_/ /_/\__/ \___//_/    \__,_/ /_/ /_/ /_/
                 </pre>
                 <div class="about-text hidden" id="about-text">
-                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Привет! Спасибо, что заглянули ко мне на сайт!</div>
-                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Меня зовут Евгений, я изучаю <span class="highlight">программирование</span>, <span class="highlight">кибербезопасность</span> и связанные с ними дисциплины, создаю интересные вещи, которыми иногда делюсь с миром.</div>
+                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Привет. Спасибо, что заглянули ко мне на сайт 😁</div>
+                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Меня зовут Евгений. Живу и учусь в Санкт-Петербурге. Изучаю <span class="highlight">DevOps</span> и <span class="highlight">сетевую инженерию</span>, в том числе Linux, сети, маршрутизацию и фильтрацию трафика.</div>
                     <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Мои принципы:</div>
-                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Приватность - это право, а не привилегия</div>
-                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Постоянное обучение - ключ к развитию</div>
-                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Главное, что бы было весело</div>
-                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Переходите на мой <a href="https://github.com/venterum" target="_blank" class="highlight-link">Github</a> для того, чтобы увидеть больше.</div>
+                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Приватность — базовое право каждого</div>
+                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Важнейшая часть любой системы — возможность её контролировать</div>
+                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Децентрализация и open-source — это база</div>
+                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Технологии можно и нужно понимать изнутри</div>
+                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Переходите на мой <a href="https://github.com/venterum" target="_blank" class="highlight-link">GitHub</a> для того, чтобы увидеть больше.</div>
+                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> А ещё есть мой <a href="https://t.me/vntrum_public" target="_blank" class="highlight-link">Telegram*</a>.</div>
 
-                    <div class="terminal-line text-en"><span class="prompt">&gt;</span> Hi! Thanks for stopping by.</div>
-                    <div class="terminal-line text-en"><span class="prompt">&gt;</span> I’m Evgeny — I explore <span class="highlight">programming</span>, <span class="highlight">cybersecurity</span>, and related fields, creating things I sometimes share with the world.</div>
+                    <div class="terminal-line text-en"><span class="prompt">&gt;</span> Hi. Thanks for stopping by 😁</div>
+                    <div class="terminal-line text-en"><span class="prompt">&gt;</span> I’m Evgeny. I live and study in Saint Petersburg. I focus on <span class="highlight">DevOps</span> and <span class="highlight">network engineering</span>, including Linux, networking, routing, and traffic filtering.</div>
                     <div class="terminal-line text-en"><span class="prompt">&gt;</span> My principles:</div>
-                    <div class="terminal-line text-en principles"><span class="prompt">*</span> Privacy is a right, not a privilege</div>
-                    <div class="terminal-line text-en principles"><span class="prompt">*</span> Keep learning, keep growing</div>
-                    <div class="terminal-line text-en principles"><span class="prompt">*</span> Have fun along the way</div>
+                    <div class="terminal-line text-en principles"><span class="prompt">*</span> Privacy is a fundamental right</div>
+                    <div class="terminal-line text-en principles"><span class="prompt">*</span> The most important part of any system is the ability to control it</div>
+                    <div class="terminal-line text-en principles"><span class="prompt">*</span> Decentralization and open source are the baseline</div>
+                    <div class="terminal-line text-en principles"><span class="prompt">*</span> Technologies should be understood from the inside out</div>
                     <div class="terminal-line text-en"><span class="prompt">&gt;</span> Visit my <a href="https://github.com/venterum" target="_blank" class="highlight-link">GitHub</a> to see more.</div>
+                    <div class="terminal-line text-en"><span class="prompt">&gt;</span> You can also find me on <a href="https://t.me/vntrum_public" target="_blank" class="highlight-link">Telegram*</a>.</div>
                 </div>
             </div>
             <div class="input-line" id="final-prompt" style="opacity: 0;">
@@ -142,6 +151,73 @@ _____/  \___//_/ /_/\__/ \___//_/    \__,_/ /_/ /_/ /_/
             </div>
         </div>
     </main>
+
+    <section class="blog-section" id="blog">
+        <div class="blog-shell">
+            <div class="blog-header">
+                <div class="blog-title">
+                    <div class="blog-kicker">
+                        <span class="blog-badge text-ru">Лента</span>
+                        <span class="blog-badge text-en">Feed</span>
+                        <span class="blog-label text-ru">t.me/vntrum_public</span>
+                        <span class="blog-label text-en">t.me/vntrum_public</span>
+                    </div>
+                    <h2 class="text-ru">Последние посты</h2>
+                    <h2 class="text-en">Latest Posts</h2>
+                    <p class="text-ru">Посты подгружаются автоматически из Telegram*. Всё самое свежее — здесь.</p>
+                    <p class="text-en">Posts are auto-loaded from Telegram*. The freshest updates live here.</p>
+                </div>
+                <div class="blog-cta">
+                    <a class="tg-link" href="https://t.me/vntrum_public" target="_blank" rel="noopener">
+                        <i class="fab fa-telegram"></i>
+                        <span class="text-ru">Подписаться в Telegram*</span>
+                        <span class="text-en">Follow on Telegram*</span>
+                    </a>
+                    <div class="blog-note text-ru">* Заготовка под текст о том, что деятельность организации<br>признана экстремистской и запрещена на территории РФ.</div>
+                    <div class="blog-note text-en">* Placeholder for text stating that the organization's activity<br>is recognized as extremist and banned in the Russian Federation.</div>
+                </div>
+            </div>
+
+            <div class="blog-grid" id="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-meta">
+                        <span class="text-ru">Плейсхолдер · 3 мин</span>
+                        <span class="text-en">Placeholder · 3 min</span>
+                        <span class="blog-chip">Security</span>
+                    </div>
+                    <h3 class="text-ru">Как я собираю заметки по инфобезу</h3>
+                    <h3 class="text-en">How I collect infosec notes</h3>
+                    <p class="text-ru">Короткий формат, чек-листы, ссылки и то, что реально пригодилось в работе.</p>
+                    <p class="text-en">Short format, checklists, links, and what actually helped in practice.</p>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-meta">
+                        <span class="text-ru">Плейсхолдер · 5 мин</span>
+                        <span class="text-en">Placeholder · 5 min</span>
+                        <span class="blog-chip">Dev</span>
+                    </div>
+                    <h3 class="text-ru">Мой легкий стек для пет-проектов</h3>
+                    <h3 class="text-en">My lightweight stack for side projects</h3>
+                    <p class="text-ru">Что беру по умолчанию, когда нужно быстро собрать MVP.</p>
+                    <p class="text-en">What I pick by default when I need a quick MVP.</p>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-meta">
+                        <span class="text-ru">Плейсхолдер · 4 мин</span>
+                        <span class="text-en">Placeholder · 4 min</span>
+                        <span class="blog-chip">Tools</span>
+                    </div>
+                    <h3 class="text-ru">Три утилиты, которые ускорили мою рутину</h3>
+                    <h3 class="text-en">Three tools that sped up my routine</h3>
+                    <p class="text-ru">Мини-обзор плюс сценарии использования без лишней воды.</p>
+                    <p class="text-en">Mini-review plus usage scenarios without extra fluff.</p>
+                </article>
+            </div>
+            <div class="blog-tail-note">© И так далее до 2100 года, потом обновлю. Больше постов в канале (<a href="https://t.me/vntrum_public" target="_blank" rel="noopener">гиперссылка</a>).</div>
+        </div>
+    </section>
     <div class="easter-egg">
         <span class="text-ru">Кстати, я использую Arch</span>
         <span class="text-en">I use Arch btw</span>
