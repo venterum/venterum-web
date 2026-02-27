@@ -1733,11 +1733,18 @@ font-family: 'IBM Plex Mono', monospace;
 }
 
 .blog-grid {
-    column-count: 2;
-    column-gap: 1.75rem;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem;
     position: relative;
     z-index: 1;
     margin-top: 0;
+}
+
+.blog-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
 }
 
 .blog-tail-note {
@@ -1759,14 +1766,13 @@ font-family: 'IBM Plex Mono', monospace;
     padding: 1.7rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: var(--elevation-1);
-    display: inline-block;
+    display: block;
     transition: var(--transition);
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
     width: 100%;
-    margin: 0 0 1.75rem;
-    break-inside: avoid;
+    margin: 0;
 }
 
 .blog-open-btn {

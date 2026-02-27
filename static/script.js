@@ -239,8 +239,50 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function arrangeBlogCards(blogGrid) {
+        if (!blogGrid) return;
+
+        const cards = Array.from(blogGrid.querySelectorAll('.blog-card'));
+        if (cards.length === 0) return;
+
+        const isSingleColumn = window.matchMedia('(max-width: 600px)').matches;
+
+        blogGrid.innerHTML = '';
+        if (isSingleColumn) {
+            cards.forEach(card => blogGrid.appendChild(card));
+            return;
+        }
+
+        const leftColumn = document.createElement('div');
+        leftColumn.className = 'blog-column';
+
+        const rightColumn = document.createElement('div');
+        rightColumn.className = 'blog-column';
+
+        cards.forEach((card, index) => {
+            if (index % 2 === 0) {
+                leftColumn.appendChild(card);
+            } else {
+                rightColumn.appendChild(card);
+            }
+        });
+
+        blogGrid.appendChild(leftColumn);
+        blogGrid.appendChild(rightColumn);
+    }
+
     const blogGrid = document.getElementById('blog-grid');
     if (blogGrid) {
+        arrangeBlogCards(blogGrid);
+
+        let blogLayoutResizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(blogLayoutResizeTimeout);
+            blogLayoutResizeTimeout = setTimeout(() => {
+                arrangeBlogCards(blogGrid);
+            }, 120);
+        });
+
         fetch('/get_news')
             .then(response => response.ok ? response.json() : null)
             .then(data => {
@@ -350,6 +392,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     blogGrid.appendChild(card);
                 });
+
+                arrangeBlogCards(blogGrid);
 
                 const currentLang = localStorage.getItem('lang') || 'ru';
                 const ruNodes = blogGrid.querySelectorAll('.text-ru');
