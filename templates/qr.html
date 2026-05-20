@@ -105,9 +105,10 @@
         </div>
     </nav>
     <main class="qr-page-container">
-        <div class="grid-card">
+        <div class="grid-card qr-input-card">
             <div class="card-header">
-                <h2><i class="fas fa-qrcode"></i>
+                <h2>
+                    <i class="fas fa-qrcode"></i>
                     <span class="text-ru">Everything-to-QR</span>
                     <span class="text-en">Everything-to-QR</span>
                     <div class="info-icon-wrapper">
@@ -120,14 +121,39 @@
                 </h2>
             </div>
             <div class="card-content">
-                <textarea id="qr-data" class="qr-input" placeholder="Введите текст, ссылку или JSON..."></textarea>
-                <button id="generate-qr-btn" class="button">
-                    <span class="text-ru">Сгенерировать</span>
-                    <span class="text-en">Generate</span>
-                </button>
+                <div class="qr-input-wrapper">
+                    <div class="qr-input-type-badge" id="input-type-badge">
+                        <i class="fas fa-font"></i>
+                        <span class="text-ru">Текст</span>
+                        <span class="text-en">Text</span>
+                    </div>
+                    <textarea
+                        id="qr-data"
+                        class="qr-input"
+                        placeholder-ru="Введите текст, ссылку или JSON..."
+                        placeholder-en="Enter text, URL, or JSON..."
+                        maxlength="2048"
+                    ></textarea>
+                    <div class="qr-input-footer">
+                        <span class="qr-char-counter" id="char-counter">0 / 2048</span>
+                    </div>
+                </div>
+                <div class="qr-actions-row">
+                    <button id="generate-qr-btn" class="qr-generate-btn" disabled>
+                        <span class="btn-text">
+                            <i class="fas fa-bolt"></i>
+                            <span class="text-ru">Сгенерировать</span>
+                            <span class="text-en">Generate</span>
+                        </span>
+                        <span class="btn-spinner">
+                            <i class="fas fa-circle-notch fa-spin"></i>
+                        </span>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="grid-card">
+
+        <div class="grid-card qr-result-card" id="qr-result-card">
             <div class="card-header">
                 <h2>
                     <i class="fas fa-image"></i>
@@ -136,14 +162,39 @@
                 </h2>
             </div>
             <div class="card-content">
-                <div id="qr-code-container" class="qr-code-container">
-                    <span class="placeholder-text text-ru">QR-код появится здесь</span>
-                    <span class="placeholder-text text-en">QR code will appear here</span>
+                <div class="qr-output-area" id="qr-output-area">
+                    <div class="qr-empty-state" id="qr-empty-state">
+                        <div class="qr-empty-icon">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                        <span class="text-ru">QR-код появится здесь</span>
+                        <span class="text-en">QR code will appear here</span>
+                    </div>
+                    <div class="qr-display" id="qr-display">
+                        <div class="qr-frame">
+                            <img id="qr-image" src="" alt="QR Code">
+                        </div>
+                    </div>
                 </div>
-                <a id="download-qr-btn" class="button" style="display: none;">
-                    <span class="text-ru">Скачать</span>
-                    <span class="text-en">Download</span>
-                </a>
+
+                <div class="qr-error" id="qr-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span class="text-ru" id="qr-error-text-ru">Произошла ошибка</span>
+                    <span class="text-en" id="qr-error-text-en">An error occurred</span>
+                </div>
+
+                <div class="qr-result-actions" id="qr-result-actions">
+                    <a id="download-qr-btn" class="qr-action-btn primary" download="qrcode.png">
+                        <i class="fas fa-download"></i>
+                        <span class="text-ru">Скачать</span>
+                        <span class="text-en">Download</span>
+                    </a>
+                    <button id="copy-qr-btn" class="qr-action-btn secondary">
+                        <i class="fas fa-copy"></i>
+                        <span class="text-ru">Копировать</span>
+                        <span class="text-en">Copy</span>
+                    </button>
+                </div>
             </div>
         </div>
     </main>

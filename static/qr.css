@@ -1,25 +1,20 @@
+/* ============================================
+   QR Page Styles
+   ============================================ */
 
-a.logo-link {
-    text-decoration: none;
-    color: var(--text-color);
-}
-
+/* --- Layout --- */
 .qr-page-container {
-    display: grid;
-    grid-template-columns: 1fr; 
-    gap: 24px;
-    padding: 24px;
-    max-width: 1000px;
-    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    max-width: 640px;
+    margin: 2rem auto;
+    animation: fadeIn 0.5s ease-out;
 }
 
-@media (min-width: 768px) {
-    .qr-page-container {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-.grid-card {
+/* --- Shared card styles (scoped to QR page) --- */
+.qr-page-container .grid-card {
     background: var(--surface-1);
     border-radius: var(--radius-2);
     box-shadow: var(--elevation-1);
@@ -29,19 +24,19 @@ a.logo-link {
     flex-direction: column;
 }
 
-.grid-card:hover {
+.qr-page-container .grid-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--elevation-2);
     background: var(--surface-2);
 }
 
-.card-header {
+.qr-page-container .card-header {
     color: var(--accent-color);
     padding: 1.25rem 1.5rem;
     border-bottom: 1px solid var(--surface-2);
 }
 
-.card-header h2 {
+.qr-page-container .card-header h2 {
     margin: 0;
     font-size: 1.2rem;
     display: flex;
@@ -49,6 +44,14 @@ a.logo-link {
     gap: 0.75rem;
 }
 
+.qr-page-container .card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* --- Info tooltip --- */
 .info-icon-wrapper {
     position: relative;
     display: inline-block;
@@ -58,6 +61,11 @@ a.logo-link {
     cursor: pointer;
     color: var(--text-color-muted);
     font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.info-icon:hover {
+    color: var(--accent-color);
 }
 
 .tooltip {
@@ -93,25 +101,65 @@ a.logo-link {
     border-color: var(--surface-2) transparent transparent transparent;
 }
 
-.card-content {
-    padding: 1.5rem;
+/* --- Input area --- */
+.qr-input-wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+}
+
+.qr-input-type-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: var(--surface-2);
+    color: var(--accent-color);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    z-index: 2;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+}
+
+.qr-input-type-badge.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.qr-input-type-badge i {
+    font-size: 0.7rem;
 }
 
 .qr-input {
-    width: 93%;
-    height: 160px;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 140px;
+    max-height: 300px;
     padding: 1rem;
+    padding-right: 6rem;
     border: 1px solid var(--surface-2);
     border-radius: var(--radius-1);
     background: var(--surface-0);
     color: var(--text-color);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1em;
-    resize: none;
-    transition: all 0.3s ease;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    resize: vertical;
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.qr-input::placeholder {
+    color: var(--text-color-muted);
 }
 
 .qr-input:focus {
@@ -120,48 +168,250 @@ a.logo-link {
     box-shadow: 0 0 0 2px var(--accent-color-translucent);
 }
 
-.button {
+.qr-input-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0.35rem 0.25rem 0;
+}
+
+.qr-char-counter {
+    font-size: 0.75rem;
+    color: var(--text-color-muted);
+    font-family: "IBM Plex Mono", monospace;
+    transition: color 0.3s ease;
+}
+
+.qr-char-counter.warning {
+    color: #ff9f43;
+}
+
+.qr-char-counter.danger {
+    color: #ff5f57;
+}
+
+/* --- Generate button --- */
+.qr-actions-row {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.qr-generate-btn {
+    flex: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 12px 24px;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    min-height: 48px;
     border: none;
-    border-radius: var(--radius-1);
+    border-radius: var(--radius-abs);
     background: var(--accent-color);
     color: var(--bg-color);
     cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.95rem;
     font-weight: 700;
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: var(--elevation-1);
 }
 
-.button:hover {
+.qr-generate-btn:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: var(--elevation-2);
 }
 
-.qr-code-container {
+.qr-generate-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.qr-generate-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.qr-generate-btn .btn-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.qr-generate-btn .btn-spinner {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.qr-generate-btn.loading .btn-text {
+    display: none;
+}
+
+.qr-generate-btn.loading .btn-spinner {
+    display: inline-flex;
+}
+
+/* --- QR Output Area --- */
+.qr-output-area {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 250px;
-    padding: 16px;
+    min-height: 280px;
+    padding: 1.5rem;
     border: 2px dashed var(--surface-2);
     border-radius: var(--radius-1);
-    background-color: var(--surface-0);
+    background: var(--surface-0);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.qr-code-container img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
+.qr-output-area::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--surface-2) 1px, transparent 1px),
+        linear-gradient(90deg, var(--surface-2) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.3;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
 }
 
-.placeholder-text {
+.qr-output-area.has-qr::before {
+    opacity: 0;
+}
+
+.qr-output-area.has-qr {
+    border-style: solid;
+    border-color: var(--accent-color-translucent);
+}
+
+/* --- Empty state --- */
+.qr-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
     color: var(--text-color-muted);
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
+.qr-empty-icon {
+    font-size: 3rem;
+    opacity: 0.3;
+    animation: float 4s ease-in-out infinite;
+}
+
+.qr-empty-state span {
+    font-size: 0.9rem;
+}
+
+/* --- QR Display --- */
+.qr-display {
+    display: none;
+    position: relative;
+    z-index: 1;
+}
+
+.qr-frame {
+    background: #ffffff;
+    border-radius: var(--radius-1);
+    padding: 1rem;
+    box-shadow: var(--elevation-2);
+    border: 1px solid var(--surface-2);
+    display: inline-block;
+    animation: qrReveal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes qrReveal {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.qr-frame img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+}
+
+/* --- Error state --- */
+.qr-error {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-1);
+    background: rgba(255, 95, 87, 0.1);
+    border: 1px solid rgba(255, 95, 87, 0.25);
+    color: #ff5f57;
+    font-size: 0.88rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.qr-error i {
+    flex-shrink: 0;
+}
+
+/* --- Result action buttons --- */
+.qr-result-actions {
+    display: none;
+    gap: 0.75rem;
+}
+
+.qr-action-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    min-height: 44px;
+    border-radius: 999px;
+    border: 1px solid var(--surface-2);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.qr-action-btn.primary {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    border-color: transparent;
+    box-shadow: var(--elevation-1);
+}
+
+.qr-action-btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--elevation-2);
+}
+
+.qr-action-btn.secondary {
+    background: transparent;
+    color: var(--text-color);
+}
+
+.qr-action-btn.secondary:hover {
+    background: var(--surface-2);
+    transform: translateY(-1px);
+}
+
+.qr-action-btn.copied {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    border-color: transparent;
+}

@@ -1,255 +1,459 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>venterum@web:~$</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="responsive.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <link rel="icon" type="image/png" href="favicon.png">
-</head>
-<body class="theme-default">
-    <div class="noise"></div>
-    <nav class="nav">
-        <div class="logo">venterum@web:~$</div>
-        <div class="nav-buttons">
-            <a href="https://github.com/venterum" target="_blank" class="nav-button">
-                <i class="fab fa-github"></i>
-                <span class="text-ru">GitHub</span>
-                <span class="text-en">GitHub</span>
-            </a>
-            <a href="#blog" class="nav-button">
-                <i class="fas fa-newspaper"></i>
-                <span class="text-ru">Блог</span>
-                <span class="text-en">Blog</span>
-            </a>
-            <a href="/ip" class="nav-button">
-                <i class="fas fa-location-arrow"></i>
-                <span class="text-ru">IP Lookup</span>
-                <span class="text-en">IP Lookup</span>
-            </a>
-            <a href="/qr" class="nav-button">
-                <i class="fas fa-qrcode"></i>
-                <span class="text-ru">Everything-to-QR</span>
-                <span class="text-en">Everything-to-QR</span>
-            </a>
-        </div>
-        <div class="controls-wrapper">
-                            <button class="lang-btn" data-lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>venterum@web:~$</title>
+        <link rel="stylesheet" href="styles.css" />
+        <link rel="stylesheet" href="responsive.css" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+        <link rel="icon" type="image/png" href="favicon.png" />
+    </head>
+    <body class="theme-default">
+        <div class="noise"></div>
+        <nav class="nav">
+            <div class="logo">venterum@web:~$</div>
+            <div class="nav-buttons">
+                <a
+                    href="https://github.com/venterum"
+                    target="_blank"
+                    class="nav-button"
+                >
+                    <i class="fab fa-github"></i>
+                    <span class="text-ru">GitHub</span>
+                    <span class="text-en">GitHub</span>
+                </a>
+                <a href="#blog" class="nav-button">
+                    <i class="fas fa-newspaper"></i>
+                    <span class="text-ru">Блог</span>
+                    <span class="text-en">Blog</span>
+                </a>
+                <a href="/ip" class="nav-button">
+                    <i class="fas fa-location-arrow"></i>
+                    <span class="text-ru">IP Lookup</span>
+                    <span class="text-en">IP Lookup</span>
+                </a>
+                <a href="/qr" class="nav-button">
+                    <i class="fas fa-qrcode"></i>
+                    <span class="text-ru">Everything-to-QR</span>
+                    <span class="text-en">Everything-to-QR</span>
+                </a>
+            </div>
+            <div class="controls-wrapper">
+                <button class="lang-btn" data-lang="ru">
                     <span class="lang-flag">🇷🇺</span>
                     <span class="lang-name">Русский</span>
-                                    </button>
-                <button class="lang-btn" data-lang="en">
-                        <span class="lang-flag">🇬🇧</span>
-                        <span class="lang-name">English</span>
-                        </button>
-            <div class="theme-dropdown">
-                <button class="theme-toggle">
-                    <span class="current-theme">🎨</span>
-                    <span class="text-ru theme-name">Тема</span>
-                    <span class="text-en theme-name">Theme</span>
-                    <i class="fas fa-chevron-down"></i>
                 </button>
-                <div class="theme-list">
-                    <div class="theme-group">
-                        <div class="theme-group-title text-ru">Светлые темы</div>
-                        <div class="theme-group-title text-en">Light Themes</div>
-                        <div class="theme-option" data-theme="light">
-                            <span class="theme-icon">☀️</span>
-                            <span class="text-ru theme-name">Просто светлая</span>
-                            <span class="text-en theme-name">Just Light</span>
+                <button class="lang-btn" data-lang="en">
+                    <span class="lang-flag">🇬🇧</span>
+                    <span class="lang-name">English</span>
+                </button>
+                <div class="theme-dropdown">
+                    <button class="theme-toggle">
+                        <span class="current-theme">🎨</span>
+                        <span class="text-ru theme-name">Тема</span>
+                        <span class="text-en theme-name">Theme</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="theme-list">
+                        <div class="theme-group">
+                            <div class="theme-group-title text-ru">
+                                Светлые темы
+                            </div>
+                            <div class="theme-group-title text-en">
+                                Light Themes
+                            </div>
+                            <div class="theme-option" data-theme="light">
+                                <span class="theme-icon">☀️</span>
+                                <span class="text-ru theme-name"
+                                    >Просто светлая</span
+                                >
+                                <span class="text-en theme-name"
+                                    >Just Light</span
+                                >
+                            </div>
+                            <div class="theme-option" data-theme="mint">
+                                <span class="theme-icon">🌿</span>
+                                <span class="text-ru theme-name"
+                                    >Свежий лемонграсс</span
+                                >
+                                <span class="text-en theme-name"
+                                    >Fresh Lemongrass</span
+                                >
+                            </div>
                         </div>
-                        <div class="theme-option" data-theme="mint">
-                            <span class="theme-icon">🌿</span>
-                            <span class="text-ru theme-name">Свежий лемонграсс</span>
-                            <span class="text-en theme-name">Fresh Lemongrass</span>
-                        </div>
-                    </div>
-                    <div class="theme-divider"></div>
-                    <div class="theme-group">
-                        <div class="theme-group-title text-ru">Темные темы</div>
-                        <div class="theme-group-title text-en">Dark Themes</div>
-                        <div class="theme-option" data-theme="default">
-                            <span class="theme-icon">☁️</span>
-                            <span class="text-ru theme-name">Бледный сад</span>
-                            <span class="text-en theme-name">Pale Garden</span>
-                        </div>
-                        <div class="theme-option" data-theme="tokyo">
-                            <span class="theme-icon">🗼</span>
-                            <span class="text-ru theme-name">Токийская ночь</span>
-                            <span class="text-en theme-name">Tokyo Night</span>
-                        </div>
-                        <div class="theme-option" data-theme="coral">
-                            <span class="theme-icon">🌺</span>
-                            <span class="text-ru theme-name">Коралловый риф</span>
-                            <span class="text-en theme-name">Coral Reef</span>
-                        </div>
-                        <div class="theme-option" data-theme="sage">
-                            <span class="theme-icon">🌿</span>
-                            <span class="text-ru theme-name">Роща шалфея</span>
-                            <span class="text-en theme-name">Sage Grove</span>
-                        </div>
-                        <div class="theme-option" data-theme="azure">
-                            <span class="theme-icon">🌊</span>
-                            <span class="text-ru theme-name">Лазурная волна</span>
-                            <span class="text-en theme-name">Azure Wave</span>
+                        <div class="theme-divider"></div>
+                        <div class="theme-group">
+                            <div class="theme-group-title text-ru">
+                                Темные темы
+                            </div>
+                            <div class="theme-group-title text-en">
+                                Dark Themes
+                            </div>
+                            <div class="theme-option" data-theme="default">
+                                <span class="theme-icon">☁️</span>
+                                <span class="text-ru theme-name"
+                                    >Бледный сад</span
+                                >
+                                <span class="text-en theme-name"
+                                    >Pale Garden</span
+                                >
+                            </div>
+                            <div class="theme-option" data-theme="tokyo">
+                                <span class="theme-icon">🗼</span>
+                                <span class="text-ru theme-name"
+                                    >Токийская ночь</span
+                                >
+                                <span class="text-en theme-name"
+                                    >Tokyo Night</span
+                                >
+                            </div>
+                            <div class="theme-option" data-theme="coral">
+                                <span class="theme-icon">🌺</span>
+                                <span class="text-ru theme-name"
+                                    >Коралловый риф</span
+                                >
+                                <span class="text-en theme-name"
+                                    >Coral Reef</span
+                                >
+                            </div>
+                            <div class="theme-option" data-theme="sage">
+                                <span class="theme-icon">🌿</span>
+                                <span class="text-ru theme-name"
+                                    >Роща шалфея</span
+                                >
+                                <span class="text-en theme-name"
+                                    >Sage Grove</span
+                                >
+                            </div>
+                            <div class="theme-option" data-theme="azure">
+                                <span class="theme-icon">🌊</span>
+                                <span class="text-ru theme-name"
+                                    >Лазурная волна</span
+                                >
+                                <span class="text-en theme-name"
+                                    >Azure Wave</span
+                                >
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <main class="terminal">
-        <div class="terminal-header">
-            <div class="window-title">vntrum-webterm 2.2.0</div>
-            <div class="window-controls">
-                <button class="control-btn red" id="minimize-btn" aria-label="Close terminal">✕</button>
+        <main class="terminal">
+            <div class="terminal-header">
+                <div class="window-title">vntrum-webterm 2.2.1</div>
+                <div class="window-controls">
+                    <button
+                        class="control-btn red"
+                        id="minimize-btn"
+                        aria-label="Close terminal"
+                    >
+                        ✕
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="terminal-content">
-            <div class="matrix-rain" id="matrix"></div>
-            <div class="typing-effect" style="opacity: 0;">
-                <span class="prompt">venterum@web:~$ </span>
-                <span class="command" data-text="bash ~/welcome.sh"></span>
-            </div>
-            <div class="response">
-                <pre class="ascii-art"> ___    __           _____                               
-__ |  / /_____________  /________________  ________ ___ 
+            <div class="terminal-content">
+                <div class="matrix-rain" id="matrix"></div>
+                <div class="typing-effect" style="opacity: 0">
+                    <span class="prompt">venterum@web:~$ </span>
+                    <span class="command" data-text="bash ~/welcome.sh"></span>
+                </div>
+                <div class="response">
+                    <pre class="ascii-art">
+ ___    __           _____
+__ |  / /_____________  /________________  ________ ___
 __ | / /_  _ \_  __ \  __/  _ \_  ___/  / / /_  __ `__ \
 __ |/ / /  __/  / / / /_ /  __/  /   / /_/ /_  / / / / /
 _____/  \___//_/ /_/\__/ \___//_/    \__,_/ /_/ /_/ /_/
-                </pre>
-                <div class="about-text hidden" id="about-text">
-                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Привет. Спасибо, что заглянули ко мне на сайт 😁</div>
-                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Меня зовут Евгений. Живу и учусь в Санкт-Петербурге. Изучаю <span class="highlight">DevOps</span> и <span class="highlight">сетевую инженерию</span>, в том числе Linux, сети, маршрутизацию и фильтрацию трафика.</div>
-                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Мои принципы:</div>
-                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Приватность — базовое право каждого</div>
-                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Важнейшая часть любой системы — возможность её контролировать</div>
-                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Децентрализация и open-source — это база</div>
-                    <div class="terminal-line text-ru principles"><span class="prompt">*</span> Технологии можно и нужно понимать изнутри</div>
-                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> Переходите на мой <a href="https://github.com/venterum" target="_blank" class="highlight-link">GitHub</a> для того, чтобы увидеть больше.</div>
-                    <div class="terminal-line text-ru"><span class="prompt">&gt;</span> А ещё есть мой <a href="https://t.me/vntrum_public" target="_blank" class="highlight-link">Telegram*</a>.</div>
+                </pre
+                    >
+                    <div class="about-text hidden" id="about-text">
+                        <div class="terminal-line text-ru">
+                            <span class="prompt">&gt;</span> Привет. Спасибо,
+                            что заглянули ко мне на сайт 😁
+                        </div>
+                        <div class="terminal-line text-ru">
+                            <span class="prompt">&gt;</span> Меня зовут Евгений.
+                            Живу и учусь в Санкт-Петербурге. Изучаю
+                            <span class="highlight">DevOps</span> и
+                            <span class="highlight">сетевую инженерию</span>, в
+                            том числе Linux, сети, маршрутизацию и фильтрацию
+                            трафика.
+                        </div>
+                        <div class="terminal-line text-ru">
+                            <span class="prompt">&gt;</span> Мои принципы:
+                        </div>
+                        <div class="terminal-line text-ru principles">
+                            <span class="prompt">*</span> Приватность — базовое
+                            право каждого
+                        </div>
+                        <div class="terminal-line text-ru principles">
+                            <span class="prompt">*</span> Важнейшая часть любой
+                            системы — возможность её контролировать
+                        </div>
+                        <div class="terminal-line text-ru principles">
+                            <span class="prompt">*</span> Децентрализация и
+                            open-source — это база
+                        </div>
+                        <div class="terminal-line text-ru principles">
+                            <span class="prompt">*</span> Технологии можно и
+                            нужно понимать изнутри
+                        </div>
+                        <div class="terminal-line text-ru">
+                            <span class="prompt">&gt;</span> Переходите на мой
+                            <a
+                                href="https://github.com/venterum"
+                                target="_blank"
+                                class="highlight-link"
+                                >GitHub</a
+                            >
+                            для того, чтобы увидеть больше.
+                        </div>
+                        <div class="terminal-line text-ru">
+                            <span class="prompt">&gt;</span> А ещё есть мой
+                            <a
+                                href="https://t.me/vntrum_public"
+                                target="_blank"
+                                class="highlight-link"
+                                >Telegram*</a
+                            >.
+                        </div>
 
-                    <div class="terminal-line text-en"><span class="prompt">&gt;</span> Hi. Thanks for stopping by 😁</div>
-                    <div class="terminal-line text-en"><span class="prompt">&gt;</span> I’m Evgeny. I live and study in Saint Petersburg. I focus on <span class="highlight">DevOps</span> and <span class="highlight">network engineering</span>, including Linux, networking, routing, and traffic filtering.</div>
-                    <div class="terminal-line text-en"><span class="prompt">&gt;</span> My principles:</div>
-                    <div class="terminal-line text-en principles"><span class="prompt">*</span> Privacy is a fundamental right</div>
-                    <div class="terminal-line text-en principles"><span class="prompt">*</span> The most important part of any system is the ability to control it</div>
-                    <div class="terminal-line text-en principles"><span class="prompt">*</span> Decentralization and open source are the baseline</div>
-                    <div class="terminal-line text-en principles"><span class="prompt">*</span> Technologies should be understood from the inside out</div>
-                    <div class="terminal-line text-en"><span class="prompt">&gt;</span> Visit my <a href="https://github.com/venterum" target="_blank" class="highlight-link">GitHub</a> to see more.</div>
-                    <div class="terminal-line text-en"><span class="prompt">&gt;</span> You can also find me on <a href="https://t.me/vntrum_public" target="_blank" class="highlight-link">Telegram*</a>.</div>
+                        <div class="terminal-line text-en">
+                            <span class="prompt">&gt;</span> Hi. Thanks for
+                            stopping by 😁
+                        </div>
+                        <div class="terminal-line text-en">
+                            <span class="prompt">&gt;</span> I’m Evgeny. I live
+                            and study in Saint Petersburg. I focus on
+                            <span class="highlight">DevOps</span> and
+                            <span class="highlight">network engineering</span>,
+                            including Linux, networking, routing, and traffic
+                            filtering.
+                        </div>
+                        <div class="terminal-line text-en">
+                            <span class="prompt">&gt;</span> My principles:
+                        </div>
+                        <div class="terminal-line text-en principles">
+                            <span class="prompt">*</span> Privacy is a
+                            fundamental right
+                        </div>
+                        <div class="terminal-line text-en principles">
+                            <span class="prompt">*</span> The most important
+                            part of any system is the ability to control it
+                        </div>
+                        <div class="terminal-line text-en principles">
+                            <span class="prompt">*</span> Decentralization and
+                            open source are the baseline
+                        </div>
+                        <div class="terminal-line text-en principles">
+                            <span class="prompt">*</span> Technologies should be
+                            understood from the inside out
+                        </div>
+                        <div class="terminal-line text-en">
+                            <span class="prompt">&gt;</span> Visit my
+                            <a
+                                href="https://github.com/venterum"
+                                target="_blank"
+                                class="highlight-link"
+                                >GitHub</a
+                            >
+                            to see more.
+                        </div>
+                        <div class="terminal-line text-en">
+                            <span class="prompt">&gt;</span> You can also find
+                            me on
+                            <a
+                                href="https://t.me/vntrum_public"
+                                target="_blank"
+                                class="highlight-link"
+                                >Telegram*</a
+                            >.
+                        </div>
+                    </div>
+                </div>
+                <div class="input-line" id="final-prompt" style="opacity: 0">
+                    <span class="prompt">venterum@web:~$</span>
+                    <span class="cursor"></span>
                 </div>
             </div>
-            <div class="input-line" id="final-prompt" style="opacity: 0;">
-                <span class="prompt">venterum@web:~$</span>
-                <span class="cursor"></span>
-            </div>
-        </div>
-    </main>
+        </main>
 
-    <section class="blog-section" id="blog">
-        <div class="blog-shell">
-            <div class="blog-header">
-                <div class="blog-title">
-                    <div class="blog-kicker">
-                        <span class="blog-badge text-ru">Лента</span>
-                        <span class="blog-badge text-en">Feed</span>
-                        <span class="blog-label text-ru">t.me/vntrum_public</span>
-                        <span class="blog-label text-en">t.me/vntrum_public</span>
+        <section class="blog-section" id="blog">
+            <div class="blog-shell">
+                <div class="blog-header">
+                    <div class="blog-title">
+                        <div class="blog-kicker">
+                            <span class="blog-badge text-ru">Лента</span>
+                            <span class="blog-badge text-en">Feed</span>
+                            <span class="blog-label text-ru"
+                                >t.me/vntrum_public</span
+                            >
+                            <span class="blog-label text-en"
+                                >t.me/vntrum_public</span
+                            >
+                        </div>
+                        <h2 class="text-ru">Последние посты</h2>
+                        <h2 class="text-en">Latest Posts</h2>
+                        <p class="text-ru">
+                            Посты подгружаются автоматически из Telegram*. Всё
+                            самое свежее — здесь.
+                        </p>
+                        <p class="text-en">
+                            Posts are auto-loaded from Telegram*. The freshest
+                            updates live here.
+                        </p>
                     </div>
-                    <h2 class="text-ru">Последние посты</h2>
-                    <h2 class="text-en">Latest Posts</h2>
-                    <p class="text-ru">Посты подгружаются автоматически из Telegram*. Всё самое свежее — здесь.</p>
-                    <p class="text-en">Posts are auto-loaded from Telegram*. The freshest updates live here.</p>
+                    <div class="blog-cta">
+                        <a
+                            class="tg-link"
+                            href="https://t.me/vntrum_public"
+                            target="_blank"
+                            rel="noopener"
+                        >
+                            <i class="fab fa-telegram"></i>
+                            <span class="text-ru">Подписаться в Telegram*</span>
+                            <span class="text-en">Follow on Telegram*</span>
+                        </a>
+                        <div class="blog-note text-ru">
+                            * Заготовка под текст о том, что деятельность
+                            организации<br />признана экстремистской и запрещена
+                            на территории РФ.
+                        </div>
+                        <div class="blog-note text-en">
+                            * Placeholder for text stating that the
+                            organization's activity<br />is recognized as
+                            extremist and banned in the Russian Federation.
+                        </div>
+                    </div>
                 </div>
-                <div class="blog-cta">
-                    <a class="tg-link" href="https://t.me/vntrum_public" target="_blank" rel="noopener">
-                        <i class="fab fa-telegram"></i>
-                        <span class="text-ru">Подписаться в Telegram*</span>
-                        <span class="text-en">Follow on Telegram*</span>
-                    </a>
-                    <div class="blog-note text-ru">* Заготовка под текст о том, что деятельность организации<br>признана экстремистской и запрещена на территории РФ.</div>
-                    <div class="blog-note text-en">* Placeholder for text stating that the organization's activity<br>is recognized as extremist and banned in the Russian Federation.</div>
+
+                <div class="blog-grid" id="blog-grid">
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="text-ru">Плейсхолдер · 3 мин</span>
+                            <span class="text-en">Placeholder · 3 min</span>
+                            <span class="blog-chip">Security</span>
+                        </div>
+                        <h3 class="text-ru">
+                            Как я собираю заметки по инфобезу
+                        </h3>
+                        <h3 class="text-en">How I collect infosec notes</h3>
+                        <p class="text-ru">
+                            Короткий формат, чек-листы, ссылки и то, что реально
+                            пригодилось в работе.
+                        </p>
+                        <p class="text-en">
+                            Short format, checklists, links, and what actually
+                            helped in practice.
+                        </p>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="text-ru">Плейсхолдер · 5 мин</span>
+                            <span class="text-en">Placeholder · 5 min</span>
+                            <span class="blog-chip">Dev</span>
+                        </div>
+                        <h3 class="text-ru">
+                            Мой легкий стек для пет-проектов
+                        </h3>
+                        <h3 class="text-en">
+                            My lightweight stack for side projects
+                        </h3>
+                        <p class="text-ru">
+                            Что беру по умолчанию, когда нужно быстро собрать
+                            MVP.
+                        </p>
+                        <p class="text-en">
+                            What I pick by default when I need a quick MVP.
+                        </p>
+                    </article>
+
+                    <article class="blog-card">
+                        <div class="blog-meta">
+                            <span class="text-ru">Плейсхолдер · 4 мин</span>
+                            <span class="text-en">Placeholder · 4 min</span>
+                            <span class="blog-chip">Tools</span>
+                        </div>
+                        <h3 class="text-ru">
+                            Три утилиты, которые ускорили мою рутину
+                        </h3>
+                        <h3 class="text-en">
+                            Three tools that sped up my routine
+                        </h3>
+                        <p class="text-ru">
+                            Мини-обзор плюс сценарии использования без лишней
+                            воды.
+                        </p>
+                        <p class="text-en">
+                            Mini-review plus usage scenarios without extra
+                            fluff.
+                        </p>
+                    </article>
+                </div>
+                <div class="blog-tail-note">
+                    © И так далее до 2100 года, потом обновлю. Больше постов в
+                    канале (<a
+                        href="https://t.me/vntrum_public"
+                        target="_blank"
+                        rel="noopener"
+                        >гиперссылка</a
+                    >).
                 </div>
             </div>
-
-            <div class="blog-grid" id="blog-grid">
-                <article class="blog-card">
-                    <div class="blog-meta">
-                        <span class="text-ru">Плейсхолдер · 3 мин</span>
-                        <span class="text-en">Placeholder · 3 min</span>
-                        <span class="blog-chip">Security</span>
-                    </div>
-                    <h3 class="text-ru">Как я собираю заметки по инфобезу</h3>
-                    <h3 class="text-en">How I collect infosec notes</h3>
-                    <p class="text-ru">Короткий формат, чек-листы, ссылки и то, что реально пригодилось в работе.</p>
-                    <p class="text-en">Short format, checklists, links, and what actually helped in practice.</p>
-                </article>
-
-                <article class="blog-card">
-                    <div class="blog-meta">
-                        <span class="text-ru">Плейсхолдер · 5 мин</span>
-                        <span class="text-en">Placeholder · 5 min</span>
-                        <span class="blog-chip">Dev</span>
-                    </div>
-                    <h3 class="text-ru">Мой легкий стек для пет-проектов</h3>
-                    <h3 class="text-en">My lightweight stack for side projects</h3>
-                    <p class="text-ru">Что беру по умолчанию, когда нужно быстро собрать MVP.</p>
-                    <p class="text-en">What I pick by default when I need a quick MVP.</p>
-                </article>
-
-                <article class="blog-card">
-                    <div class="blog-meta">
-                        <span class="text-ru">Плейсхолдер · 4 мин</span>
-                        <span class="text-en">Placeholder · 4 min</span>
-                        <span class="blog-chip">Tools</span>
-                    </div>
-                    <h3 class="text-ru">Три утилиты, которые ускорили мою рутину</h3>
-                    <h3 class="text-en">Three tools that sped up my routine</h3>
-                    <p class="text-ru">Мини-обзор плюс сценарии использования без лишней воды.</p>
-                    <p class="text-en">Mini-review plus usage scenarios without extra fluff.</p>
-                </article>
+        </section>
+        <div class="easter-egg">
+            <span class="text-ru">Кстати, я использую Arch</span>
+            <span class="text-en">I use Arch btw</span>
+        </div>
+        <div class="cookie-notice">
+            <div class="cookie-text">
+                <div class="cookie-header">
+                    <i class="fas fa-cookie-bite"></i>
+                    <span class="text-ru"
+                        >Внимание, этот сайт использует куки!</span
+                    >
+                    <span class="text-en"
+                        >Attention, this site uses cookies!</span
+                    >
+                </div>
+                <p class="text-ru">
+                    Оставаясь на сайте, вы соглашаетесь с использованием
+                    cookie-файлов для:
+                    <br />• Сохранения выбранной темы оформления <br />•
+                    Запоминания предпочитаемого языка <br /><span
+                        class="cookie-note"
+                        >Сайт не собирает никакие личные данные 😎</span
+                    >
+                </p>
+                <p class="text-en">
+                    By staying on the site, you agree to the use of cookie files
+                    for:
+                    <br />• Saving your preferred theme <br />• Remembering your
+                    language choice <br /><span class="cookie-note"
+                        >Site doesn't collect any personal data 😎</span
+                    >
+                </p>
             </div>
-            <div class="blog-tail-note">© И так далее до 2100 года, потом обновлю. Больше постов в канале (<a href="https://t.me/vntrum_public" target="_blank" rel="noopener">гиперссылка</a>).</div>
-        </div>
-    </section>
-    <div class="easter-egg">
-        <span class="text-ru">Кстати, я использую Arch</span>
-        <span class="text-en">I use Arch btw</span>
-    </div>
-    <div class="cookie-notice">
-        <div class="cookie-text">
-            <div class="cookie-header">
-                <i class="fas fa-cookie-bite"></i>
-                <span class="text-ru">Внимание, этот сайт использует куки!</span>
-                <span class="text-en">Attention, this site uses cookies!</span>
+            <div class="cookie-buttons">
+                <button class="cookie-button cookie-accept">
+                    <span class="text-ru">Понятно</span>
+                    <span class="text-en">Got it</span>
+                </button>
             </div>
-            <p class="text-ru">
-                Оставаясь на сайте, вы соглашаетесь с использованием cookie-файлов для:
-                <br>• Сохранения выбранной темы оформления
-                <br>• Запоминания предпочитаемого языка
-                <br><span class="cookie-note">Сайт не собирает никакие личные данные 😎</span>
-            </p>
-            <p class="text-en">
-                By staying on the site, you agree to the use of cookie files for:
-                <br>• Saving your preferred theme
-                <br>• Remembering your language choice
-                <br><span class="cookie-note">Site doesn't collect any personal data 😎</span>
-            </p>
         </div>
-        <div class="cookie-buttons">
-            <button class="cookie-button cookie-accept">
-                <span class="text-ru">Понятно</span>
-                <span class="text-en">Got it</span>
-            </button>
-        </div>
-    </div>
-    <script src="script.js"></script>
-    <script src="responsive.js"></script>
-</body>
+        <script src="script.js"></script>
+        <script src="responsive.js"></script>
+    </body>
 </html>

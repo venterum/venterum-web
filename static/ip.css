@@ -42,7 +42,7 @@ a.logo-link {
     background: rgba(255, 255, 255, 0.03);
     color: var(--text-color);
     padding: 0 0.9rem;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: "IBM Plex Mono", monospace;
     font-size: 0.95rem;
 }
 
@@ -71,7 +71,7 @@ a.logo-link {
     color: var(--bg-color);
     text-decoration: none;
     cursor: pointer;
-    font-family: 'IBM Plex Mono', monospace;
+    font-family: "IBM Plex Mono", monospace;
     font-size: 0.88rem;
     transition: var(--transition);
 }
@@ -161,9 +161,6 @@ a.logo-link {
     color: var(--accent-color);
 }
 
-
-
-
 .info-card .info-grid {
     display: flex;
     flex-direction: column;
@@ -245,7 +242,8 @@ a.logo-link {
     color: var(--text-color) !important;
 }
 
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
     background: var(--terminal-bg) !important;
     color: var(--text-color) !important;
     box-shadow: var(--elevation-2);
@@ -310,7 +308,7 @@ a.logo-link {
     padding: 0.5rem 1rem;
     border-radius: var(--radius-1);
     border: none;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
     cursor: pointer;
     transition: var(--transition);
     font-size: 0.9rem;
@@ -341,10 +339,18 @@ a.logo-link {
             "ip-display info"
             "map        info";
     }
-    .ip-tools-card { grid-area: tools; }
-    .ip-display-card { grid-area: ip-display; }
-    .map-card { grid-area: map; }
-    .info-card { grid-area: info; }
+    .ip-tools-card {
+        grid-area: tools;
+    }
+    .ip-display-card {
+        grid-area: ip-display;
+    }
+    .map-card {
+        grid-area: map;
+    }
+    .info-card {
+        grid-area: info;
+    }
 
     .info-card .info-grid {
         padding: 1.5rem 2rem;
@@ -353,7 +359,9 @@ a.logo-link {
 
 @media (max-width: 768px) {
     .ip-query-row {
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: stretch;
     }
 
     .ip-query-input,
@@ -364,7 +372,7 @@ a.logo-link {
 
 @media (min-width: 1200px) {
     .info-group-items {
-         grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 }
 
