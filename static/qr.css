@@ -368,10 +368,13 @@
 .qr-result-actions {
     display: none;
     gap: 0.75rem;
+    min-width: 0;
 }
 
 .qr-action-btn {
     flex: 1;
+    box-sizing: border-box;
+    min-width: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -386,6 +389,14 @@
     cursor: pointer;
     text-decoration: none;
     transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.qr-action-btn span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .qr-action-btn.primary {

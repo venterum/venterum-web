@@ -379,8 +379,11 @@ async function animateTerminal() {
     const finalPrompt = document.getElementById('final-prompt');
 
     typingEffectEl.style.opacity = '0';
+    typingEffectEl.style.transform = 'translateY(8px)';
     responseEl.style.opacity = '0';
+    responseEl.style.transform = 'translateY(14px) scale(0.98)';
     finalPrompt.style.opacity = '0';
+    finalPrompt.style.transform = 'translateY(8px)';
     aboutTextEl.style.opacity = '0';
 
     const lines = aboutTextEl.querySelectorAll(".terminal-line");
@@ -388,13 +391,15 @@ async function animateTerminal() {
 
     await new Promise(resolve => setTimeout(resolve, 100));
 
-    typingEffectEl.style.transition = 'opacity 0.3s ease';
+    typingEffectEl.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
     typingEffectEl.style.opacity = '1';
+    typingEffectEl.style.transform = 'translateY(0)';
     await typeCommand(commandEl, commandEl.dataset.text, 50);
     await new Promise(resolve => setTimeout(resolve, 200));
 
-    responseEl.style.transition = 'opacity 0.5s ease';
+    responseEl.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
     responseEl.style.opacity = '1';
+    responseEl.style.transform = 'translateY(0) scale(1)';
     aboutTextEl.classList.remove('hidden');
     aboutTextEl.style.transition = 'opacity 0.5s ease';
     aboutTextEl.style.opacity = '1';
@@ -412,8 +417,9 @@ async function animateTerminal() {
         await new Promise(resolve => setTimeout(resolve, 100));
     }
 
-    finalPrompt.style.transition = 'opacity 0.5s ease';
+    finalPrompt.style.transition = 'opacity 0.45s ease, transform 0.45s ease';
     finalPrompt.style.opacity = '1';
+    finalPrompt.style.transform = 'translateY(0)';
     isAnimating = false;
 }
 
