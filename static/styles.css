@@ -971,9 +971,8 @@ body {
     width: auto;
     box-sizing: border-box;
     align-self: center;
-    display: grid;
-    grid-template-columns: minmax(7.4rem, auto) auto;
-    align-items: stretch;
+    display: flex;
+    align-items: center;
     justify-content: center;
     gap: 0.45rem;
     /*! background: var(--surface-1); */
@@ -2131,5 +2130,40 @@ body {
 }
 
 .footer-copy {
+    color: var(--text-color-muted);
+}
+
+.clock-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.42rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    cursor: default;
+    user-select: none;
+    transition: var(--transition);
+    white-space: nowrap;
+    min-height: 53.75px;
+    box-sizing: border-box;
+}
+
+.clock-pill:hover {
+    background: var(--surface-2);
+    border-color: var(--accent-color-translucent);
+}
+
+.clock-time {
+    font-weight: 700;
+    color: var(--accent-color);
+    letter-spacing: 0.02em;
+}
+
+.clock-date {
+    font-size: 0.78rem;
+    opacity: 0.75;
     color: var(--text-color-muted);
 }

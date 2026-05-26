@@ -71,6 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('lang', lang);
             
             updateLanguage(lang);
+
+            // Force clock update to apply new format
+            if (typeof updateClock === 'function') {
+                clearInterval(clockInterval);
+                updateClock();
+                clockInterval = setInterval(updateClock, 1000);
+            }
         });
     });
 
@@ -180,6 +187,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (document.querySelector('.typing-effect')) {
         updateLanguage(savedLang);
+    }
+
+    // Clock pill functionality
+    const clockTime = document.getElementById('clock-time');
+    const clockDate = document.getElementById('clock-date');
+    let clockInterval = null;
+
+    if (clockTime && clockDate) {
+        function updateClock() {
+            const now = new Date();
+            const currentLang = localStorage.getItem('lang') || 'ru';
+
+            let hours = now.getHours();
+            let timeString;
+
+            if (currentLang === 'en') {
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                const timeStr = String(hours).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+                timeString = `${timeStr} ${ampm}`;
+            } else {
+                timeString = String(hours).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+            }
+
+            clockTime.textContent = timeString;
+
+            let dayName, monthName, dayNum;
+
+            if (currentLang === 'en') {
+                const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                dayName = days[now.getDay()];
+                monthName = months[now.getMonth()];
+                dayNum = now.getDate();
+                clockDate.textContent = `${dayName}, ${monthName} ${dayNum}`;
+            } else {
+                const days = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+                const months = ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+                dayName = days[now.getDay()];
+                monthName = months[now.getMonth()];
+                dayNum = now.getDate();
+                clockDate.textContent = `${dayName}, ${dayNum} ${monthName}`;
+            }
+        }
+
+        window.updateClock = updateClock;
+
+        updateClock();
+        clockInterval = setInterval(updateClock, 1000);
     }
 
     const wipMessages = {
@@ -378,16 +435,23 @@ async function animateTerminal() {
     const aboutTextEl = document.querySelector('.about-text');
     const finalPrompt = document.getElementById('final-prompt');
 
+    const is404 = !responseEl && !aboutTextEl && !finalPrompt;
+
     typingEffectEl.style.opacity = '0';
     typingEffectEl.style.transform = 'translateY(8px)';
-    responseEl.style.opacity = '0';
-    responseEl.style.transform = 'translateY(14px) scale(0.98)';
-    finalPrompt.style.opacity = '0';
-    finalPrompt.style.transform = 'translateY(8px)';
-    aboutTextEl.style.opacity = '0';
-
-    const lines = aboutTextEl.querySelectorAll(".terminal-line");
-    lines.forEach(line => line.classList.add('hidden-line'));
+    if (responseEl) {
+        responseEl.style.opacity = '0';
+        responseEl.style.transform = 'translateY(14px) scale(0.98)';
+    }
+    if (finalPrompt) {
+        finalPrompt.style.opacity = '0';
+        finalPrompt.style.transform = 'translateY(8px)';
+    }
+    if (aboutTextEl) {
+        aboutTextEl.style.opacity = '0';
+        const lines = aboutTextEl.querySelectorAll(".terminal-line");
+        lines.forEach(line => line.classList.add('hidden-line'));
+    }
 
     await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -396,6 +460,11 @@ async function animateTerminal() {
     typingEffectEl.style.transform = 'translateY(0)';
     await typeCommand(commandEl, commandEl.dataset.text, 50);
     await new Promise(resolve => setTimeout(resolve, 200));
+
+    if (is404) {
+        isAnimating = false;
+        return;
+    }
 
     responseEl.style.transition = 'opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
     responseEl.style.opacity = '1';

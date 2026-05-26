@@ -1,60 +1,401 @@
-body {
-  background-color: #000;
-  color: #ff0000;
-  font-family: 'Courier New', Courier, monospace;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+/* ============================================
+   404 PAGE — TERMINAL STYLE (matches main site)
+   ============================================ */
+
+.error-terminal {
+    background: var(--terminal-bg);
+    border-radius: var(--radius-2);
+    box-shadow: var(--elevation-2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 2rem auto;
+    max-width: 900px;
+    width: 90%;
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-out;
+    position: relative;
+    transition: var(--transition);
 }
 
-.container {
-  text-align: center;
-  padding: 20px;
-  border: 1px solid #ff0000;
-  border-radius: 5px;
-  background-color: #111;
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-  max-width: 90%;
-  width: auto;
-  overflow-x: auto; /* Handle long lines */
+.error-terminal .terminal-header {
+    background: var(--surface-1);
+    border-radius: var(--radius-2) var(--radius-2) 0 0;
+    backdrop-filter: blur(5px);
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.cow-art {
-  white-space: pre; /* Preserve ASCII art formatting */
-  line-height: 1.2;
-  margin: 0 0 20px 0;
-  font-size: 0.8rem; /* Adjust base font size */
+.error-terminal .window-title {
+    color: var(--text-color);
+    opacity: 0.8;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.9rem;
 }
 
-@media (min-width: 768px) {
-  .cow-art {
-    font-size: 1rem; /* Larger font on bigger screens */
-  }
-  
-  .container {
-    max-width: 80%;
-  }
+.error-terminal .window-controls {
+    display: flex;
+    gap: 8px;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
 }
 
-.home-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #ff0000;
-  color: #000;
-  text-decoration: none;
-  border-radius: 3px;
-  font-weight: bold;
-  transition: background-color 0.3s, color 0.3s;
-  border: none;
-  cursor: pointer;
+.error-terminal .control-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1;
+    opacity: 0.7;
 }
 
-.home-button:hover,
-.home-button:focus {
-  background-color: #000;
-  color: #ff0000;
-  border: 1px solid #ff0000;
+.error-terminal .control-btn:hover {
+    opacity: 1;
+    color: #ff5f57;
+}
+
+.error-terminal .terminal-content {
+    padding: 2rem;
+    font-family: "IBM Plex Mono", monospace;
+}
+
+.error-terminal .typing-effect {
+    display: flex;
+    gap: 8px;
+    margin: 1rem 0;
+}
+
+.error-terminal .command {
+    color: var(--text-color);
+    opacity: 0.9;
+}
+
+.error-terminal .prompt {
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.error-terminal .error-response {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    animation: fadeIn 0.6s ease-out 0.3s both;
+}
+
+.error-terminal .cow-art {
+    font-size: clamp(7px, 1.2vw, 11px);
+    line-height: 1.15;
+    text-align: center;
+    color: var(--accent-color);
+    white-space: pre;
+    margin: 1rem 0;
+    opacity: 0.85;
+}
+
+.error-terminal .error-info {
+    margin: 1.5rem 0;
+    text-align: left;
+    max-width: 600px;
+    width: 100%;
+}
+
+.error-terminal .error-line {
+    display: flex;
+    gap: 8px;
+    margin: 0.5rem 0;
+    font-size: clamp(12px, 1.6vw, 15px);
+    line-height: 1.6;
+    color: var(--text-color);
+    opacity: 0.85;
+}
+
+.error-terminal .error-message {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.error-terminal .error-hint {
+    color: var(--text-color-muted);
+}
+
+.error-terminal .error-actions {
+    margin: 2rem 0 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.error-terminal .glitch-stack {
+    margin: 1.5rem 0 0.5rem;
+    width: 100%;
+    max-width: 600px;
+    animation: fadeIn 0.6s ease-out 0.6s both;
+}
+
+.error-terminal .glitch-trace {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(10px, 1.4vw, 13px);
+    line-height: 1.6;
+    color: var(--text-color);
+    opacity: 0.85;
+    white-space: pre;
+    margin: 0;
+    text-align: left;
+}
+
+.error-terminal .glitch-trace .dim {
+    opacity: 0.45;
+}
+
+.error-terminal .glitch-trace .err {
+    color: #ff5f57;
+    font-weight: bold;
+}
+
+.error-terminal .glitch-trace .warn {
+    color: #f0c040;
+}
+
+.error-terminal .glitch-path {
+    color: var(--accent-color);
+    text-decoration: line-through;
+    animation: glitch-text 2s ease-in-out infinite;
+}
+
+.error-terminal .segfault-box {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 1.2rem 0;
+    padding: 0.6rem 1.2rem;
+    background: rgba(255, 95, 87, 0.08);
+    border: 1px solid rgba(255, 95, 87, 0.25);
+    border-radius: 4px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: clamp(10px, 1.4vw, 13px);
+    animation: fadeIn 0.6s ease-out 0.9s both;
+}
+
+.error-terminal .segfault-icon {
+    font-size: 1.2rem;
+    animation: pulse-segfault 1.5s ease-in-out infinite;
+}
+
+.error-terminal .segfault-msg {
+    color: #ff5f57;
+    font-weight: bold;
+}
+
+.error-terminal .segfault-dump {
+    color: var(--text-color-muted);
+    margin-left: auto;
+    font-style: italic;
+}
+
+@keyframes glitch-text {
+    0%, 90%, 100% { opacity: 1; transform: none; }
+    92% { opacity: 0.6; transform: translateX(-2px); }
+    94% { opacity: 1; transform: translateX(2px); }
+    96% { opacity: 0.7; transform: translateX(-1px); }
+    98% { opacity: 1; transform: none; }
+}
+
+@keyframes pulse-segfault {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.error-terminal .tui-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 0.6rem 0;
+    color: var(--text-color);
+    text-decoration: none;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.95rem;
+    cursor: pointer;
+    background: var(--surface-1);
+    border: 1px solid var(--accent-color);
+    transition: var(--transition);
+    position: relative;
+}
+
+.error-terminal .tui-button:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+}
+
+.error-terminal .tui-button:hover .tui-btn-bracket {
+    color: var(--bg-color);
+}
+
+.error-terminal .tui-btn-bracket {
+    color: var(--accent-color);
+    font-weight: bold;
+    padding: 0.6rem 0.5rem;
+    transition: color 0.3s;
+    user-select: none;
+}
+
+.error-terminal .tui-btn-label {
+    padding: 0.6rem 1.2rem;
+    white-space: nowrap;
+}
+
+.error-terminal .nav-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 999px;
+    transition: var(--transition);
+    background: var(--surface-1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.error-terminal .nav-button:hover {
+    background: var(--surface-2);
+    transform: translateY(-2px);
+    box-shadow: var(--elevation-1);
+    color: var(--accent-color);
+}
+
+.error-terminal .input-line {
+    display: flex;
+    gap: 8px;
+    margin-top: 2rem;
+    opacity: 1;
+}
+
+.error-terminal .cursor {
+    width: 8px;
+    height: 1.2em;
+    background: var(--accent-color);
+    animation: blink 1s step-end infinite;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .error-terminal {
+        margin: 1rem auto;
+        width: 95%;
+    }
+
+    .error-terminal .terminal-content {
+        padding: 1.5rem;
+    }
+
+    .error-terminal .cow-art {
+        font-size: 0.55rem;
+        line-height: 1.1;
+    }
+
+    .error-terminal .error-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .error-terminal .nav-button {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-terminal .terminal-header {
+        padding: 0.5rem;
+    }
+
+    .error-terminal .window-title {
+        font-size: 0.8rem;
+    }
+
+    .error-terminal .terminal-content {
+        padding: 1rem;
+    }
+
+    .error-terminal .cow-art {
+        font-size: 0.45rem;
+    }
+
+    .error-terminal .error-line {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .error-terminal {
+        margin: 0.5rem auto;
+    }
+
+    .error-terminal .terminal-content {
+        padding: 1rem;
+    }
+
+    .error-terminal .cow-art {
+        font-size: 0.45rem;
+        margin: 0.5rem 0;
+    }
+
+    .error-terminal .error-info {
+        margin: 0.5rem 0;
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .error-terminal,
+    .error-terminal .error-response,
+    .error-terminal .typing-effect {
+        animation: none;
+    }
+
+    .error-terminal .cursor {
+        animation: none;
+        opacity: 1;
+    }
 }

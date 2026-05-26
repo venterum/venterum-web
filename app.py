@@ -422,7 +422,8 @@ def page_not_found(e):
     message = random.choice(COOL_404_MESSAGES)
     random_cow_name = random.choice(cowsay.char_names)
     cow_art = cowsay.get_output_string(random_cow_name, message)
-    return render_template("404.html", cow_art=cow_art), 404
+    path = request.path.lstrip("/")
+    return render_template("404.html", cow_art=cow_art, path=path), 404
 
 
 if __name__ == "__main__":

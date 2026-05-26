@@ -108,6 +108,10 @@
         justify-content: center;
     }
 
+    .clock-pill {
+        display: none;
+    }
+
     .lang-segment {
         display: grid;
         grid-template-columns: repeat(2, minmax(4rem, 1fr));

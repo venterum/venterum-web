@@ -1,15 +1,128 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='404.css') }}">
-</head>
-<body>
-    <div class="container">
-        <pre class="cow-art">{{ cow_art }}</pre>
-        <a href="/" class="home-button">Return to Homepage</a>
-    </div>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>404 - Page Not Found</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='404.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+    </head>
+    <body class="theme-default">
+        <div class="noise"></div>
+
+        <main class="error-terminal">
+            <div class="terminal-header">
+                <div class="window-title">
+                    vntrum-webterm 2.3.0 — error_404.sh
+                </div>
+                <div class="window-controls">
+                    <button class="control-btn red" aria-label="Close terminal">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <div class="terminal-content">
+                <div class="typing-effect">
+                    <span class="prompt">venterum@web:~$ </span>
+                    <span class="command" data-text="bash ~/error_404.sh"
+                        >bash ~/error_404.sh</span
+                    >
+                </div>
+
+                <div class="error-response">
+                    <div class="error-info">
+                        <div class="error-line">
+                            <span class="prompt">&gt;</span>
+                            <span class="error-message"
+                                >Error: Page not found</span
+                            >
+                        </div>
+                        <div class="error-line">
+                            <span class="prompt">&gt;</span>
+                            <span class="error-hint"
+                                >The requested resource could not be located on
+                                this server.</span
+                            >
+                        </div>
+                    </div>
+
+                    <div class="glitch-stack">
+                        <pre class="glitch-trace">
+<span class="dim">[  OK  ]</span> Started Session c1 of user venterum.
+<span class="dim">[  OK  ]</span> Reached target Timers.
+<span class="dim">[  OK  ]</span> Reached target Sockets.
+<span class="dim">[  OK  ]</span> Reached target Paths.
+<span class="dim">[  OK  ]</span> Reached target Basic System.
+<span class="dim">[  OK  ]</span> Started D-Bus System Message Bus.
+<span class="dim">[  OK  ]</span> Started Network Manager.
+<span class="dim">[  OK  ]</span> Reached target Network.
+<span class="dim">[  OK  ]</span> Reached target Host and Network Name Lookups.
+<span class="err">[FAILED]</span> Failed to resolve route <span class="glitch-path">/{{ path }}</span>.
+<span class="err">[FAILED]</span> See 'systemctl status route-resolver.service' for details.
+<span class="warn">[ WARN ]</span> Falling back to 404 handler...
+                    </pre>
+                    </div>
+                    <pre class="cow-art">{{ cow_art }}</pre>
+
+                    <div class="error-actions">
+                        <a href="/" class="tui-button">
+                            <span class="tui-btn-bracket">[</span>
+                            <span class="tui-btn-label"
+                                ><i class="fas fa-home"></i>&nbsp;Home</span
+                            >
+                            <span class="tui-btn-bracket">]</span>
+                        </a>
+                        <a
+                            href="https://github.com/venterum"
+                            target="_blank"
+                            class="tui-button"
+                        >
+                            <span class="tui-btn-bracket">[</span>
+                            <span class="tui-btn-label"
+                                ><i class="fab fa-github"></i>&nbsp;GitHub</span
+                            >
+                            <span class="tui-btn-bracket">]</span>
+                        </a>
+                        <a href="/ip" class="tui-button">
+                            <span class="tui-btn-bracket">[</span>
+                            <span class="tui-btn-label"
+                                ><i class="fas fa-location-arrow"></i>&nbsp;IP
+                                Lookup</span
+                            >
+                            <span class="tui-btn-bracket">]</span>
+                        </a>
+                        <a href="/qr" class="tui-button">
+                            <span class="tui-btn-bracket">[</span>
+                            <span class="tui-btn-label"
+                                ><i class="fas fa-qrcode"></i>&nbsp;QR</span
+                            >
+                            <span class="tui-btn-bracket">]</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="input-line">
+                    <span class="prompt">venterum@web:~$</span>
+                    <span class="cursor"></span>
+                </div>
+            </div>
+        </main>
+
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+    </body>
 </html>
