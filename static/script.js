@@ -29,19 +29,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const themeToggle = document.querySelector('.theme-toggle');
-    const themeList = document.querySelector('.theme-list');
+    const themeDropdown = document.querySelector('.theme-dropdown');
     const themeOptions = document.querySelectorAll('.theme-option');
     const currentThemeIcon = document.querySelector('.current-theme');
     const body = document.body;
 
-    themeToggle.addEventListener('click', () => {
-        themeList.classList.toggle('active');
+    themeToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        themeDropdown.classList.toggle('active');
     });
 
     document.addEventListener('click', (e) => {
-        if (!themeToggle.contains(e.target)) {
-            themeList.classList.remove('active');
+        if (!themeDropdown.contains(e.target)) {
+            themeDropdown.classList.remove('active');
         }
+    });
+
+    /* ── Tools dropdown toggle ──────────────── */
+    const toolsDropdown = document.querySelector('.tools-dropdown');
+    const toolsToggle = document.querySelector('.tools-toggle');
+
+    if (toolsDropdown && toolsToggle) {
+        toolsToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toolsDropdown.classList.toggle('active');
+            themeDropdown.classList.remove('active');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!toolsDropdown.contains(e.target)) {
+                toolsDropdown.classList.remove('active');
+            }
+        });
+    }
+
+    /* Close tools dropdown when theme opens */
+    themeToggle.addEventListener('click', () => {
+        if (toolsDropdown) toolsDropdown.classList.remove('active');
     });
 
     themeOptions.forEach(option => {
@@ -53,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentThemeIcon.textContent = icon;
             
             localStorage.setItem('theme', theme);
-            themeList.classList.remove('active');
+            themeDropdown.classList.remove('active');
         });
     });
 

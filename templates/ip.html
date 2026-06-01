@@ -34,11 +34,44 @@
                 <span class="text-ru">Блог</span>
                 <span class="text-en">Blog</span>
             </a>
-            <a href="/qr" class="nav-button">
-                <i class="fas fa-qrcode"></i>
-                <span class="text-ru">Everything-to-QR</span>
-                <span class="text-en">Everything-to-QR</span>
-            </a>
+            <div class="tools-dropdown">
+                <button class="nav-button tools-toggle">
+                    <i class="fas fa-screwdriver-wrench"></i>
+                    <span class="text-ru">Инструменты</span>
+                    <span class="text-en">Tools</span>
+                    <i class="fas fa-chevron-down tools-chevron"></i>
+                </button>
+                <div class="tools-list">
+                    <a href="/ip" class="tools-option">
+                        <i class="fas fa-location-arrow"></i>
+                        <span class="tools-copy">
+                            <span class="tools-title">IP-lookup</span>
+                            <span class="tools-desc">IP info</span>
+                        </span>
+                    </a>
+                    <a href="/qr" class="tools-option">
+                        <i class="fas fa-qrcode"></i>
+                        <span class="tools-copy">
+                            <span class="tools-title">E-2-QR</span>
+                            <span class="tools-desc">Text to QR</span>
+                        </span>
+                    </a>
+                    <a href="/pswd" class="tools-option">
+                        <i class="fas fa-key"></i>
+                        <span class="tools-copy">
+                            <span class="tools-title">pswd</span>
+                            <span class="tools-desc">Password gen</span>
+                        </span>
+                    </a>
+                    <a href="/cidr" class="tools-option">
+                        <i class="fas fa-network-wired"></i>
+                        <span class="tools-copy">
+                            <span class="tools-title">CIDR</span>
+                            <span class="tools-desc">Subnet calc</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="controls-wrapper">
             <div class="lang-segment" aria-label="Language">
@@ -66,13 +99,21 @@
                         <div class="theme-group-title text-en">Light Themes</div>
                         <div class="theme-option" data-theme="light">
                             <span class="theme-icon">☀️</span>
-                            <span class="text-ru theme-name">Просто светлая</span>
-                            <span class="text-en theme-name">Just Light</span>
+                            <span class="theme-copy">
+                                <span class="text-ru theme-name">Просто светлая</span>
+                                <span class="text-en theme-name">Just Light</span>
+                                <span class="text-ru theme-desc">Чистый светлый режим</span>
+                                <span class="text-en theme-desc">Clean light mode</span>
+                            </span>
                         </div>
                         <div class="theme-option" data-theme="mint">
                             <span class="theme-icon">🌿</span>
-                            <span class="text-ru theme-name">Свежий лемонграсс</span>
-                            <span class="text-en theme-name">Fresh Lemongrass</span>
+                            <span class="theme-copy">
+                                <span class="text-ru theme-name">Свежий лемонграсс</span>
+                                <span class="text-en theme-name">Fresh Lemongrass</span>
+                                <span class="text-ru theme-desc">Мягкий зеленый акцент</span>
+                                <span class="text-en theme-desc">Soft green accent</span>
+                            </span>
                         </div>
                     </div>
                     <div class="theme-divider"></div>
@@ -81,28 +122,48 @@
                         <div class="theme-group-title text-en">Dark Themes</div>
                         <div class="theme-option" data-theme="default">
                             <span class="theme-icon">☁️</span>
-                            <span class="text-ru theme-name">Бледный сад</span>
-                            <span class="text-en theme-name">Pale Garden</span>
+                            <span class="theme-copy">
+                                <span class="text-ru theme-name">Бледный сад</span>
+                                <span class="text-en theme-name">Pale Garden</span>
+                                <span class="text-ru theme-desc">Спокойная базовая тема</span>
+                                <span class="text-en theme-desc">Calm default theme</span>
+                            </span>
                         </div>
                         <div class="theme-option" data-theme="tokyo">
                             <span class="theme-icon">🗼</span>
-                            <span class="text-ru theme-name">Токийская ночь</span>
-                            <span class="text-en theme-name">Tokyo Night</span>
+                            <span class="theme-copy">
+                                <span class="text-ru theme-name">Токийская ночь</span>
+                                <span class="text-en theme-name">Tokyo Night</span>
+                                <span class="text-ru theme-desc">Темная синяя палитра</span>
+                                <span class="text-en theme-desc">Dark blue palette</span>
+                            </span>
                         </div>
                         <div class="theme-option" data-theme="coral">
                             <span class="theme-icon">🌺</span>
-                            <span class="text-ru theme-name">Коралловый риф</span>
-                            <span class="text-en theme-name">Coral Reef</span>
+                            <span class="theme-copy">
+                                <span class="text-ru theme-name">Коралловый риф</span>
+                                <span class="text-en theme-name">Coral Reef</span>
+                                <span class="text-ru theme-desc">Теплый красный акцент</span>
+                                <span class="text-en theme-desc">Warm red accent</span>
+                            </span>
                         </div>
                         <div class="theme-option" data-theme="sage">
                             <span class="theme-icon">🌿</span>
-                            <span class="text-ru theme-name">Роща шалфея</span>
-                            <span class="text-en theme-name">Sage Grove</span>
+                            <span class="theme-copy">
+                                <span class="text-ru theme-name">Роща шалфея</span>
+                                <span class="text-en theme-name">Sage Grove</span>
+                                <span class="text-ru theme-desc">Приглушенный зеленый</span>
+                                <span class="text-en theme-desc">Muted green tone</span>
+                            </span>
                         </div>
                         <div class="theme-option" data-theme="azure">
                             <span class="theme-icon">🌊</span>
-                            <span class="text-ru theme-name">Лазурная волна</span>
-                            <span class="text-en theme-name">Azure Wave</span>
+                            <span class="theme-copy">
+                                <span class="text-ru theme-name">Лазурная волна</span>
+                                <span class="text-en theme-name">Azure Wave</span>
+                                <span class="text-ru theme-desc">Холодный голубой акцент</span>
+                                <span class="text-en theme-desc">Cool blue accent</span>
+                            </span>
                         </div>
                     </div>
                 </div>

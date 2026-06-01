@@ -208,6 +208,16 @@ def qr_page():
     return render_template("qr.html")
 
 
+@app.route("/pswd")
+def pswd_page():
+    return render_template("pswd.html")
+
+
+@app.route("/cidr")
+def cidr_page():
+    return render_template("cidr.html")
+
+
 @app.route("/ip")
 def ip_lookup():
     client_ip = request.headers.get("X-Forwarded-For", request.remote_addr).split(

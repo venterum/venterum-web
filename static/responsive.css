@@ -64,6 +64,27 @@
         gap: 0.85rem;
     }
 
+    .tools-dropdown {
+        display: contents;
+    }
+
+    .tools-list {
+        position: fixed;
+        top: auto;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        right: auto;
+        width: min(calc(100% - 2rem), 520px);
+        margin-top: 0;
+        z-index: 1001;
+    }
+
+    .tools-option {
+        padding: 0.85rem 1rem;
+        font-size: 0.92rem;
+    }
+
     .nav-button {
         box-sizing: border-box;
         width: 100%;
@@ -95,7 +116,7 @@
 
     .controls-wrapper {
         width: min(100%, 520px);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--border-color);
         background: var(--surface-1);
         box-sizing: border-box;
         align-self: center;
@@ -119,7 +140,7 @@
         padding: 0.18rem;
         border-radius: 999px;
         background: var(--surface-2);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--border-color);
         min-width: 0;
     }
 
@@ -130,7 +151,7 @@
         padding: 0.5rem 0.7rem;
         min-height: 42px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        border: 1px solid var(--border-color);
         background: var(--surface-1);
     }
 
