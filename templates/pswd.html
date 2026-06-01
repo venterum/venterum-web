@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>venterum@web:~$ ./pswd</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='pswd.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='responsive.css') }}"
+        />
+
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="{{ url_for('static', filename='favicon.svg') }}"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            href="{{ url_for('static', filename='favicon.png') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+    </head>
+    <body class="theme-default">
+        <div class="noise"></div>
+        <nav class="nav">
+            <div class="logo">venterum@web:~$</div>
+            <div class="nav-buttons">
+                <a href="/" class="nav-button">
+                    <i class="fas fa-home"></i>
+                    <span class="text-ru">Главная</span>
+                    <span class="text-en">Home</span>
+                </a>
+                <a
+                    href="https://github.com/venterum"
+                    target="_blank"
+                    class="nav-button"
+                >
+                    <i class="fab fa-github"></i>
+                    <span class="text-ru">GitHub</span>
+                    <span class="text-en">GitHub</span>
+                </a>
+                <a href="/#blog" class="nav-button">
+                    <i class="fas fa-newspaper"></i>
+                    <span class="text-ru">Блог</span>
+                    <span class="text-en">Blog</span>
+                </a>
+                <div class="tools-dropdown">
+                    <button class="nav-button tools-toggle">
+                        <i class="fas fa-screwdriver-wrench"></i>
+                        <span class="text-ru">Инструменты</span>
+                        <span class="text-en">Tools</span>
+                        <i class="fas fa-chevron-down tools-chevron"></i>
+                    </button>
+                    <div class="tools-list">
+                        <a href="/ip" class="tools-option">
+                            <i class="fas fa-location-arrow"></i>
+                            <span class="tools-copy">
+                                <span class="tools-title">IP-lookup</span>
+                                <span class="tools-desc">IP info</span>
+                            </span>
+                        </a>
+                        <a href="/qr" class="tools-option">
+                            <i class="fas fa-qrcode"></i>
+                            <span class="tools-copy">
+                                <span class="tools-title">E-2-QR</span>
+                                <span class="tools-desc">Text to QR</span>
+                            </span>
+                        </a>
+                        <a href="/pswd" class="tools-option">
+                            <i class="fas fa-key"></i>
+                            <span class="tools-copy">
+                                <span class="tools-title">pswd</span>
+                                <span class="tools-desc">Password gen</span>
+                            </span>
+                        </a>
+                        <a href="/cidr" class="tools-option">
+                            <i class="fas fa-network-wired"></i>
+                            <span class="tools-copy">
+                                <span class="tools-title">CIDR</span>
+                                <span class="tools-desc">Subnet calc</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="controls-wrapper">
+                <div class="lang-segment" aria-label="Language">
+                    <button class="lang-btn" data-lang="ru">
+                        <span class="lang-flag" aria-hidden="true">🇷🇺</span>
+                        <span class="lang-name">Русский</span>
+                        <span class="lang-code">RU</span>
+                    </button>
+                    <button class="lang-btn" data-lang="en">
+                        <span class="lang-flag" aria-hidden="true">🇬🇧</span>
+                        <span class="lang-name">English</span>
+                        <span class="lang-code">EN</span>
+                    </button>
+                </div>
+                <div class="theme-dropdown">
+                    <button class="theme-toggle">
+                        <span class="current-theme">🎨</span>
+                        <span class="text-ru theme-name">Тема</span>
+                        <span class="text-en theme-name">Theme</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="theme-list">
+                        <div class="theme-group">
+                            <div class="theme-group-title text-ru">
+                                Светлые темы
+                            </div>
+                            <div class="theme-group-title text-en">
+                                Light Themes
+                            </div>
+                            <div class="theme-option" data-theme="light">
+                                <span class="theme-icon">☀️</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Просто светлая</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Just Light</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Чистый светлый режим</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Clean light mode</span
+                                    >
+                                </span>
+                            </div>
+                            <div class="theme-option" data-theme="mint">
+                                <span class="theme-icon">🌿</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Свежий лемонграсс</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Fresh Lemongrass</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Мягкий зеленый акцент</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Soft green accent</span
+                                    >
+                                </span>
+                            </div>
+                        </div>
+                        <div class="theme-divider"></div>
+                        <div class="theme-group">
+                            <div class="theme-group-title text-ru">
+                                Темные темы
+                            </div>
+                            <div class="theme-group-title text-en">
+                                Dark Themes
+                            </div>
+                            <div class="theme-option" data-theme="default">
+                                <span class="theme-icon">☁️</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Бледный сад</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Pale Garden</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Спокойная базовая тема</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Calm default theme</span
+                                    >
+                                </span>
+                            </div>
+                            <div class="theme-option" data-theme="tokyo">
+                                <span class="theme-icon">🗼</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Токийская ночь</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Tokyo Night</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Темная синяя палитра</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Dark blue palette</span
+                                    >
+                                </span>
+                            </div>
+                            <div class="theme-option" data-theme="coral">
+                                <span class="theme-icon">🌺</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Коралловый риф</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Coral Reef</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Теплый красный акцент</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Warm red accent</span
+                                    >
+                                </span>
+                            </div>
+                            <div class="theme-option" data-theme="sage">
+                                <span class="theme-icon">🌿</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Роща шалфея</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Sage Grove</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Приглушенный зеленый</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Muted green tone</span
+                                    >
+                                </span>
+                            </div>
+                            <div class="theme-option" data-theme="azure">
+                                <span class="theme-icon">🌊</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Лазурная волна</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Azure Wave</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Холодный голубой акцент</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Cool blue accent</span
+                                    >
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="pswd-page-container">
+            <div class="grid-card pswd-config-card">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-key"></i>
+                        <span class="text-ru">Генератор паролей</span>
+                        <span class="text-en">Password Generator</span>
+                        <div class="info-icon-wrapper">
+                            <i class="fas fa-info-circle info-icon"></i>
+                            <div class="tooltip">
+                                <span class="text-ru"
+                                    >Пароли генерируются локально в браузере с
+                                    использованием криптографически стойкого
+                                    генератора случайных чисел
+                                    (crypto.getRandomValues). Никакие данные не
+                                    отправляются на сервер.</span
+                                >
+                                <span class="text-en"
+                                    >Passwords are generated locally in your
+                                    browser using a cryptographically secure
+                                    random number generator
+                                    (crypto.getRandomValues). No data is sent to
+                                    the server.</span
+                                >
+                            </div>
+                        </div>
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="pswd-length-section">
+                        <div class="pswd-length-header">
+                            <span class="label text-ru">Длина пароля</span>
+                            <span class="label text-en">Password length</span>
+                            <span
+                                class="pswd-length-value"
+                                id="pswd-length-value"
+                                >24</span
+                            >
+                        </div>
+                        <div class="pswd-slider-wrapper">
+                            <input
+                                type="range"
+                                id="pswd-length-slider"
+                                class="pswd-slider"
+                                min="8"
+                                max="128"
+                                value="24"
+                                step="1"
+                            />
+                            <div class="pswd-slider-ticks">
+                                <span>8</span>
+                                <span>32</span>
+                                <span>64</span>
+                                <span>96</span>
+                                <span>128</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pswd-charsets">
+                        <label class="pswd-checkbox">
+                            <input type="checkbox" id="charset-upper" checked />
+                            <span class="pswd-checkbox-custom"></span>
+                            <span class="pswd-checkbox-label">A-Z</span>
+                            <span class="pswd-checkbox-hint text-ru"
+                                >Заглавные</span
+                            >
+                            <span class="pswd-checkbox-hint text-en"
+                                >Uppercase</span
+                            >
+                        </label>
+                        <label class="pswd-checkbox">
+                            <input type="checkbox" id="charset-lower" checked />
+                            <span class="pswd-checkbox-custom"></span>
+                            <span class="pswd-checkbox-label">a-z</span>
+                            <span class="pswd-checkbox-hint text-ru"
+                                >Строчные</span
+                            >
+                            <span class="pswd-checkbox-hint text-en"
+                                >Lowercase</span
+                            >
+                        </label>
+                        <label class="pswd-checkbox">
+                            <input
+                                type="checkbox"
+                                id="charset-digits"
+                                checked
+                            />
+                            <span class="pswd-checkbox-custom"></span>
+                            <span class="pswd-checkbox-label">0-9</span>
+                            <span class="pswd-checkbox-hint text-ru"
+                                >Цифры</span
+                            >
+                            <span class="pswd-checkbox-hint text-en"
+                                >Digits</span
+                            >
+                        </label>
+                        <label class="pswd-checkbox">
+                            <input
+                                type="checkbox"
+                                id="charset-symbols"
+                                checked
+                            />
+                            <span class="pswd-checkbox-custom"></span>
+                            <span class="pswd-checkbox-label">!@#$</span>
+                            <span class="pswd-checkbox-hint text-ru"
+                                >Символы</span
+                            >
+                            <span class="pswd-checkbox-hint text-en"
+                                >Symbols</span
+                            >
+                        </label>
+                    </div>
+
+                    <div class="pswd-options">
+                        <label class="pswd-toggle">
+                            <input type="checkbox" id="option-no-ambiguous" />
+                            <span class="pswd-toggle-track">
+                                <span class="pswd-toggle-thumb"></span>
+                            </span>
+                            <span class="pswd-toggle-text">
+                                <span class="text-ru">Без похожих символов</span>
+                                <span class="text-en">Avoid similar symbols</span>
+                            </span>
+                        </label>
+                        <label class="pswd-toggle">
+                            <input
+                                type="checkbox"
+                                id="option-require-each"
+                                checked
+                            />
+                            <span class="pswd-toggle-track">
+                                <span class="pswd-toggle-thumb"></span>
+                            </span>
+                            <span class="pswd-toggle-text">
+                                <span class="text-ru">Символ из каждого набора</span>
+                                <span class="text-en">Use every selected set</span>
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="pswd-actions-row">
+                        <button
+                            id="generate-pswd-btn"
+                            class="pswd-generate-btn"
+                        >
+                            <span class="btn-text">
+                                <i class="fas fa-dice-d6"></i>
+                                <span class="text-ru">Сгенерировать</span>
+                                <span class="text-en">Generate</span>
+                            </span>
+                            <span class="btn-spinner">
+                                <i class="fas fa-circle-notch fa-spin"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-card pswd-result-card" id="pswd-result-card">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-shield-halved"></i>
+                        <span class="text-ru">Результат</span>
+                        <span class="text-en">Result</span>
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="pswd-output-area" id="pswd-output-area">
+                        <div class="pswd-empty-state" id="pswd-empty-state">
+                            <div class="pswd-empty-icon">
+                                <i class="fas fa-fingerprint"></i>
+                            </div>
+                            <span class="text-ru">Пароль появится здесь</span>
+                            <span class="text-en"
+                                >Password will appear here</span
+                            >
+                        </div>
+                        <div class="pswd-display" id="pswd-display">
+                            <div class="pswd-field-wrapper">
+                                <div class="pswd-field" id="pswd-field">
+                                    <span
+                                        class="pswd-text"
+                                        id="pswd-text"
+                                    ></span>
+                                    <span
+                                        class="pswd-cursor"
+                                        id="pswd-cursor"
+                                    ></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div
+                        class="pswd-strength-section"
+                        id="pswd-strength-section"
+                    >
+                        <div class="pswd-strength-header">
+                            <span class="label text-ru">Стойкость</span>
+                            <span class="label text-en">Strength</span>
+                            <span
+                                class="pswd-strength-label"
+                                id="pswd-strength-label"
+                                >—</span
+                            >
+                        </div>
+                        <div class="pswd-strength-bar-wrapper">
+                            <div
+                                class="pswd-strength-bar"
+                                id="pswd-strength-bar"
+                            >
+                                <div
+                                    class="pswd-strength-fill"
+                                    id="pswd-strength-fill"
+                                ></div>
+                            </div>
+                        </div>
+                        <div
+                            class="pswd-entropy"
+                            id="pswd-entropy"
+                            aria-live="polite"
+                        >
+                            Энтропия: — бит
+                        </div>
+                    </div>
+
+                    <div class="pswd-result-actions" id="pswd-result-actions">
+                        <button
+                            id="copy-pswd-btn"
+                            class="pswd-action-btn primary"
+                        >
+                            <i class="fas fa-copy"></i>
+                            <span class="text-ru">Копировать</span>
+                            <span class="text-en">Copy</span>
+                        </button>
+                        <button
+                            id="regenerate-pswd-btn"
+                            class="pswd-action-btn secondary"
+                        >
+                            <i class="fas fa-sync-alt"></i>
+                            <span class="text-ru">Ещё</span>
+                            <span class="text-en">Again</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="pswd-toast" id="pswd-toast">
+            <i class="fas fa-check-circle"></i>
+            <span class="text-ru" id="pswd-toast-text-ru">Скопировано!</span>
+            <span class="text-en" id="pswd-toast-text-en">Copied!</span>
+        </div>
+
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script src="{{ url_for('static', filename='responsive.js') }}"></script>
+        <script src="{{ url_for('static', filename='pswd.js') }}"></script>
+    </body>
+</html>

@@ -1,0 +1,757 @@
+/* ============================================
+   CIDR Calculator
+   ============================================ */
+
+@keyframes cidrReveal {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cidrPop {
+    from {
+        opacity: 0;
+        transform: scale(0.88) translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes cidrFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes cidrShake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-6px);
+    }
+    40% {
+        transform: translateX(6px);
+    }
+    60% {
+        transform: translateX(-4px);
+    }
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+.cidr-page-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 640px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    animation: cidrReveal 0.5s ease-out;
+}
+
+.cidr-page-container .grid-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-1);
+    border: 1px solid var(--surface-2);
+    border-radius: var(--radius-2);
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.cidr-page-container .grid-card:hover {
+    background: var(--surface-2);
+    border-color: var(--accent-color-translucent);
+    transform: translateY(-4px);
+}
+
+.cidr-page-container .card-header {
+    padding: 1.25rem 1.5rem;
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--surface-2);
+}
+
+.cidr-page-container .card-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.cidr-page-container .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+}
+
+/* ── Info tooltip (reuse pswd pattern) ──── */
+
+.cidr-page-container .info-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    margin-left: auto;
+}
+
+.cidr-page-container .info-icon {
+    color: var(--text-color-muted);
+    cursor: pointer;
+    font-size: 1.05rem;
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.cidr-page-container .info-icon-wrapper:hover .info-icon {
+    color: var(--accent-color);
+    transform: translateY(-1px);
+}
+
+.cidr-page-container .tooltip {
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    z-index: 10;
+    display: none;
+    width: 280px;
+    padding: 1rem;
+    color: var(--text-color);
+    background: var(--surface-2);
+    border-radius: var(--radius-1);
+    font-size: 0.86rem;
+    line-height: 1.45;
+    text-align: center;
+    transform: translateX(-50%);
+}
+
+.cidr-page-container .info-icon-wrapper:hover .tooltip {
+    display: block;
+    animation: cidrPop 0.25s ease-out;
+}
+
+.cidr-page-container .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-color: var(--surface-2) transparent transparent transparent;
+    border-style: solid;
+    border-width: 5px;
+}
+
+/* ── Input field ─────────────────────────── */
+
+.cidr-input-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.cidr-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.cidr-label {
+    color: var(--text-color-muted);
+    font-size: 0.88rem;
+}
+
+.cidr-text-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    background: var(--surface-0);
+    border: 1px solid var(--surface-2);
+    border-radius: var(--radius-1);
+    outline: none;
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.cidr-text-input::placeholder {
+    color: var(--text-color-muted);
+    font-weight: 400;
+}
+
+.cidr-text-input:focus {
+    border-color: var(--accent-color-translucent);
+    background: var(--surface-1);
+}
+
+.cidr-text-input.error {
+    border-color: #ff5f57;
+}
+
+/* ── Prefix slider ───────────────────────── */
+
+.cidr-prefix-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cidr-prefix-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.cidr-prefix-header .label {
+    color: var(--text-color-muted);
+    font-size: 0.88rem;
+}
+
+.cidr-prefix-value {
+    min-width: 4ch;
+    margin-left: auto;
+    color: var(--accent-color);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: right;
+}
+
+.cidr-prefix-value.bump {
+    animation: cidrPop 0.22s ease-out;
+}
+
+.cidr-slider-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.cidr-slider {
+    width: 100%;
+    height: 8px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--surface-2);
+    border-radius: var(--radius-abs);
+    outline: none;
+    transition:
+        background 0.3s ease,
+        height 0.3s ease;
+}
+
+.cidr-slider:hover {
+    height: 10px;
+    background: var(--accent-color-translucent);
+}
+
+.cidr-slider::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+    cursor: grab;
+    appearance: none;
+    -webkit-appearance: none;
+    background: var(--accent-color);
+    border: 3px solid var(--bg-color);
+    border-radius: 50%;
+    transition:
+        border-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.cidr-slider::-webkit-slider-thumb:hover {
+    border-color: var(--surface-2);
+    transform: scale(1.08);
+}
+
+.cidr-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    cursor: grab;
+    background: var(--accent-color);
+    border: 3px solid var(--bg-color);
+    border-radius: 50%;
+}
+
+.cidr-slider:focus-visible::-webkit-slider-thumb {
+    border-color: var(--surface-2);
+}
+
+.cidr-slider-ticks {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0.25rem;
+    color: var(--text-color-muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+}
+
+/* ── IPv6 toggle ─────────────────────────── */
+
+.cidr-version-toggle {
+    display: flex;
+}
+
+.cidr-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 0;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 0.82rem;
+    user-select: none;
+}
+
+.cidr-toggle input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cidr-toggle-track {
+    position: relative;
+    width: 38px;
+    height: 22px;
+    flex: 0 0 auto;
+    background: var(--surface-2);
+    border: 1px solid var(--surface-2);
+    border-radius: var(--radius-abs);
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.cidr-toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    background: var(--text-color-muted);
+    border-radius: 50%;
+    transition:
+        background 0.3s ease,
+        transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cidr-toggle input:checked + .cidr-toggle-track {
+    background: var(--accent-color-translucent);
+    border-color: var(--accent-color-translucent);
+}
+
+.cidr-toggle input:checked + .cidr-toggle-track .cidr-toggle-thumb {
+    background: var(--accent-color);
+    transform: translateX(16px);
+}
+
+.cidr-toggle:has(input:focus-visible) .cidr-toggle-track {
+    outline: 2px solid var(--accent-color-translucent);
+    outline-offset: 2px;
+}
+
+.cidr-toggle-text {
+    min-width: 0;
+    color: var(--text-color-muted);
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 700;
+}
+
+/* ── Calculate button ────────────────────── */
+
+.cidr-actions-row {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.cidr-calc-btn {
+    display: inline-flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0.75rem 1.5rem;
+    color: var(--bg-color);
+    background: var(--accent-color);
+    border: none;
+    border-radius: var(--radius-abs);
+    cursor: pointer;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.cidr-calc-btn:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-2px);
+}
+
+.cidr-calc-btn:active:not(:disabled) {
+    transform: translateY(0);
+}
+
+.cidr-calc-btn:focus-visible {
+    outline: 2px solid var(--accent-color-translucent);
+    outline-offset: 2px;
+}
+
+.cidr-calc-btn .btn-text {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cidr-calc-btn .btn-spinner {
+    display: none;
+}
+
+.cidr-calc-btn.loading .btn-text {
+    display: none;
+}
+
+.cidr-calc-btn.loading .btn-spinner {
+    display: inline-flex;
+}
+
+.cidr-calc-btn.shake {
+    animation: cidrShake 0.4s ease;
+}
+
+/* ── Result area ─────────────────────────── */
+
+.cidr-output-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    padding: 1.5rem;
+    overflow: hidden;
+    background: var(--surface-0);
+    border: 2px dashed var(--surface-2);
+    border-radius: var(--radius-1);
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease;
+}
+
+.cidr-output-area.has-results {
+    border-style: solid;
+    border-color: var(--accent-color-translucent);
+}
+
+.cidr-empty-state {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-color-muted);
+    text-align: center;
+}
+
+.cidr-empty-icon {
+    color: var(--text-color-muted);
+    font-size: 3rem;
+    opacity: 0.35;
+    animation: cidrFloat 4s ease-in-out infinite;
+}
+
+.cidr-empty-state span {
+    font-size: 0.9rem;
+}
+
+.cidr-empty-state.hidden {
+    display: none;
+}
+
+.cidr-results {
+    display: none;
+    width: 100%;
+}
+
+.cidr-results.visible {
+    display: block;
+    animation: cidrPop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Result grid ─────────────────────────── */
+
+.cidr-result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.cidr-result-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem;
+    background: var(--surface-1);
+    border: 1px solid var(--surface-2);
+    border-radius: var(--radius-1);
+    cursor: pointer;
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.cidr-result-item:hover {
+    background: var(--surface-2);
+    border-color: var(--accent-color-translucent);
+    transform: translateY(-2px);
+}
+
+.cidr-result-item:active {
+    transform: translateY(0);
+}
+
+.cidr-result-item.full-width {
+    grid-column: 1 / -1;
+}
+
+.cidr-result-label {
+    color: var(--text-color-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.cidr-result-value {
+    color: var(--text-color);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.92rem;
+    font-weight: 700;
+    word-break: break-all;
+}
+
+.cidr-result-value .highlight {
+    color: var(--accent-color);
+}
+
+/* ── Reference table ─────────────────────── */
+
+.cidr-table-card {
+    display: none;
+}
+
+.cidr-table-card.visible {
+    display: flex;
+}
+
+.cidr-ref-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.cidr-ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.82rem;
+}
+
+.cidr-ref-table th {
+    padding: 0.6rem 0.75rem;
+    color: var(--text-color-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--surface-2);
+}
+
+.cidr-ref-table td {
+    padding: 0.5rem 0.75rem;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--surface-2);
+    transition: background 0.2s ease;
+}
+
+.cidr-ref-table tr:last-child td {
+    border-bottom: none;
+}
+
+.cidr-ref-table tbody tr:hover td {
+    background: var(--surface-1);
+}
+
+.cidr-ref-table tbody tr.active td {
+    background: var(--accent-color-translucent);
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+/* ── Toast ────────────────────────────────── */
+
+.cidr-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: calc(100vw - 2rem);
+    padding: 0.7rem 1.35rem;
+    color: var(--text-color);
+    background: var(--terminal-bg);
+    border: 1px solid var(--surface-2);
+    border-radius: var(--radius-abs);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.88rem;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(100px);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    white-space: nowrap;
+}
+
+.cidr-toast.visible {
+    transform: translateX(-50%) translateY(0);
+}
+
+.cidr-toast i {
+    color: #27c93f;
+}
+
+/* ── IP-in-range checker ─────────────────── */
+
+.cidr-check-row {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.cidr-check-row .cidr-field-group {
+    flex: 1;
+}
+
+.cidr-check-result {
+    display: none;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-1);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.88rem;
+    font-weight: 600;
+    animation: cidrPop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cidr-check-result.visible {
+    display: flex;
+}
+
+.cidr-check-result.match {
+    color: #27c93f;
+    background: rgba(39, 201, 63, 0.1);
+    border: 1px solid rgba(39, 201, 63, 0.25);
+}
+
+.cidr-check-result.match i {
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.cidr-check-result.no-match {
+    color: #ff5f57;
+    background: rgba(255, 95, 87, 0.1);
+    border: 1px solid rgba(255, 95, 87, 0.25);
+}
+
+.cidr-check-result.no-match i {
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+/* ── Responsive ──────────────────────────── */
+
+@media (max-width: 560px) {
+    .cidr-page-container {
+        gap: 1rem;
+        margin: 1rem auto;
+        padding: 1rem;
+    }
+
+    .cidr-page-container .card-header,
+    .cidr-page-container .card-content {
+        padding: 1rem;
+    }
+
+    .cidr-page-container .card-header h2 {
+        font-size: 1.05rem;
+    }
+
+    .cidr-result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cidr-output-area {
+        min-height: 150px;
+        padding: 1rem;
+    }
+
+    .cidr-page-container .tooltip {
+        left: auto;
+        right: -0.25rem;
+        width: min(260px, calc(100vw - 3rem));
+        transform: none;
+    }
+
+    .cidr-page-container .tooltip::after {
+        left: auto;
+        right: 1rem;
+    }
+
+    .cidr-ref-table {
+        font-size: 0.75rem;
+    }
+
+    .cidr-ref-table th,
+    .cidr-ref-table td {
+        padding: 0.4rem 0.5rem;
+    }
+
+    .cidr-check-row {
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

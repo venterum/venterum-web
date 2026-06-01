@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>venterum@web:~$ ./cidr</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='styles.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='cidr.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='responsive.css') }}"
+        />
+
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="{{ url_for('static', filename='favicon.svg') }}"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            href="{{ url_for('static', filename='favicon.png') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        />
+    </head>
+    <body class="theme-default">
+        <div class="noise"></div>
+        <nav class="nav">
+            <div class="logo">venterum@web:~$</div>
+            <div class="nav-buttons">
+                <a href="/" class="nav-button">
+                    <i class="fas fa-home"></i>
+                    <span class="text-ru">Главная</span>
+                    <span class="text-en">Home</span>
+                </a>
+                <a
+                    href="https://github.com/venterum"
+                    target="_blank"
+                    class="nav-button"
+                >
+                    <i class="fab fa-github"></i>
+                    <span class="text-ru">GitHub</span>
+                    <span class="text-en">GitHub</span>
+                </a>
+                <a href="/#blog" class="nav-button">
+                    <i class="fas fa-newspaper"></i>
+                    <span class="text-ru">Блог</span>
+                    <span class="text-en">Blog</span>
+                </a>
+                <div class="tools-dropdown">
+                    <button class="nav-button tools-toggle">
+                        <i class="fas fa-screwdriver-wrench"></i>
+                        <span class="text-ru">Инструменты</span>
+                        <span class="text-en">Tools</span>
+                        <i class="fas fa-chevron-down tools-chevron"></i>
+                    </button>
+                    <div class="tools-list">
+                        <a href="/ip" class="tools-option">
+                            <i class="fas fa-location-arrow"></i>
+                            <span class="tools-copy">
+                                <span class="tools-title">IP-lookup</span>
+                                <span class="tools-desc">IP info</span>
+                            </span>
+                        </a>
+                        <a href="/qr" class="tools-option">
+                            <i class="fas fa-qrcode"></i>
+                            <span class="tools-copy">
+                                <span class="tools-title">E-2-QR</span>
+                                <span class="tools-desc">Text to QR</span>
+                            </span>
+                        </a>
+                        <a href="/pswd" class="tools-option">
+                            <i class="fas fa-key"></i>
+                            <span class="tools-copy">
+                                <span class="tools-title">pswd</span>
+                                <span class="tools-desc">Password gen</span>
+                            </span>
+                        </a>
+                        <a href="/cidr" class="tools-option">
+                            <i class="fas fa-network-wired"></i>
+                            <span class="tools-copy">
+                                <span class="tools-title">CIDR</span>
+                                <span class="tools-desc">Subnet calc</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="controls-wrapper">
+                <div class="lang-segment" aria-label="Language">
+                    <button class="lang-btn" data-lang="ru">
+                        <span class="lang-flag" aria-hidden="true">🇷🇺</span>
+                        <span class="lang-name">Русский</span>
+                        <span class="lang-code">RU</span>
+                    </button>
+                    <button class="lang-btn" data-lang="en">
+                        <span class="lang-flag" aria-hidden="true">🇬🇧</span>
+                        <span class="lang-name">English</span>
+                        <span class="lang-code">EN</span>
+                    </button>
+                </div>
+                <div class="theme-dropdown">
+                    <button class="theme-toggle">
+                        <span class="current-theme">🎨</span>
+                        <span class="text-ru theme-name">Тема</span>
+                        <span class="text-en theme-name">Theme</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="theme-list">
+                        <div class="theme-group">
+                            <div class="theme-group-title text-ru">
+                                Светлые темы
+                            </div>
+                            <div class="theme-group-title text-en">
+                                Light Themes
+                            </div>
+                            <div class="theme-option" data-theme="light">
+                                <span class="theme-icon">☀️</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Просто светлая</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Just Light</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Чистый светлый режим</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Clean light mode</span
+                                    >
+                                </span>
+                            </div>
+                            <div class="theme-option" data-theme="mint">
+                                <span class="theme-icon">🌿</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Свежий лемонграсс</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Fresh Lemongrass</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Мягкий зеленый акцент</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Soft green accent</span
+                                    >
+                                </span>
+                            </div>
+                        </div>
+                        <div class="theme-divider"></div>
+                        <div class="theme-group">
+                            <div class="theme-group-title text-ru">
+                                Темные темы
+                            </div>
+                            <div class="theme-group-title text-en">
+                                Dark Themes
+                            </div>
+                            <div class="theme-option" data-theme="default">
+                                <span class="theme-icon">☁️</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Бледный сад</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Pale Garden</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Спокойная базовая тема</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Calm default theme</span
+                                    >
+                                </span>
+                            </div>
+                            <div class="theme-option" data-theme="tokyo">
+                                <span class="theme-icon">🗼</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Токийская ночь</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Tokyo Night</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Темная синяя палитра</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Dark blue palette</span
+                                    >
+                                </span>
+                            </div>
+                            <div class="theme-option" data-theme="coral">
+                                <span class="theme-icon">🌺</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Коралловый риф</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Coral Reef</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Теплый красный акцент</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Warm red accent</span
+                                    >
+                                </span>
+                            </div>
+                            <div class="theme-option" data-theme="sage">
+                                <span class="theme-icon">🌿</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Роща шалфея</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Sage Grove</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Приглушенный зеленый</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Muted green tone</span
+                                    >
+                                </span>
+                            </div>
+                            <div class="theme-option" data-theme="azure">
+                                <span class="theme-icon">🌊</span>
+                                <span class="theme-copy">
+                                    <span class="text-ru theme-name"
+                                        >Лазурная волна</span
+                                    >
+                                    <span class="text-en theme-name"
+                                        >Azure Wave</span
+                                    >
+                                    <span class="text-ru theme-desc"
+                                        >Холодный голубой акцент</span
+                                    >
+                                    <span class="text-en theme-desc"
+                                        >Cool blue accent</span
+                                    >
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="cidr-page-container">
+            <div class="grid-card cidr-input-card">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-network-wired"></i>
+                        <span class="text-ru">CIDR-калькулятор</span>
+                        <span class="text-en">CIDR Calculator</span>
+                        <div class="info-icon-wrapper">
+                            <i class="fas fa-info-circle info-icon"></i>
+                            <div class="tooltip">
+                                <span class="text-ru"
+                                    >Все вычисления выполняются локально в
+                                    браузере. Поддерживаются IPv4 и IPv6.
+                                    Введите адрес в CIDR-нотации
+                                    (например, 192.168.1.0/24) или выберите
+                                    маску через слайдер.</span
+                                >
+                                <span class="text-en"
+                                    >All calculations are performed locally in
+                                    your browser. IPv4 and IPv6 are supported.
+                                    Enter an address in CIDR notation
+                                    (e.g. 192.168.1.0/24) or pick a mask with
+                                    the slider.</span
+                                >
+                            </div>
+                        </div>
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="cidr-input-row">
+                        <div class="cidr-field-group">
+                            <label class="cidr-label" for="cidr-input">
+                                <span class="text-ru">IP / CIDR</span>
+                                <span class="text-en">IP / CIDR</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="cidr-input"
+                                class="cidr-text-input"
+                                placeholder="192.168.1.0/24"
+                                spellcheck="false"
+                                autocomplete="off"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="cidr-prefix-section">
+                        <div class="cidr-prefix-header">
+                            <span class="label text-ru">Префикс</span>
+                            <span class="label text-en">Prefix</span>
+                            <span class="cidr-prefix-value" id="cidr-prefix-value">/24</span>
+                        </div>
+                        <div class="cidr-slider-wrapper">
+                            <input
+                                type="range"
+                                id="cidr-prefix-slider"
+                                class="cidr-slider"
+                                min="0"
+                                max="32"
+                                value="24"
+                                step="1"
+                            />
+                            <div class="cidr-slider-ticks">
+                                <span>/0</span>
+                                <span>/8</span>
+                                <span>/16</span>
+                                <span>/24</span>
+                                <span>/32</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cidr-version-toggle">
+                        <label class="cidr-toggle">
+                            <input type="checkbox" id="cidr-ipv6-toggle" />
+                            <span class="cidr-toggle-track">
+                                <span class="cidr-toggle-thumb"></span>
+                            </span>
+                            <span class="cidr-toggle-text">IPv6</span>
+                        </label>
+                    </div>
+
+                    <div class="cidr-actions-row">
+                        <button id="cidr-calc-btn" class="cidr-calc-btn">
+                            <span class="btn-text">
+                                <i class="fas fa-calculator"></i>
+                                <span class="text-ru">Рассчитать</span>
+                                <span class="text-en">Calculate</span>
+                            </span>
+                            <span class="btn-spinner">
+                                <i class="fas fa-circle-notch fa-spin"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-card cidr-check-card">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-search-location"></i>
+                        <span class="text-ru">Проверка вхождения</span>
+                        <span class="text-en">Address in Range</span>
+                        <div class="info-icon-wrapper">
+                            <i class="fas fa-info-circle info-icon"></i>
+                            <div class="tooltip">
+                                <span class="text-ru"
+                                    >Проверьте, входит ли IP-адрес в
+                                    указанную подсеть (CIDR-диапазон).
+                                    Поддерживаются IPv4 и IPv6.</span
+                                >
+                                <span class="text-en"
+                                    >Check whether an IP address belongs
+                                    to a given subnet (CIDR range).
+                                    IPv4 and IPv6 are supported.</span
+                                >
+                            </div>
+                        </div>
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="cidr-check-row">
+                        <div class="cidr-field-group">
+                            <label class="cidr-label" for="cidr-check-ip">
+                                <span class="text-ru">IP-адрес</span>
+                                <span class="text-en">IP Address</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="cidr-check-ip"
+                                class="cidr-text-input"
+                                placeholder="192.168.1.42"
+                                spellcheck="false"
+                                autocomplete="off"
+                            />
+                        </div>
+                        <div class="cidr-field-group">
+                            <label class="cidr-label" for="cidr-check-range">
+                                <span class="text-ru">Подсеть (CIDR)</span>
+                                <span class="text-en">Subnet (CIDR)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="cidr-check-range"
+                                class="cidr-text-input"
+                                placeholder="192.168.1.0/24"
+                                spellcheck="false"
+                                autocomplete="off"
+                            />
+                        </div>
+                    </div>
+                    <div class="cidr-actions-row">
+                        <button id="cidr-check-btn" class="cidr-calc-btn">
+                            <span class="btn-text">
+                                <i class="fas fa-magnifying-glass"></i>
+                                <span class="text-ru">Проверить</span>
+                                <span class="text-en">Check</span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="cidr-check-result" id="cidr-check-result"></div>
+                </div>
+            </div>
+
+            <div class="grid-card cidr-result-card" id="cidr-result-card">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-diagram-project"></i>
+                        <span class="text-ru">Результат</span>
+                        <span class="text-en">Result</span>
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="cidr-output-area" id="cidr-output-area">
+                        <div class="cidr-empty-state" id="cidr-empty-state">
+                            <div class="cidr-empty-icon">
+                                <i class="fas fa-sitemap"></i>
+                            </div>
+                            <span class="text-ru">Результат появится здесь</span>
+                            <span class="text-en">Result will appear here</span>
+                        </div>
+                        <div class="cidr-results" id="cidr-results">
+                            <div class="cidr-result-grid" id="cidr-result-grid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-card cidr-table-card" id="cidr-table-card">
+                <div class="card-header">
+                    <h2>
+                        <i class="fas fa-table"></i>
+                        <span class="text-ru">Таблица подсетей</span>
+                        <span class="text-en">Subnet Reference</span>
+                    </h2>
+                </div>
+                <div class="card-content">
+                    <div class="cidr-ref-table-wrapper">
+                        <table class="cidr-ref-table" id="cidr-ref-table">
+                            <thead>
+                                <tr>
+                                    <th>CIDR</th>
+                                    <th>
+                                        <span class="text-ru">Маска</span>
+                                        <span class="text-en">Mask</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-ru">Адресов</span>
+                                        <span class="text-en">Addresses</span>
+                                    </th>
+                                    <th>
+                                        <span class="text-ru">Хостов</span>
+                                        <span class="text-en">Usable</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="cidr-ref-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="cidr-toast" id="cidr-toast">
+            <i class="fas fa-check-circle"></i>
+            <span class="text-ru" id="cidr-toast-text-ru">Скопировано!</span>
+            <span class="text-en" id="cidr-toast-text-en">Copied!</span>
+        </div>
+
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script src="{{ url_for('static', filename='responsive.js') }}"></script>
+        <script src="{{ url_for('static', filename='cidr.js') }}"></script>
+    </body>
+</html>
