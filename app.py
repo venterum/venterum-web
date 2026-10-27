@@ -629,6 +629,24 @@ def telegram_webhook(secret):
     return "ok"
 
 
+@app.route("/tg/last/<secret>")
+def telegram_last_post(secret):
+    if not TG_WEBHOOK_SECRET or not hmac.compare_digest(secret, TG_WEBHOOK_SECRET):
+        return "forbidden", 403
+    try:
+        init_tg_db()
+        with closing(get_tg_db()) as conn:
+            row = conn.execute(
+                "SELECT raw_json FROM tg_posts ORDER BY updated_at DESC LIMIT 1"
+            ).fetchone()
+    except Exception:
+        traceback.print_exc()
+        return jsonify({"error": "db error"}), 500
+    if not row:
+        return jsonify({"error": "no posts yet"}), 404
+    return Response(row["raw_json"], mimetype="application/json")
+
+
 @app.route("/qr/generate", methods=["POST"])
 def generate_qr_code():
     data = request.json.get("data")

@@ -363,6 +363,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const pageSize = 8;
         let posts = [];
         let shown = 0;
+        const cardOrder = [];
+
+        const arrangeBlogCards = () => {
+            if (cardOrder.length === 0) return;
+            blogGrid.innerHTML = '';
+
+            if (window.matchMedia('(max-width: 600px)').matches) {
+                cardOrder.forEach((card) => blogGrid.appendChild(card));
+                return;
+            }
+
+            const leftColumn = document.createElement('div');
+            leftColumn.className = 'blog-column';
+            const rightColumn = document.createElement('div');
+            rightColumn.className = 'blog-column';
+
+            cardOrder.forEach((card, index) => {
+                (index % 2 === 0 ? leftColumn : rightColumn).appendChild(card);
+            });
+
+            blogGrid.appendChild(leftColumn);
+            blogGrid.appendChild(rightColumn);
+        };
+
+        let blogResizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(blogResizeTimeout);
+            blogResizeTimeout = setTimeout(arrangeBlogCards, 120);
+        });
 
         const timeAgo = (iso, lang) => {
             const date = new Date(iso);
@@ -499,8 +528,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const renderNext = () => {
             const slice = posts.slice(shown, shown + pageSize);
-            slice.forEach((item) => blogGrid.appendChild(buildCard(item)));
+            slice.forEach((item) => cardOrder.push(buildCard(item)));
             shown += slice.length;
+            arrangeBlogCards();
             if (moreBtn) moreBtn.hidden = shown >= posts.length;
         };
 

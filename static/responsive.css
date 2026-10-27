@@ -417,6 +417,10 @@
         gap: 0.9rem;
     }
 
+    .blog-column {
+        gap: 0.9rem;
+    }
+
     .blog-card {
         padding: 1rem;
         border-radius: 16px;

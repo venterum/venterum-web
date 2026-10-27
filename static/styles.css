@@ -2003,6 +2003,13 @@ body {
     margin-top: 0;
 }
 
+.blog-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 0;
+}
+
 .blog-tail-note {
     margin-top: 0.5rem;
     text-align: center;
