@@ -1,23 +1,38 @@
 from io import BytesIO
 import base64
+from datetime import datetime
+from email.utils import format_datetime
 import ipaddress
 import random
 import re
 import time
 import traceback
+from xml.sax.saxutils import escape as xml_escape
 
 import requests
 import user_agents
 import qrcode
 import cowsay
 from PIL import Image
-from flask import Flask, render_template, request, send_from_directory, jsonify
+from flask import (
+    Flask,
+    Response,
+    jsonify,
+    render_template,
+    request,
+    send_from_directory,
+)
 from bs4 import BeautifulSoup, NavigableString
 from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.colormasks import SolidFillColorMask
 from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
 
 app = Flask(__name__)
+
+
+@app.context_processor
+def inject_globals():
+    return {"current_year": datetime.now().year}
 
 NEWS_CACHE = {
     "data": [],
@@ -275,17 +290,15 @@ def ip_lookup():
     )
 
 
-@app.route("/get_news")
-def get_news():
+def load_news(force_refresh=False):
     current_time = time.time()
-    force_refresh = request.args.get("force", "false").lower() == "true"
 
     if (
         not force_refresh
         and NEWS_CACHE["data"]
         and (current_time - NEWS_CACHE["timestamp"] < NEWS_CACHE["ttl"])
     ):
-        return jsonify(NEWS_CACHE["data"])
+        return NEWS_CACHE["data"], None
 
     try:
         headers = {
@@ -348,7 +361,9 @@ def get_news():
                             image_url = style.split("url('")[1].split("')")[0]
 
                     if not image_url:
-                        video_thumb = msg.find("i", class_="tgme_widget_message_video_thumb")
+                        video_thumb = msg.find(
+                            "i", class_="tgme_widget_message_video_thumb"
+                        )
                         if video_thumb:
                             style = video_thumb.get("style", "")
                             if "url('" in style:
@@ -372,19 +387,91 @@ def get_news():
                 print(f"Could not parse channel {channel_slug}: {e}")
 
         all_news.sort(key=lambda x: x["datetime"], reverse=True)
-        latest_news = all_news[:8]
+        latest_news = all_news[:16]
 
         if not latest_news:
-            return jsonify({"error": "No valid content found"}), 404
+            return None, ("No valid content found", 404)
 
         NEWS_CACHE["data"] = latest_news
         NEWS_CACHE["timestamp"] = current_time
 
-        return jsonify(latest_news)
+        return latest_news, None
 
     except Exception:
         traceback.print_exc()
-        return jsonify({"error": "Parsing error"}), 500
+        return None, ("Parsing error", 500)
+
+
+@app.route("/get_news")
+def get_news():
+    force_refresh = request.args.get("force", "false").lower() == "true"
+    data, error = load_news(force_refresh)
+    if error:
+        return jsonify({"error": error[0]}), error[1]
+    return jsonify(data)
+
+
+@app.route("/rss.xml")
+def rss_feed():
+    data, error = load_news()
+    if error:
+        return Response(
+            "RSS temporarily unavailable",
+            status=error[1],
+            mimetype="text/plain",
+        )
+
+    items = []
+    for post in data:
+        plain = BeautifulSoup(post["content"] or "", "html.parser").get_text(
+            " ", strip=True
+        )
+        title = (plain[:90] + "...") if len(plain) > 90 else (plain or "Новый пост")
+        link = post.get("url") or f"https://t.me/{TELEGRAM_CHANNELS[0]}"
+        published = ""
+
+        try:
+            published = format_datetime(datetime.fromisoformat(post["datetime"]))
+        except (TypeError, ValueError):
+            pass
+
+        description = post.get("content") or ""
+        if post.get("image_url"):
+            description += (
+                f'<p><img src="{xml_escape(post["image_url"])}" alt=""></p>'
+            )
+
+        items.append(
+            "<item>"
+            f"<title>{xml_escape(title)}</title>"
+            f"<link>{xml_escape(link)}</link>"
+            f"<guid>{xml_escape(link)}</guid>"
+            f"<pubDate>{published}</pubDate>"
+            f"<description><![CDATA[{description.replace(']]>', ']]&gt;')}]]></description>"
+            "</item>"
+        )
+
+    feed = (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<rss version="2.0"><channel>'
+        "<title>venterum — notes</title>"
+        "<link>https://venterum.com/</link>"
+        "<description>Посты из Telegram-канала vntrum_public</description>"
+        "<language>ru</language>"
+        + "".join(items)
+        + "</channel></rss>"
+    )
+    return Response(feed, mimetype="application/rss+xml")
+
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+
+@app.route("/now")
+def now():
+    return render_template("now.html")
 
 
 @app.route("/<path:filename>")

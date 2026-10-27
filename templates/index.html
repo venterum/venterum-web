@@ -1,11 +1,15 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-lang="ru">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>venterum@web:~$</title>
-        <link rel="stylesheet" href="styles.css" />
-        <link rel="stylesheet" href="responsive.css" />
+        <title>venterum — сети, linux, софт</title>
+        <meta
+            name="description"
+            content="Персональный сайт и база знаний Евгения (venterum). Сетевые протоколы, администрирование Linux, Android и бэкенд."
+        />
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}" />
         <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap"
@@ -14,232 +18,11 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
         />
-        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}" />
     </head>
     <body class="theme-default">
         <div class="noise"></div>
-        <nav class="nav">
-            <div class="logo">venterum@web:~$</div>
-            <div class="nav-buttons">
-                <a
-                    href="https://github.com/venterum"
-                    target="_blank"
-                    class="nav-button"
-                >
-                    <i class="fab fa-github"></i>
-                    <span class="text-ru">GitHub</span>
-                    <span class="text-en">GitHub</span>
-                </a>
-                <a href="#blog" class="nav-button">
-                    <i class="fas fa-newspaper"></i>
-                    <span class="text-ru">Блог</span>
-                    <span class="text-en">Blog</span>
-                </a>
-                <div class="tools-dropdown">
-                    <button class="nav-button tools-toggle">
-                        <i class="fas fa-screwdriver-wrench"></i>
-                        <span class="text-ru">Инструменты</span>
-                        <span class="text-en">Tools</span>
-                        <i class="fas fa-chevron-down tools-chevron"></i>
-                    </button>
-                    <div class="tools-list">
-                        <a href="/ip" class="tools-option">
-                            <i class="fas fa-location-arrow"></i>
-                            <span class="tools-copy">
-                                <span class="tools-title">IP-lookup</span>
-                                <span class="tools-desc">IP info</span>
-                            </span>
-                        </a>
-                        <a href="/qr" class="tools-option">
-                            <i class="fas fa-qrcode"></i>
-                            <span class="tools-copy">
-                                <span class="tools-title">E-2-QR</span>
-                                <span class="tools-desc">Text to QR</span>
-                            </span>
-                        </a>
-                        <a href="/pswd" class="tools-option">
-                            <i class="fas fa-key"></i>
-                            <span class="tools-copy">
-                                <span class="tools-title">pswd</span>
-                                <span class="tools-desc">Password gen</span>
-                            </span>
-                        </a>
-                        <a href="/cidr" class="tools-option">
-                            <i class="fas fa-network-wired"></i>
-                            <span class="tools-copy">
-                                <span class="tools-title">CIDR</span>
-                                <span class="tools-desc">Subnet calc</span>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="controls-wrapper">
-                <div class="lang-segment" aria-label="Language">
-                    <button class="lang-btn" data-lang="ru">
-                        <span class="lang-flag" aria-hidden="true">🇷🇺</span>
-                        <span class="lang-name">Русский</span>
-                        <span class="lang-code">RU</span>
-                    </button>
-                    <button class="lang-btn" data-lang="en">
-                        <span class="lang-flag" aria-hidden="true">🇬🇧</span>
-                        <span class="lang-name">English</span>
-                        <span class="lang-code">EN</span>
-                    </button>
-                </div>
-                <div class="theme-dropdown">
-                    <button class="theme-toggle">
-                        <span class="current-theme">🎨</span>
-                        <span class="text-ru theme-name">Тема</span>
-                        <span class="text-en theme-name">Theme</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-                    <div class="theme-list">
-                        <div class="theme-group">
-                            <div class="theme-group-title text-ru">
-                                Светлые темы
-                            </div>
-                            <div class="theme-group-title text-en">
-                                Light Themes
-                            </div>
-                            <div class="theme-option" data-theme="light">
-                                <span class="theme-icon">☀️</span>
-                                <span class="theme-copy">
-                                    <span class="text-ru theme-name"
-                                        >Просто светлая</span
-                                    >
-                                    <span class="text-en theme-name"
-                                        >Just Light</span
-                                    >
-                                    <span class="text-ru theme-desc"
-                                        >Чистый светлый режим</span
-                                    >
-                                    <span class="text-en theme-desc"
-                                        >Clean light mode</span
-                                    >
-                                </span>
-                            </div>
-                            <div class="theme-option" data-theme="mint">
-                                <span class="theme-icon">🌿</span>
-                                <span class="theme-copy">
-                                    <span class="text-ru theme-name"
-                                        >Свежий лемонграсс</span
-                                    >
-                                    <span class="text-en theme-name"
-                                        >Fresh Lemongrass</span
-                                    >
-                                    <span class="text-ru theme-desc"
-                                        >Мягкий зеленый акцент</span
-                                    >
-                                    <span class="text-en theme-desc"
-                                        >Soft green accent</span
-                                    >
-                                </span>
-                            </div>
-                        </div>
-                        <div class="theme-divider"></div>
-                        <div class="theme-group">
-                            <div class="theme-group-title text-ru">
-                                Темные темы
-                            </div>
-                            <div class="theme-group-title text-en">
-                                Dark Themes
-                            </div>
-                            <div class="theme-option" data-theme="default">
-                                <span class="theme-icon">☁️</span>
-                                <span class="theme-copy">
-                                    <span class="text-ru theme-name"
-                                        >Бледный сад</span
-                                    >
-                                    <span class="text-en theme-name"
-                                        >Pale Garden</span
-                                    >
-                                    <span class="text-ru theme-desc"
-                                        >Спокойная базовая тема</span
-                                    >
-                                    <span class="text-en theme-desc"
-                                        >Calm default theme</span
-                                    >
-                                </span>
-                            </div>
-                            <div class="theme-option" data-theme="tokyo">
-                                <span class="theme-icon">🗼</span>
-                                <span class="theme-copy">
-                                    <span class="text-ru theme-name"
-                                        >Токийская ночь</span
-                                    >
-                                    <span class="text-en theme-name"
-                                        >Tokyo Night</span
-                                    >
-                                    <span class="text-ru theme-desc"
-                                        >Темная синяя палитра</span
-                                    >
-                                    <span class="text-en theme-desc"
-                                        >Dark blue palette</span
-                                    >
-                                </span>
-                            </div>
-                            <div class="theme-option" data-theme="coral">
-                                <span class="theme-icon">🌺</span>
-                                <span class="theme-copy">
-                                    <span class="text-ru theme-name"
-                                        >Коралловый риф</span
-                                    >
-                                    <span class="text-en theme-name"
-                                        >Coral Reef</span
-                                    >
-                                    <span class="text-ru theme-desc"
-                                        >Теплый красный акцент</span
-                                    >
-                                    <span class="text-en theme-desc"
-                                        >Warm red accent</span
-                                    >
-                                </span>
-                            </div>
-                            <div class="theme-option" data-theme="sage">
-                                <span class="theme-icon">🌿</span>
-                                <span class="theme-copy">
-                                    <span class="text-ru theme-name"
-                                        >Роща шалфея</span
-                                    >
-                                    <span class="text-en theme-name"
-                                        >Sage Grove</span
-                                    >
-                                    <span class="text-ru theme-desc"
-                                        >Приглушенный зеленый</span
-                                    >
-                                    <span class="text-en theme-desc"
-                                        >Muted green tone</span
-                                    >
-                                </span>
-                            </div>
-                            <div class="theme-option" data-theme="azure">
-                                <span class="theme-icon">🌊</span>
-                                <span class="theme-copy">
-                                    <span class="text-ru theme-name"
-                                        >Лазурная волна</span
-                                    >
-                                    <span class="text-en theme-name"
-                                        >Azure Wave</span
-                                    >
-                                    <span class="text-ru theme-desc"
-                                        >Холодный голубой акцент</span
-                                    >
-                                    <span class="text-en theme-desc"
-                                        >Cool blue accent</span
-                                    >
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clock-pill" id="clock-pill">
-                    <span class="clock-time" id="clock-time">00:00</span>
-                    <span class="clock-date" id="clock-date">Mon, Jan 1</span>
-                </div>
-            </div>
-        </nav>
+        {% include "_nav.html" %}
 
         <main class="terminal">
             <div class="terminal-header">
@@ -248,9 +31,9 @@
                     <button
                         class="control-btn red"
                         id="minimize-btn"
-                        aria-label="Close terminal"
+                        aria-label="Свернуть терминал"
                     >
-                        ✕
+                        –
                     </button>
                 </div>
             </div>
@@ -276,13 +59,7 @@ _____/  \___//_/ /_/\__/ \___//_/    \__,_/ /_/ /_/ /_/
                         </div>
                         <div class="terminal-line text-ru">
                             <span class="prompt">&gt;</span>
-                            <span class="highlight">DevOps</span>,
-                            <span class="highlight">сетевая инженерия</span> —
-                            Linux, маршрутизация, фильтрация трафика.
-                        </div>
-                        <div class="terminal-line text-ru">
-                            <span class="prompt">&gt;</span> Всё ещё учусь. LLM
-                            уверена, что уже давно.
+                            Инфокоммуникации, сети, Linux, разработка софта, инфраструктура.
                         </div>
                         <div class="terminal-line text-ru">
                             <span class="prompt">&gt;</span> github:
@@ -310,13 +87,7 @@ _____/  \___//_/ /_/\__/ \___//_/    \__,_/ /_/ /_/ /_/
                         </div>
                         <div class="terminal-line text-en">
                             <span class="prompt">&gt;</span>
-                            <span class="highlight">DevOps</span>,
-                            <span class="highlight">network engineering</span> —
-                            Linux, routing, traffic filtering.
-                        </div>
-                        <div class="terminal-line text-en">
-                            <span class="prompt">&gt;</span> Still learning. LLM
-                            strongly disagrees.
+                            Telecommunications, networking, Linux, code, self-hosted infrastructure.
                         </div>
                         <div class="terminal-line text-en">
                             <span class="prompt">&gt;</span> github:
@@ -339,12 +110,90 @@ _____/  \___//_/ /_/\__/ \___//_/    \__,_/ /_/ /_/ /_/
                         </div>
                     </div>
                 </div>
-                <div class="input-line" id="final-prompt" style="opacity: 0">
-                    <span class="prompt">venterum@web:~$</span>
-                    <span class="cursor"></span>
+                <div class="terminal-log" id="terminal-log" aria-live="polite"></div>
+                <div class="terminal-prompt">
+                    <label class="prompt" for="terminal-command">venterum@web:~$</label>
+                    <input
+                        class="terminal-input"
+                        id="terminal-command"
+                        type="text"
+                        placeholder="help"
+                        autocomplete="off"
+                        autocapitalize="off"
+                        spellcheck="false"
+                        aria-label="Команда терминала"
+                        enterkeyhint="go"
+                    />
                 </div>
             </div>
         </main>
+
+        <section class="work-section" id="projects">
+            <div class="work-shell">
+                <div class="work-head">
+                    <div>
+                        <div class="work-kicker">~/projects</div>
+                        <h2>
+                            <span class="text-ru">Проекты</span>
+                            <span class="text-en">Selected work</span>
+                        </h2>
+                    </div>
+                    <a class="work-all" href="https://github.com/venterum" target="_blank" rel="noopener">
+                        github.com/venterum ↗
+                    </a>
+                </div>
+                <div class="work-grid">
+                    <article class="work-card">
+                        <div class="work-top">
+                            <span class="work-name">veil</span>
+                            <span class="work-tag">android</span>
+                        </div>
+                        <p>
+                            <span class="text-ru">Android-клиент для защищённых сетевых туннелей. Внутри — многомодульный Go-бэкенд, маршрутизация трафика через gVisor и полезные протоколы.</span>
+                            <span class="text-en">Android client for secure network tunnels. Under the hood: a multi-module Go backend, gVisor-based traffic routing, and handy network protocols.</span>
+                        </p>
+                        <div class="work-tags">
+                            <span>kotlin</span>
+                            <span>go</span>
+                            <span>networking</span>
+                        </div>
+                        <a class="work-link" href="https://github.com/venterum/veil" target="_blank" rel="noopener">github ↗</a>
+                    </article>
+                    <article class="work-card">
+                        <div class="work-top">
+                            <span class="work-name">ruthenia</span>
+                            <span class="work-tag">store</span>
+                        </div>
+                        <p>
+                            <span class="text-ru">Лёгкий приватный клиент для установки и обновления приложений из RuStore. Без трекинга, рекламы и лишнего.</span>
+                            <span class="text-en">A lightweight, private client for installing and updating apps from RuStore. No tracking, no ads, no bloat.</span>
+                        </p>
+                        <div class="work-tags">
+                            <span>kotlin</span>
+                            <span>android</span>
+                            <span>privacy</span>
+                        </div>
+                        <a class="work-link" href="https://github.com/venterum/ruthenia" target="_blank" rel="noopener">github ↗</a>
+                    </article>
+                    <article class="work-card">
+                        <div class="work-top">
+                            <span class="work-name">whatsip-rs</span>
+                            <span class="work-tag">wip</span>
+                        </div>
+                        <p>
+                            <span class="text-ru">Разбираюсь в Rust, чтобы переписать WhatSIP на него. Пока в процессе.</span>
+                            <span class="text-en">Learning Rust to rewrite WhatSIP in it. Still in progress.</span>
+                        </p>
+                        <div class="work-tags">
+                            <span>rust</span>
+                            <span>whatsip</span>
+                            <span>wip</span>
+                        </div>
+                        <a class="work-link" href="https://github.com/venterum/WhatSIP" target="_blank" rel="noopener">current whatsip ↗</a>
+                    </article>
+                </div>
+            </div>
+        </section>
 
         <section class="blog-section" id="blog">
             <div class="blog-shell">
@@ -396,68 +245,33 @@ _____/  \___//_/ /_/\__/ \___//_/    \__,_/ /_/ /_/ /_/
                 </div>
 
                 <div class="blog-grid" id="blog-grid">
-                    <article class="blog-card">
-                        <div class="blog-meta">
-                            <span class="text-ru">Пасхалка · 3 мин</span>
-                            <span class="text-en">Easter egg · 3 min</span>
-                            <span class="blog-chip">Security</span>
-                        </div>
-                        <h3 class="text-ru">
-                            Как я взломал свой собственный роутер
-                        </h3>
-                        <h3 class="text-en">How I hacked my own router</h3>
-                        <p class="text-ru">
-                            Спойлер: пароль был admin/admin. Но история о том,
-                            как я это обнаружил, стоит того.
-                        </p>
-                        <p class="text-en">
-                            Spoiler: the password was admin/admin. But the story
-                            of how I discovered it is worth it.
-                        </p>
+                    <article class="blog-card blog-skeleton" aria-hidden="true">
+                        <span class="sk short"></span>
+                        <span class="sk medium"></span>
+                        <span class="sk line"></span>
+                        <span class="sk line"></span>
+                        <span class="sk short"></span>
                     </article>
-
-                    <article class="blog-card">
-                        <div class="blog-meta">
-                            <span class="text-ru">Мем · 5 мин</span>
-                            <span class="text-en">Meme · 5 min</span>
-                            <span class="blog-chip">Dev</span>
-                        </div>
-                        <h3 class="text-ru">
-                            Я переписал всё на Rust, и теперь мне одиноко
-                        </h3>
-                        <h3 class="text-en">
-                            I rewrote everything in Rust, now I'm lonely
-                        </h3>
-                        <p class="text-ru">
-                            borrow_checker и я — лучшие друзья. Остальные не
-                            понимают наших заимствований.
-                        </p>
-                        <p class="text-en">
-                            borrow_checker and I are best friends. Others don't
-                            understand our borrowings.
-                        </p>
+                    <article class="blog-card blog-skeleton" aria-hidden="true">
+                        <span class="sk short"></span>
+                        <span class="sk medium"></span>
+                        <span class="sk line"></span>
+                        <span class="sk line"></span>
+                        <span class="sk short"></span>
                     </article>
-
-                    <article class="blog-card">
-                        <div class="blog-meta">
-                            <span class="text-ru">Лайфхак · 4 мин</span>
-                            <span class="text-en">Lifehack · 4 min</span>
-                            <span class="blog-chip">Tools</span>
-                        </div>
-                        <h3 class="text-ru">
-                            Как я 3 дня искал баг, а он был в одной букве
-                        </h3>
-                        <h3 class="text-en">
-                            How I looked for a bug for 3 days, it was one letter
-                        </h3>
-                        <p class="text-ru">
-                            True story. git blame показал, что это я сам. Я
-                            плакал.
-                        </p>
-                        <p class="text-en">
-                            True story. git blame showed it was me. I cried.
-                        </p>
+                    <article class="blog-card blog-skeleton" aria-hidden="true">
+                        <span class="sk short"></span>
+                        <span class="sk medium"></span>
+                        <span class="sk line"></span>
+                        <span class="sk line"></span>
+                        <span class="sk short"></span>
                     </article>
+                </div>
+                <div class="blog-more-wrap">
+                    <button class="blog-more" id="blog-more" type="button" hidden>
+                        <span class="text-ru">Показать ещё</span>
+                        <span class="text-en">Load more</span>
+                    </button>
                 </div>
                 <div class="blog-tail-note">
                     © И так далее до 2100 года, потом обновлю. Больше постов в
@@ -470,47 +284,9 @@ _____/  \___//_/ /_/\__/ \___//_/    \__,_/ /_/ /_/ /_/
                 </div>
             </div>
         </section>
-        <div class="easter-egg">
-            <span class="text-ru">Кстати, я использую Arch</span>
-            <span class="text-en">I use Arch btw</span>
-        </div>
-        <div class="cookie-notice">
-            <div class="cookie-text">
-                <div class="cookie-header">
-                    <i class="fas fa-cookie-bite"></i>
-                    <span class="text-ru"
-                        >Внимание, этот сайт использует куки!</span
-                    >
-                    <span class="text-en"
-                        >Attention, this site uses cookies!</span
-                    >
-                </div>
-                <p class="text-ru">
-                    Оставаясь на сайте, вы соглашаетесь с использованием
-                    cookie-файлов для:
-                    <br />• Сохранения выбранной темы оформления <br />•
-                    Запоминания предпочитаемого языка <br /><span
-                        class="cookie-note"
-                        >Сайт не собирает никакие личные данные 😎</span
-                    >
-                </p>
-                <p class="text-en">
-                    By staying on the site, you agree to the use of cookie files
-                    for:
-                    <br />• Saving your preferred theme <br />• Remembering your
-                    language choice <br /><span class="cookie-note"
-                        >Site doesn't collect any personal data 😎</span
-                    >
-                </p>
-            </div>
-            <div class="cookie-buttons">
-                <button class="cookie-button cookie-accept">
-                    <span class="text-ru">Понятно</span>
-                    <span class="text-en">Got it</span>
-                </button>
-            </div>
-        </div>
-        <script src="script.js"></script>
-        <script src="responsive.js"></script>
+        {% include "_cookie.html" %}
+        {% include "_footer.html" %}
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script src="{{ url_for('static', filename='responsive.js') }}"></script>
     </body>
 </html>

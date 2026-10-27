@@ -1,4 +1,4 @@
-@media (max-width: 768px) {
+@media (max-width: 840px) {
   .terminal-header {
     cursor: default;
     user-select: none;
@@ -144,6 +144,9 @@
   }
   
   #container {
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
     margin: 0.5rem;
     padding: 0.5rem;
   }
@@ -251,6 +254,9 @@
   }
   
   #container {
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
     margin: 0.3rem;
     padding: 0.3rem;
   }

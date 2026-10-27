@@ -242,6 +242,18 @@ a.logo-link {
     color: var(--text-color) !important;
 }
 
+.leaflet-bar a,
+.leaflet-control-zoom a {
+    background: var(--terminal-bg) !important;
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+.leaflet-bar a:hover,
+.leaflet-control-zoom a:hover {
+    background: var(--surface-2) !important;
+}
+
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
     background: var(--terminal-bg) !important;

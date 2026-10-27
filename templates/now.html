@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>сейчас — venterum</title>
+        <meta name="robots" content="noindex" />
+        <meta name="description" content="Чем Евгений занят сейчас: Ruthenia Store, whatsip-rs на Rust, сети и университет." />
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}" />
+    </head>
+    <body class="theme-default">
+        <div class="noise"></div>
+        {% include "_nav.html" %}
+
+        <main class="doc-page">
+            <article class="doc-card">
+                <div class="doc-kicker">venterum@web:~$ cat ~/now.txt</div>
+                <h1><span class="text-ru">Сейчас</span><span class="text-en">Now</span></h1>
+                <p class="doc-lead">
+                    <span class="text-ru">Фокус: ruthenia, whatsip-rs и сетевой Rust.</span>
+                    <span class="text-en">Focus: ruthenia, whatsip-rs, and Rust networking.</span>
+                </p>
+                <ul class="doc-list">
+                    <li>
+                        <span class="text-ru">Довожу Ruthenia Store: загрузки, SPKI pinning, Shizuku.</span>
+                        <span class="text-en">Refining Ruthenia Store: downloads, SPKI pinning, Shizuku.</span>
+                    </li>
+                    <li>
+                        <span class="text-ru">Переписываю WhatSIP на Rust: CLI, tokio/reqwest, borrow checker.</span>
+                        <span class="text-en">Rewriting WhatSIP in Rust: CLI, tokio/reqwest, borrow checker.</span>
+                    </li>
+                    <li>
+                        <span class="text-ru">Университет: криптография, сети, C/C++.</span>
+                        <span class="text-en">University: cryptography, networks, C/C++.</span>
+                    </li>
+                </ul>
+                <p class="doc-muted">
+                    <span class="text-ru">Последнее обновление: октябрь 2026.</span>
+                    <span class="text-en">Last updated: October 2026.</span>
+                </p>
+                <a class="doc-next" href="/about">
+                    <span class="text-ru">← Обо мне</span>
+                    <span class="text-en">← About me</span>
+                </a>
+            </article>
+        </main>
+
+        {% include "_footer.html" %}
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script src="{{ url_for('static', filename='responsive.js') }}"></script>
+    </body>
+</html>

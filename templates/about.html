@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>обо мне — venterum</title>
+        <meta name="description" content="Евгений (venterum) — студент инфокоммуникаций из Санкт-Петербурга: сети, Linux, Android, Rust и открытые проекты." />
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}" />
+    </head>
+    <body class="theme-default">
+        <div class="noise"></div>
+        {% include "_nav.html" %}
+
+        <main class="about-page">
+            <header class="about-hero">
+                <div class="about-byline">
+                    <p class="about-label">
+                        <span class="text-ru">обо мне</span>
+                        <span class="text-en">about me</span>
+                    </p>
+                    <h1 class="about-name">
+                        <span class="text-ru">Евгений</span>
+                        <span class="text-en">Evgenij</span>
+                    </h1>
+                    <p class="about-role">
+                        <span class="text-ru">Студент программно-защищённых инфокоммуникаций. Сети, Linux, Android, Rust.</span>
+                        <span class="text-en">Secure telecommunications student. Networking, Linux, Android, Rust.</span>
+                    </p>
+                </div>
+                <p class="about-lead">
+                    <span class="text-ru">Собираю прикладной софт и сетевую инфраструктуру под свои задачи. Люблю системы, которые понятны на уровень ниже рабочего стека.</span>
+                    <span class="text-en">I build practical software and network infrastructure for my own needs. I like systems I can understand one layer below the stack.</span>
+                </p>
+            </header>
+
+            <section class="about-bio">
+                <p class="text-ru">
+                    Мой вход в технологии начался с экспериментов с Debian внутри ChromeOS и двух лет плотного программирования в Яндекс Лицее, где я освоил архитектуру Python-бэкенда и реляционные базы. Сейчас я углубляюсь в телекоммуникации, системное администрирование Linux (Arch на основной машине) и сетевые протоколы. Не люблю раздутые веб-интерфейсы, слежку за пользователями и навязанные корпоративные экосистемы. Все мои проекты — от сетевого клиента Veil до каталога Ruthenia Store — написаны для того, чтобы решать прикладные проблемы быстро, чисто и без сторонней телеметрии.
+                </p>
+                <p class="text-en">
+                    My journey started with running Debian on ChromeOS and two years of structured Python and database training at Yandex Lyceum. Today, I am studying secure telecommunications, diving deep into Linux internals (running bare Arch Linux), and networking protocols. I dislike bloated web frameworks, telemetry, and vendor lock-in. Everything I build — from the Veil network client to Ruthenia Store — is crafted to solve real problems cleanly, quickly, and without surveillance.
+                </p>
+            </section>
+
+            <div class="about-details">
+                <section class="about-stack" aria-labelledby="stack-title">
+                    <h2 class="about-section-label" id="stack-title">
+                        <span class="text-ru">Стек</span>
+                        <span class="text-en">Stack</span>
+                    </h2>
+                    <div class="about-stack-grid">
+                        <div class="about-stack-group">
+                            <div class="about-stack-label">
+                                <i class="fas fa-server" aria-hidden="true"></i>
+                                <h3>systems</h3>
+                            </div>
+                            <div class="doc-chips">
+                                <span>Arch Linux</span>
+                                <span>systemd</span>
+                                <span>Bash</span>
+                                <span>Git</span>
+                            </div>
+                        </div>
+                        <div class="about-stack-group">
+                            <div class="about-stack-label">
+                                <i class="fas fa-network-wired" aria-hidden="true"></i>
+                                <h3>network</h3>
+                            </div>
+                            <div class="doc-chips">
+                                <span>routing</span>
+                                <span>VPN</span>
+                                <span>tcpdump</span>
+                                <span>DNS</span>
+                            </div>
+                        </div>
+                        <div class="about-stack-group">
+                            <div class="about-stack-label">
+                                <i class="fas fa-code" aria-hidden="true"></i>
+                                <h3>code</h3>
+                            </div>
+                            <div class="doc-chips">
+                                <span>Kotlin</span>
+                                <span>Python</span>
+                                <span>Rust</span>
+                                <span>C/C++</span>
+                            </div>
+                        </div>
+                        <div class="about-stack-group">
+                            <div class="about-stack-label">
+                                <i class="fas fa-mobile" aria-hidden="true"></i>
+                                <h3>mobile</h3>
+                            </div>
+                            <div class="doc-chips">
+                                <span>Compose</span>
+                                <span>Gradle</span>
+                                <span>VpnService</span>
+                                <span>Shizuku</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <aside class="about-now" aria-labelledby="now-title">
+                    <h2 class="about-section-label" id="now-title">
+                        <span class="about-now-dot" aria-hidden="true"></span>
+                        <span class="text-ru">Сейчас</span>
+                        <span class="text-en">Now</span>
+                    </h2>
+                    <p>
+                        <span class="text-ru">Фокус: ruthenia, whatsip-rs и сетевой Rust.</span>
+                        <span class="text-en">Focus: ruthenia, whatsip-rs, and Rust networking.</span>
+                    </p>
+                </aside>
+            </div>
+        </main>
+
+        {% include "_footer.html" %}
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script src="{{ url_for('static', filename='responsive.js') }}"></script>
+    </body>
+</html>

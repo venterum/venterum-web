@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,166 +9,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='responsive.css') }}">
 
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="theme-default">
     <div class="noise"></div>
-    <nav class="nav">
-        <div class="logo">venterum@web:~$</div>
-        <div class="nav-buttons">
-            <a href="/" class="nav-button">
-                <i class="fas fa-home"></i>
-                <span class="text-ru">Главная</span>
-                <span class="text-en">Home</span>
-            </a>
-            <a href="https://github.com/venterum" target="_blank" class="nav-button">
-                <i class="fab fa-github"></i>
-                <span class="text-ru">GitHub</span>
-                <span class="text-en">GitHub</span>
-            </a>
-            <a href="/#blog" class="nav-button">
-                <i class="fas fa-newspaper"></i>
-                <span class="text-ru">Блог</span>
-                <span class="text-en">Blog</span>
-            </a>
-            <div class="tools-dropdown">
-                <button class="nav-button tools-toggle">
-                    <i class="fas fa-screwdriver-wrench"></i>
-                    <span class="text-ru">Инструменты</span>
-                    <span class="text-en">Tools</span>
-                    <i class="fas fa-chevron-down tools-chevron"></i>
-                </button>
-                <div class="tools-list">
-                    <a href="/ip" class="tools-option">
-                        <i class="fas fa-location-arrow"></i>
-                        <span class="tools-copy">
-                            <span class="tools-title">IP-lookup</span>
-                            <span class="tools-desc">IP info</span>
-                        </span>
-                    </a>
-                    <a href="/qr" class="tools-option">
-                        <i class="fas fa-qrcode"></i>
-                        <span class="tools-copy">
-                            <span class="tools-title">E-2-QR</span>
-                            <span class="tools-desc">Text to QR</span>
-                        </span>
-                    </a>
-                    <a href="/pswd" class="tools-option">
-                        <i class="fas fa-key"></i>
-                        <span class="tools-copy">
-                            <span class="tools-title">pswd</span>
-                            <span class="tools-desc">Password gen</span>
-                        </span>
-                    </a>
-                    <a href="/cidr" class="tools-option">
-                        <i class="fas fa-network-wired"></i>
-                        <span class="tools-copy">
-                            <span class="tools-title">CIDR</span>
-                            <span class="tools-desc">Subnet calc</span>
-                        </span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="controls-wrapper">
-            <div class="lang-segment" aria-label="Language">
-                <button class="lang-btn" data-lang="ru">
-                    <span class="lang-flag" aria-hidden="true">🇷🇺</span>
-                    <span class="lang-name">Русский</span>
-                    <span class="lang-code">RU</span>
-                </button>
-                <button class="lang-btn" data-lang="en">
-                    <span class="lang-flag" aria-hidden="true">🇬🇧</span>
-                    <span class="lang-name">English</span>
-                    <span class="lang-code">EN</span>
-                </button>
-            </div>
-            <div class="theme-dropdown">
-                <button class="theme-toggle">
-                    <span class="current-theme">🎨</span>
-                    <span class="text-ru theme-name">Тема</span>
-                    <span class="text-en theme-name">Theme</span>
-                    <i class="fas fa-chevron-down"></i>
-                </button>
-                <div class="theme-list">
-                    <div class="theme-group">
-                        <div class="theme-group-title text-ru">Светлые темы</div>
-                        <div class="theme-group-title text-en">Light Themes</div>
-                        <div class="theme-option" data-theme="light">
-                            <span class="theme-icon">☀️</span>
-                            <span class="theme-copy">
-                                <span class="text-ru theme-name">Просто светлая</span>
-                                <span class="text-en theme-name">Just Light</span>
-                                <span class="text-ru theme-desc">Чистый светлый режим</span>
-                                <span class="text-en theme-desc">Clean light mode</span>
-                            </span>
-                        </div>
-                        <div class="theme-option" data-theme="mint">
-                            <span class="theme-icon">🌿</span>
-                            <span class="theme-copy">
-                                <span class="text-ru theme-name">Свежий лемонграсс</span>
-                                <span class="text-en theme-name">Fresh Lemongrass</span>
-                                <span class="text-ru theme-desc">Мягкий зеленый акцент</span>
-                                <span class="text-en theme-desc">Soft green accent</span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="theme-divider"></div>
-                    <div class="theme-group">
-                        <div class="theme-group-title text-ru">Темные темы</div>
-                        <div class="theme-group-title text-en">Dark Themes</div>
-                        <div class="theme-option" data-theme="default">
-                            <span class="theme-icon">☁️</span>
-                            <span class="theme-copy">
-                                <span class="text-ru theme-name">Бледный сад</span>
-                                <span class="text-en theme-name">Pale Garden</span>
-                                <span class="text-ru theme-desc">Спокойная базовая тема</span>
-                                <span class="text-en theme-desc">Calm default theme</span>
-                            </span>
-                        </div>
-                        <div class="theme-option" data-theme="tokyo">
-                            <span class="theme-icon">🗼</span>
-                            <span class="theme-copy">
-                                <span class="text-ru theme-name">Токийская ночь</span>
-                                <span class="text-en theme-name">Tokyo Night</span>
-                                <span class="text-ru theme-desc">Темная синяя палитра</span>
-                                <span class="text-en theme-desc">Dark blue palette</span>
-                            </span>
-                        </div>
-                        <div class="theme-option" data-theme="coral">
-                            <span class="theme-icon">🌺</span>
-                            <span class="theme-copy">
-                                <span class="text-ru theme-name">Коралловый риф</span>
-                                <span class="text-en theme-name">Coral Reef</span>
-                                <span class="text-ru theme-desc">Теплый красный акцент</span>
-                                <span class="text-en theme-desc">Warm red accent</span>
-                            </span>
-                        </div>
-                        <div class="theme-option" data-theme="sage">
-                            <span class="theme-icon">🌿</span>
-                            <span class="theme-copy">
-                                <span class="text-ru theme-name">Роща шалфея</span>
-                                <span class="text-en theme-name">Sage Grove</span>
-                                <span class="text-ru theme-desc">Приглушенный зеленый</span>
-                                <span class="text-en theme-desc">Muted green tone</span>
-                            </span>
-                        </div>
-                        <div class="theme-option" data-theme="azure">
-                            <span class="theme-icon">🌊</span>
-                            <span class="theme-copy">
-                                <span class="text-ru theme-name">Лазурная волна</span>
-                                <span class="text-en theme-name">Azure Wave</span>
-                                <span class="text-ru theme-desc">Холодный голубой акцент</span>
-                                <span class="text-en theme-desc">Cool blue accent</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+        {% include "_nav.html" %}
     <main class="qr-page-container">
         <div class="grid-card qr-input-card">
             <div class="card-header">
@@ -263,6 +109,7 @@
             </div>
         </div>
     </main>
+    {% include "_footer.html" %}
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script src="{{ url_for('static', filename='responsive.js') }}"></script>
     <script src="{{ url_for('static', filename='qr.js') }}"></script>

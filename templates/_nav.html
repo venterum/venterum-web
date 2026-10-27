@@ -1,0 +1,223 @@
+<nav class="nav">
+    <a href="/" class="logo">venterum@web:~$</a>
+    <div class="nav-buttons">
+        {% if request.path != "/" %}
+        <a href="/" class="nav-button nav-home">
+            <i class="fas fa-home"></i>
+            <span class="text-ru">Главная</span>
+            <span class="text-en">Home</span>
+        </a>
+        {% endif %}
+        <a href="https://github.com/venterum" target="_blank" class="nav-button">
+            <i class="fab fa-github"></i>
+            <span class="text-ru">GitHub</span>
+            <span class="text-en">GitHub</span>
+        </a>
+        <a href="/#blog" class="nav-button">
+            <i class="fas fa-newspaper"></i>
+            <span class="text-ru">Блог</span>
+            <span class="text-en">Blog</span>
+        </a>
+        <a href="/about" class="nav-button{% if request.path == "/about" %} active{% endif %}">
+            <i class="fas fa-user"></i>
+            <span class="text-ru">Обо мне</span>
+            <span class="text-en">About me</span>
+        </a>
+        <div class="tools-dropdown">
+            <button class="nav-button tools-toggle">
+                <i class="fas fa-screwdriver-wrench"></i>
+                <span class="text-ru">Инструменты</span>
+                <span class="text-en">Tools</span>
+                <i class="fas fa-chevron-down tools-chevron"></i>
+            </button>
+            <div class="tools-list">
+                <a href="/ip" class="tools-option{% if request.path == "/ip" %} active{% endif %}">
+                    <i class="fas fa-location-arrow"></i>
+                    <span class="tools-copy">
+                        <span class="tools-title">IP-lookup</span>
+                        <span class="tools-desc">IP info</span>
+                    </span>
+                </a>
+                <a href="/qr" class="tools-option{% if request.path == "/qr" %} active{% endif %}">
+                    <i class="fas fa-qrcode"></i>
+                    <span class="tools-copy">
+                        <span class="tools-title">E-2-QR</span>
+                        <span class="tools-desc">Text to QR</span>
+                    </span>
+                </a>
+                <a href="/pswd" class="tools-option{% if request.path == "/pswd" %} active{% endif %}">
+                    <i class="fas fa-key"></i>
+                    <span class="tools-copy">
+                        <span class="tools-title">pswd</span>
+                        <span class="tools-desc">Password gen</span>
+                    </span>
+                </a>
+                <a href="/cidr" class="tools-option{% if request.path == "/cidr" %} active{% endif %}">
+                    <i class="fas fa-network-wired"></i>
+                    <span class="tools-copy">
+                        <span class="tools-title">CIDR</span>
+                        <span class="tools-desc">Subnet calc</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="controls-wrapper">
+        <button class="nav-button palette-toggle" type="button" aria-label="Поиск (Ctrl+K)" title="Ctrl+K">
+            <i class="fas fa-magnifying-glass"></i>
+        </button>
+        <div class="lang-segment" aria-label="Language">
+            <button class="lang-btn" data-lang="ru">
+                <span class="lang-flag" aria-hidden="true">🇷🇺</span>
+                <span class="lang-name">Русский</span>
+                <span class="lang-code">RU</span>
+            </button>
+            <button class="lang-btn" data-lang="en">
+                <span class="lang-flag" aria-hidden="true">🇬🇧</span>
+                <span class="lang-name">English</span>
+                <span class="lang-code">EN</span>
+            </button>
+        </div>
+        <div class="theme-dropdown">
+            <button class="theme-toggle" aria-label="Theme">
+                <span class="current-theme">🎨</span>
+                <i class="fas fa-palette theme-control-icon"></i>
+                <span class="text-ru theme-name">Тема</span>
+                <span class="text-en theme-name">Theme</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="theme-list">
+                <div class="theme-group">
+                    <div class="theme-group-title text-ru">Светлые темы</div>
+                    <div class="theme-group-title text-en">Light Themes</div>
+                    <div class="theme-option" data-theme="light">
+                        <span class="theme-icon">☀️</span>
+                        <span class="theme-copy">
+                            <span class="text-ru theme-name">Просто светлая</span>
+                            <span class="text-en theme-name">Just Light</span>
+                            <span class="text-ru theme-desc">Чистый светлый режим</span>
+                            <span class="text-en theme-desc">Clean light mode</span>
+                        </span>
+                    </div>
+                    <div class="theme-option" data-theme="mint">
+                        <span class="theme-icon">🌿</span>
+                        <span class="theme-copy">
+                            <span class="text-ru theme-name">Свежий лемонграсс</span>
+                            <span class="text-en theme-name">Fresh Lemongrass</span>
+                            <span class="text-ru theme-desc">Мягкий зеленый акцент</span>
+                            <span class="text-en theme-desc">Soft green accent</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="theme-divider"></div>
+                <div class="theme-group">
+                    <div class="theme-group-title text-ru">Темные темы</div>
+                    <div class="theme-group-title text-en">Dark Themes</div>
+                    <div class="theme-option" data-theme="default">
+                        <span class="theme-icon">☁️</span>
+                        <span class="theme-copy">
+                            <span class="text-ru theme-name">Бледный сад</span>
+                            <span class="text-en theme-name">Pale Garden</span>
+                            <span class="text-ru theme-desc">Спокойная базовая тема</span>
+                            <span class="text-en theme-desc">Calm default theme</span>
+                        </span>
+                    </div>
+                    <div class="theme-option" data-theme="tokyo">
+                        <span class="theme-icon">🗼</span>
+                        <span class="theme-copy">
+                            <span class="text-ru theme-name">Токийская ночь</span>
+                            <span class="text-en theme-name">Tokyo Night</span>
+                            <span class="text-ru theme-desc">Темная синяя палитра</span>
+                            <span class="text-en theme-desc">Dark blue palette</span>
+                        </span>
+                    </div>
+                    <div class="theme-option" data-theme="coral">
+                        <span class="theme-icon">🌺</span>
+                        <span class="theme-copy">
+                            <span class="text-ru theme-name">Коралловый риф</span>
+                            <span class="text-en theme-name">Coral Reef</span>
+                            <span class="text-ru theme-desc">Теплый красный акцент</span>
+                            <span class="text-en theme-desc">Warm red accent</span>
+                        </span>
+                    </div>
+                    <div class="theme-option" data-theme="sage">
+                        <span class="theme-icon">🌿</span>
+                        <span class="theme-copy">
+                            <span class="text-ru theme-name">Роща шалфея</span>
+                            <span class="text-en theme-name">Sage Grove</span>
+                            <span class="text-ru theme-desc">Приглушенный зеленый</span>
+                            <span class="text-en theme-desc">Muted green tone</span>
+                        </span>
+                    </div>
+                    <div class="theme-option" data-theme="azure">
+                        <span class="theme-icon">🌊</span>
+                        <span class="theme-copy">
+                            <span class="text-ru theme-name">Лазурная волна</span>
+                            <span class="text-en theme-name">Azure Wave</span>
+                            <span class="text-ru theme-desc">Холодный голубой акцент</span>
+                            <span class="text-en theme-desc">Cool blue accent</span>
+                        </span>
+                    </div>
+                    <div class="theme-option" data-theme="gruvbox">
+                        <span class="theme-icon">🟧</span>
+                        <span class="theme-copy">
+                            <span class="text-ru theme-name">Gruvbox</span>
+                            <span class="text-en theme-name">Gruvbox</span>
+                            <span class="text-ru theme-desc">Тёплая ретро-палитра</span>
+                            <span class="text-en theme-desc">Warm retro palette</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clock-pill" id="clock-pill">
+            <span class="clock-time" id="clock-time">00:00</span>
+            <span class="clock-date" id="clock-date">Mon, Jan 1</span>
+        </div>
+    </div>
+</nav>
+
+<div class="palette" id="palette" hidden>
+    <div class="palette-backdrop" data-palette-close></div>
+    <div class="palette-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+        <div class="palette-search">
+            <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+            <input id="palette-input" type="text" placeholder="Куда?" autocomplete="off" spellcheck="false" />
+        </div>
+        <div class="palette-list" id="palette-list"></div>
+        <div class="palette-hint">
+            <span class="text-ru">↑↓ выбрать · Enter открыть · Esc закрыть</span>
+            <span class="text-en">↑↓ select · Enter open · Esc close</span>
+        </div>
+    </div>
+</div>
+
+<div class="palette" id="lang-confirm" hidden>
+    <div class="palette-backdrop" data-lang-confirm-cancel></div>
+    <div
+        class="palette-panel confirm-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="lang-confirm-title"
+        aria-describedby="lang-confirm-text"
+    >
+        <h2 class="confirm-title" id="lang-confirm-title">
+            <span class="text-ru">Сменить язык?</span>
+            <span class="text-en">Switch language?</span>
+        </h2>
+        <p class="confirm-text" id="lang-confirm-text">
+            <span class="text-ru">Терминал очистится: история команд и текст в поле ввода.</span>
+            <span class="text-en">The terminal will be cleared: command history and the text in the input.</span>
+        </p>
+        <div class="confirm-actions">
+            <button class="confirm-btn" type="button" data-lang-confirm-cancel>
+                <span class="text-ru">Отмена</span>
+                <span class="text-en">Cancel</span>
+            </button>
+            <button class="confirm-btn primary" type="button" data-lang-confirm-ok>
+                <span class="text-ru">Сменить</span>
+                <span class="text-en">Switch</span>
+            </button>
+        </div>
+    </div>
+</div>
