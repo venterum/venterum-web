@@ -1,10 +1,16 @@
 from io import BytesIO
 import base64
-from datetime import datetime
+from contextlib import closing
+from datetime import datetime, timezone
 from email.utils import format_datetime
+from html import escape as html_escape
+import hmac
 import ipaddress
+import json
+import os
 import random
 import re
+import sqlite3
 import time
 import traceback
 from xml.sax.saxutils import escape as xml_escape
@@ -27,6 +33,32 @@ from qrcode.image.styledpil import StyledPilImage
 from qrcode.image.styles.colormasks import SolidFillColorMask
 from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
 
+
+def load_dotenv():
+    # shortcut: KEY=value, quotes and # comments only; no interpolation/multiline.
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+    try:
+        with open(path, encoding="utf-8-sig") as env_file:
+            for line in env_file:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                if line.startswith("export "):
+                    line = line[7:].lstrip()
+                key, value = line.split("=", 1)
+                key = key.strip()
+                value = value.strip()
+                if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+                    value = value[1:-1]
+                if key:
+                    os.environ.setdefault(key, value)
+    except FileNotFoundError:
+        pass
+
+
+# .env lives next to app.py; real environment variables take priority.
+load_dotenv()
+
 app = Flask(__name__)
 
 
@@ -41,6 +73,14 @@ NEWS_CACHE = {
 }
 
 TELEGRAM_CHANNELS = ["vntrum_public"]
+
+TG_CHANNEL_SLUG = os.environ.get("TG_CHANNEL_SLUG", TELEGRAM_CHANNELS[0])
+TG_CHANNEL_ID = os.environ.get("TG_CHANNEL_ID", "").strip()
+TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "").strip()
+TG_WEBHOOK_SECRET = os.environ.get("TG_WEBHOOK_SECRET", "").strip()
+TG_DB_PATH = os.environ.get("TG_DB_PATH", "posts.db")
+TG_MEDIA_DIR = os.path.join("static", "tg-media")
+TG_MEDIA_URL = "/tg-media"
 
 
 COOL_404_MESSAGES = [
@@ -193,6 +233,400 @@ def sanitize_telegram_post_html(raw_html):
         return ""
 
     return html
+
+
+def _rich_link(href, text):
+    href = normalize_href((href or "").strip())
+    body = render_rich_text(text) or html_escape(href)
+    if not href.startswith(("http://", "https://", "tg://", "mailto:", "tel:")):
+        return body
+    return f'<a href="{html_escape(href, quote=True)}">{body}</a>'
+
+
+def render_rich_text(node):
+    if node is None:
+        return ""
+    if isinstance(node, str):
+        return html_escape(node)
+    if isinstance(node, list):
+        return "".join(render_rich_text(item) for item in node)
+    if not isinstance(node, dict):
+        return html_escape(str(node))
+
+    node_type = node.get("type")
+    text = node.get("text")
+
+    if node_type == "bold":
+        return f"<strong>{render_rich_text(text)}</strong>"
+    if node_type == "italic":
+        return f"<em>{render_rich_text(text)}</em>"
+    if node_type == "underline":
+        return f"<u>{render_rich_text(text)}</u>"
+    if node_type == "strikethrough":
+        return f"<s>{render_rich_text(text)}</s>"
+    if node_type == "code":
+        return f"<code>{render_rich_text(text)}</code>"
+    if node_type == "url":
+        return _rich_link(node.get("url"), text)
+    if node_type == "email_address":
+        return _rich_link(f"mailto:{node.get('email_address') or ''}", text)
+    if node_type == "phone_number":
+        return _rich_link(f"tel:{node.get('phone_number') or ''}", text)
+    if node_type == "text_mention":
+        username = (node.get("user") or {}).get("username")
+        return (
+            _rich_link(f"https://t.me/{username}", text)
+            if username
+            else render_rich_text(text)
+        )
+    if node_type == "mention":
+        return _rich_link(f"https://t.me/{str(text or '').lstrip('@')}", text)
+    if node_type == "custom_emoji":
+        return html_escape(node.get("alternative_text") or "")
+    if node_type == "mathematical_expression":
+        return f"<code>{html_escape(node.get('expression') or '')}</code>"
+
+    # shortcut: spoilers, anchors and buttons lose styling, text only.
+    return render_rich_text(text)
+
+
+def _render_rich_caption(caption):
+    if not isinstance(caption, dict):
+        return ""
+    return render_rich_text(caption.get("text"))
+
+
+def _render_rich_list(block):
+    items = [item for item in block.get("items") or [] if isinstance(item, dict)]
+    ordered = any(
+        item.get("label") or item.get("value") is not None or item.get("type")
+        for item in items
+    )
+    parts = []
+    for index, item in enumerate(items, start=1):
+        body = render_rich_blocks(item.get("blocks"))
+        if not body:
+            continue
+        if item.get("has_checkbox"):
+            prefix = "☑" if item.get("is_checked") else "☐"
+        else:
+            prefix = f"{index}." if ordered else "•"
+        parts.append(f"{prefix} {body}")
+    return "<br>".join(parts)
+
+
+def _render_rich_table(block):
+    # shortcut: tables are flattened to text rows; upgrade if full posts are rendered.
+    rows = []
+    for row in block.get("cells") or []:
+        cells = []
+        for cell in row or []:
+            if not isinstance(cell, dict):
+                continue
+            text = render_rich_text(cell.get("text")).strip()
+            if text:
+                cells.append(text)
+        if cells:
+            rows.append(" — ".join(cells))
+    caption = _render_rich_caption(block.get("caption"))
+    if caption:
+        rows.insert(0, caption)
+    return "<br>".join(rows)
+
+
+def render_rich_block(block):
+    block_type = block.get("type")
+
+    if block_type == "paragraph":
+        return render_rich_text(block.get("text"))
+    if block_type == "heading":
+        return f"<strong>{render_rich_text(block.get('text'))}</strong>"
+    if block_type == "pre":
+        return f"<pre><code>{render_rich_text(block.get('text'))}</code></pre>"
+    if block_type in {"footer", "pullquote"}:
+        return render_rich_text(block.get("text"))
+    if block_type == "divider":
+        return "—"
+    if block_type == "list":
+        return _render_rich_list(block)
+    if block_type == "blockquote":
+        inner = render_rich_blocks(block.get("blocks"))
+        credit = render_rich_text(block.get("credit"))
+        if credit:
+            inner = f"{inner}<br><em>{credit}</em>"
+        return f"<blockquote>{inner}</blockquote>" if inner else ""
+    if block_type == "expandable_blockquote":
+        inner = render_rich_text(block.get("text"))
+        credit = render_rich_text(block.get("credit"))
+        if credit:
+            inner = f"{inner}<br><em>{credit}</em>"
+        return f"<blockquote>{inner}</blockquote>" if inner else ""
+    if block_type == "details":
+        summary = f"<strong>{render_rich_text(block.get('summary'))}</strong>"
+        inner = render_rich_blocks(block.get("blocks"))
+        return f"{summary}<br>{inner}" if inner else summary
+    if block_type == "table":
+        return _render_rich_table(block)
+    if block_type in {"collage", "slideshow"}:
+        parts = [
+            render_rich_blocks(block.get("blocks")),
+            _render_rich_caption(block.get("caption")),
+        ]
+        return "<br>".join(part for part in parts if part)
+    if block_type in {
+        "animation",
+        "audio",
+        "document",
+        "photo",
+        "video",
+        "voice_note",
+    }:
+        # shortcut: only the first photo is stored, other media stays in Telegram.
+        return _render_rich_caption(block.get("caption"))
+
+    return ""
+
+
+def render_rich_blocks(blocks):
+    parts = []
+    for block in blocks or []:
+        if not isinstance(block, dict):
+            continue
+        fragment = render_rich_block(block)
+        if fragment:
+            parts.append(fragment)
+    return "<br>".join(parts)
+
+
+def render_rich_message(rich_message):
+    if not isinstance(rich_message, dict):
+        return ""
+    return sanitize_telegram_post_html(render_rich_blocks(rich_message.get("blocks")))
+
+
+_tg_db_initialized = False
+
+
+def get_tg_db():
+    conn = sqlite3.connect(TG_DB_PATH, timeout=10)
+    conn.row_factory = sqlite3.Row
+    conn.execute("PRAGMA busy_timeout=10000")
+    return conn
+
+
+def init_tg_db():
+    global _tg_db_initialized
+    if _tg_db_initialized:
+        return
+    with closing(get_tg_db()) as conn, conn:
+        conn.execute("PRAGMA journal_mode=WAL")
+        conn.execute(
+            "CREATE TABLE IF NOT EXISTS tg_posts ("
+            "chat_id INTEGER NOT NULL, "
+            "message_id INTEGER NOT NULL, "
+            "posted_at TEXT NOT NULL, "
+            "url TEXT, "
+            "raw_json TEXT NOT NULL, "
+            "image_path TEXT, "
+            "updated_at TEXT NOT NULL, "
+            "PRIMARY KEY (chat_id, message_id))"
+        )
+    _tg_db_initialized = True
+
+
+def _find_tg_photo(message):
+    photos = message.get("photo")
+    if photos:
+        return photos[-1].get("file_id")
+
+    def walk(blocks):
+        for block in blocks or []:
+            if not isinstance(block, dict):
+                continue
+            if block.get("type") == "photo":
+                sizes = block.get("photo") or []
+                if sizes:
+                    return sizes[-1].get("file_id")
+            found = walk(block.get("blocks"))
+            if found:
+                return found
+            for item in block.get("items") or []:
+                found = walk((item or {}).get("blocks"))
+                if found:
+                    return found
+        return None
+
+    rich = message.get("rich_message") or {}
+    return walk(rich.get("blocks"))
+
+
+def _download_tg_photo(file_id, chat_id, message_id):
+    if not TG_BOT_TOKEN or not file_id:
+        return None
+    try:
+        info = requests.get(
+            f"https://api.telegram.org/bot{TG_BOT_TOKEN}/getFile",
+            params={"file_id": file_id},
+            timeout=10,
+        )
+        info.raise_for_status()
+        file_path = (info.json().get("result") or {}).get("file_path")
+        if not file_path:
+            return None
+
+        media = requests.get(
+            f"https://api.telegram.org/file/bot{TG_BOT_TOKEN}/{file_path}",
+            timeout=15,
+        )
+        media.raise_for_status()
+
+        extension = os.path.splitext(file_path)[1].lower() or ".jpg"
+        filename = f"{chat_id}_{message_id}{extension}"
+        os.makedirs(TG_MEDIA_DIR, exist_ok=True)
+        with open(os.path.join(TG_MEDIA_DIR, filename), "wb") as photo:
+            photo.write(media.content)
+        return f"{TG_MEDIA_URL}/{filename}"
+    except Exception as exc:
+        # The image is optional: a failed download must not drop the post.
+        print(f"Could not download telegram photo: {exc}")
+        return None
+
+
+def _load_tg_post_image(chat_id, message_id):
+    with closing(get_tg_db()) as conn:
+        row = conn.execute(
+            "SELECT image_path FROM tg_posts WHERE chat_id = ? AND message_id = ?",
+            (chat_id, message_id),
+        ).fetchone()
+    return row["image_path"] if row else None
+
+
+def save_tg_post(message):
+    chat = message.get("chat") or {}
+    chat_id = chat.get("id")
+    message_id = message.get("message_id")
+    if chat_id is None or message_id is None:
+        return
+
+    init_tg_db()
+    posted_at = datetime.fromtimestamp(
+        message.get("date") or time.time(), tz=timezone.utc
+    ).isoformat()
+    url = f"https://t.me/{chat.get('username') or TG_CHANNEL_SLUG}/{message_id}"
+
+    photo_file_id = _find_tg_photo(message)
+    image_path = (
+        _download_tg_photo(photo_file_id, chat_id, message_id)
+        if photo_file_id
+        else None
+    )
+    if photo_file_id and not image_path:
+        image_path = _load_tg_post_image(chat_id, message_id)
+
+    with closing(get_tg_db()) as conn, conn:
+        conn.execute(
+            "INSERT INTO tg_posts "
+            "(chat_id, message_id, posted_at, url, raw_json, image_path, updated_at) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?) "
+            "ON CONFLICT(chat_id, message_id) DO UPDATE SET "
+            "posted_at = excluded.posted_at, "
+            "url = excluded.url, "
+            "raw_json = excluded.raw_json, "
+            "image_path = excluded.image_path, "
+            "updated_at = excluded.updated_at",
+            (
+                chat_id,
+                message_id,
+                posted_at,
+                url,
+                json.dumps(message, ensure_ascii=False),
+                image_path,
+                datetime.now(timezone.utc).isoformat(),
+            ),
+        )
+
+
+def load_bot_posts(limit=50):
+    try:
+        init_tg_db()
+        with closing(get_tg_db()) as conn:
+            rows = conn.execute(
+                "SELECT message_id, posted_at, url, raw_json, image_path "
+                "FROM tg_posts ORDER BY posted_at DESC LIMIT ?",
+                (limit,),
+            ).fetchall()
+    except Exception as exc:
+        print(f"Could not load telegram posts: {exc}")
+        return []
+
+    posts = []
+    for row in rows:
+        try:
+            message = json.loads(row["raw_json"])
+        except (TypeError, ValueError):
+            continue
+
+        rich = message.get("rich_message")
+        if isinstance(rich, dict):
+            content = render_rich_message(rich)
+        else:
+            content = sanitize_telegram_post_html(
+                message.get("text") or message.get("caption") or ""
+            )
+        image_url = row["image_path"]
+
+        if not content and not image_url:
+            continue
+
+        chat = message.get("chat") or {}
+        posts.append(
+            {
+                "content": content,
+                "image_url": image_url,
+                "datetime": row["posted_at"],
+                "url": row["url"],
+                "channel": {
+                    "name": chat.get("title") or TG_CHANNEL_SLUG,
+                    "avatar_url": "",
+                    "slug": TG_CHANNEL_SLUG,
+                },
+                "_rich": bool(rich),
+            }
+        )
+    return posts
+
+
+@app.route("/tg/webhook/<secret>", methods=["POST"])
+def telegram_webhook(secret):
+    if not TG_WEBHOOK_SECRET or not hmac.compare_digest(secret, TG_WEBHOOK_SECRET):
+        return "forbidden", 403
+    header_secret = request.headers.get("X-Telegram-Bot-Api-Secret-Token", "")
+    if not hmac.compare_digest(header_secret, TG_WEBHOOK_SECRET):
+        return "forbidden", 403
+
+    update = request.get_json(silent=True)
+    if not isinstance(update, dict):
+        return "ok"
+
+    message = update.get("channel_post") or update.get("edited_channel_post")
+    if not message:
+        return "ok"
+
+    chat = message.get("chat") or {}
+    if TG_CHANNEL_ID:
+        if str(chat.get("id")) != TG_CHANNEL_ID:
+            return "ok"
+    elif (chat.get("username") or "").lower() != TG_CHANNEL_SLUG.lower():
+        return "ok"
+
+    try:
+        save_tg_post(message)
+    except Exception:
+        traceback.print_exc()
+        return "error", 500
+
+    NEWS_CACHE["timestamp"] = 0
+    return "ok"
 
 
 @app.route("/qr/generate", methods=["POST"])
@@ -386,7 +820,32 @@ def load_news(force_refresh=False):
             except Exception as e:
                 print(f"Could not parse channel {channel_slug}: {e}")
 
-        all_news.sort(key=lambda x: x["datetime"], reverse=True)
+        merged = {post["url"]: post for post in all_news if post.get("url")}
+        for post in load_bot_posts():
+            rich = post.pop("_rich", False)
+            url = post.get("url")
+            if not url:
+                continue
+            # Keep web formatting for regular posts, the bot wins on rich ones.
+            if url in merged and not rich and merged[url].get("content"):
+                continue
+            merged[url] = post
+        all_news = list(merged.values())
+
+        channel_avatar_url = next(
+            (
+                post["channel"]["avatar_url"]
+                for post in all_news
+                if post.get("channel", {}).get("avatar_url")
+            ),
+            "",
+        )
+        for post in all_news:
+            channel = post.setdefault("channel", {})
+            if not channel.get("avatar_url"):
+                channel["avatar_url"] = channel_avatar_url
+
+        all_news.sort(key=lambda x: x.get("datetime") or "", reverse=True)
         latest_news = all_news[:16]
 
         if not latest_news:
@@ -436,10 +895,11 @@ def rss_feed():
             pass
 
         description = post.get("content") or ""
-        if post.get("image_url"):
-            description += (
-                f'<p><img src="{xml_escape(post["image_url"])}" alt=""></p>'
-            )
+        image_url = post.get("image_url") or ""
+        if image_url.startswith("/"):
+            image_url = f"{request.url_root.rstrip('/')}{image_url}"
+        if image_url:
+            description += f'<p><img src="{xml_escape(image_url)}" alt=""></p>'
 
         items.append(
             "<item>"
